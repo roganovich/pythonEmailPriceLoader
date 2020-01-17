@@ -4,20 +4,26 @@
 import imaplib
 import email
 import base64
-# import time
-# начало работы скрипта
-# start_time = time.time()
+import log
+import os
+import config
+
+# получаем настройки приложения
+config = config.getConfig()
 
 # функция подключения к почтовому ящику по imaplib
 def auth(server, username, password):
-    print('Подключаюсь к ' + server)
+    # журнал
+    log.print_r('Подключаюсь к ' + server)
     imap = imaplib.IMAP4_SSL(server)
     try:
         imap.login(str(username), str(password))
-        print("Успешно подключились к " + username)
+        # журнал
+        log.print_r("Успешно подключились к " + username)
         return imap
     except:
-        print("Не удалось подключиться к " + username)
+        # журнал
+        log.print_r("Не удалось подключиться к " + username)
 
 # функция проверяет строку на кодировку base64(ей кодируют кирилицу)
 def hascyrillic(s):
@@ -33,13 +39,41 @@ def translit(s):
     ru_subject = str(email_subject,'utf-8')
     return ru_subject
 
+# скачивания файла
+def downloadAttachment(email):
+    files = []
+    # путь к сохранения файла
+    path = config.get("email", "attachmentFolder")
+    # есть ли вложения в письме
+    if email.is_multipart():
+        for part in email.walk():
+            content_type = part.get_content_type()
+            filename = part.get_filename()
+            # проверяем на наличие имени у файла
+            if filename:
+                filePath = path + "/" + part.get_filename()
+                # если этот файл уже есть удалить
+                if os.path.exists(filePath):
+                    log.print_r('Удаляем ' + filePath)
+                    os.remove(filePath)
+                # открываем файл для записи
+                with open(filePath, 'wb') as new_file:
+                    # сохраняем файл в папку для дальнейшей загрузки
+                    new_file.write(part.get_payload(decode=True))
+                    log.print_r('Нашел файл. Сохраняем ' + filePath)
+                    # добавляем путь к файлу в массив с данными
+                    files.append(filePath)
+    if (not  files):
+        log.print_r('Нет файлов для скачивания')
+    # возвращаем массив с новыми файлами
+    return files
+
 # выполняем подключение
-def getemail(config):
+def getemail():
     # настройки подключения
     server = config.get("email", "server")
     user = config.get("email", "user")
     password = config.get("email", "password")
-
     mail = auth(server, user, password)
     # получаем список каталогов
     mail.list()
@@ -88,7 +122,7 @@ def getemail(config):
         for response_part in data:
             if isinstance(response_part, tuple):
                 email_message = email.message_from_bytes(response_part[1])
-                  # кому отправлено письмо
+                # кому отправлено письмо
                 email_to = email_message['To']
                 # от кого отправлено письмо  #email.utils.parseaddr
                 email_from = email_message['From']
@@ -101,26 +135,14 @@ def getemail(config):
                 # проверяем кирилицу
                 if(hascyrillic(email_subject)):
                     email_subject = translit(email_subject)
-
-
-
-                print('Нашел письмо ' + email_subject + ' от ' + email_from)
-                # работа с вложениями
-                files = []
-                for part in email_message.walk():
-                    # print(part.as_string() + "\n")
-                    # пропускаем мусор
-                    if part.get_content_maintype() == 'multipart': continue
-                    if part.get_content_maintype() == 'text': continue
-                    if part.get('Content-Disposition') == 'inline': continue
-                    if part.get('Content-Disposition') is None: continue
-                    print('-')
-                    filename = part.get_filename()
-                    print('Нашел файл ' + filename)
-                    files.append(filename)
+                # журнал
+                log.print_r('Нашел письмо ' + email_subject + ' от ' + email_from)
+                # скачивания файла
+                files = downloadAttachment(email_message)
                 # заполняем массив данных
                 returnData.append({'msg_id':email_msg_id, 'email_date':email_date, 'subject':email_subject, 'files':files})
+    # закрываем соединение
     mail.close()
     mail.logout()
+    # возвращаем массив данных
     return returnData
-#print("--- %s seconds ---" % (time.time() - start_time))
