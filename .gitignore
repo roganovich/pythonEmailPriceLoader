@@ -1,6 +1,6 @@
 /.idea
 /.git
 /files/*
-/__pycache__
-/parsers/__pycache__
+/__pycache__/*
+/parsers/__pycache__/*
 settings.ini
