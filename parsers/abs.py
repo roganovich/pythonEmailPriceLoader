@@ -1,15 +1,26 @@
+import sys
+sys.path.append('models')
 import os
 from zipfile import ZipFile
 import log
 import csv
+
+from models import articles, brands, prices, rests
 
 class Absparser:
     name = "ABS"
     suppliers_id = 16
     data = []
     filePath = ""
+    # путь к каталогу с файлами
     filePathExtract = "files/ABS/"
+    # делитель CSV
     delimiter = "\t"
+    # пупустить первую строку в файле
+    firstLine = True
+
+    # ['Артикул', 'Бренд', 'Окончательная цена', 'Количество', 'Наименование номенклатуры', 'Полный артикул']
+    colums = {"art":0,"bra":1,"price":2,"quality":3}
 
     # 20	ABS-AUTO
     # 158	ABS
@@ -80,9 +91,27 @@ class Absparser:
     def csvReader(self,filePath):
         with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
             reader = csv.reader(file_obj, delimiter=self.delimiter)
+            i = 0
             for row in reader:
-                print(row)
-                exit()
+                i = i + 1
+                # пропускаем первую строку
+                if(self.firstLine == True and i == 1):
+                    continue
+
+                colData = self.prepareColumns(row)
+                print(colData)
+                if (i > 10):
+                    exit()
+
+    def prepareColumns(self, row):
+        data = []
+        for key in self.colums:
+            #print(key + ' > '+ self.colums[key])
+            data.append(row[self.colums[key]])
+        return data
+
+
+
 
 
 

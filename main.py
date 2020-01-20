@@ -1,19 +1,16 @@
+import sys
 import profiler
 import mail
-import log
 import config
-import sys
-sys.path.append('parsers')
-from parsers import abs
+from parsers.abs import Absparser
 # получаем настройки приложения
 config = config.getConfig()
-
 
 def checkParser(email):
     # eсли есть вроженый файл
     if(email['files']):
         if "ABS-AUTO" in email['subject']:
-            obj = abs.Absparser()
+            obj = Absparser()
             obj.data = email
             obj.upload()
             exit()
