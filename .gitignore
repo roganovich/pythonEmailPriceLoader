@@ -1,5 +1,7 @@
 /.idea
 /.git
 /files/*
+/results/*
 *__pycache__*
+*.pyc
 settings.ini

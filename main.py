@@ -2,6 +2,7 @@ import sys
 import profiler
 import mail
 import config
+import log
 from parsers.abs import Absparser
 # получаем настройки приложения
 config = config.getConfig()
@@ -20,6 +21,9 @@ def checkParser(email):
 with profiler.Profiler() as p:
     # получаем все письма и данные в виде списка
     emails = mail.getemail()
+    if(not emails):
+        log.print_r('Нет новыйх писем')
+        exit()
     # print(emails)
     for email in emails:
         checkParser(email)

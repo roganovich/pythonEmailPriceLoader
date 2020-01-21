@@ -1,6 +1,5 @@
-#work width email
-#author Roganovich.R.M.
-
+# author Roganovich.R.M.
+# work width email
 import imaplib
 import email
 import base64
@@ -70,7 +69,9 @@ def downloadAttachment(email):
 
 # выполняем подключение
 def getemail():
-    # настройки подключения
+    # будем возвращать массив данных
+    returnData = []
+        # настройки подключения
     server = config.get("email", "server")
     user = config.get("email", "user")
     password = config.get("email", "password")
@@ -78,7 +79,7 @@ def getemail():
     # получаем список каталогов
     mail.list()
     # выбираем входящие
-    mail.select("inbox")
+    mail.select("Prices")
     # Получаем массив со списком найденных почтовых сообщений
     result, data = mail.search(None, "ALL")
     # Сохраняем в переменную ids строку с номерами писем
@@ -87,21 +88,21 @@ def getemail():
     id_list = mail_ids.split()
     # кол-во писем в ящике
     mail_coun = len(id_list)
+    # если нет новых писем возвращаем пустой массив
+    if(mail_coun == 0):
+        return returnData
     # Задаем переменную latest_email_id, значением которой будет номер первого письма
     first_email_id = id_list[0]
     # Задаем переменную latest_email_id, значением которой будет номер последнего письма
     latest_email_id = id_list[-1]
-
     # Получаем письмо с идентификатором latest_email_id (последнее письмо).
     result, data = mail.fetch(latest_email_id, "(RFC822)")
     # В переменную raw_email заносим необработанное письмо
     raw_email = data[0][1]
     # Переводим текст письма в кодировку UTF-8 и сохраняем в переменную raw_email_string
     raw_email_string = raw_email.decode('UTF-8')
-
     # Получаем заголовки и тело письма и заносим результат в переменную email_message.
     email_message = email.message_from_string(raw_email_string)
-
     # кому отправлено письмо
     email_to = email_message['To']
     # от кого отправлено письмо
@@ -112,13 +113,10 @@ def getemail():
     email_subject = email_message['Subject']
     # идентификатор письма
     email_msg_id = email_message['Message-Id']
-
-    # будем возвращать массив данных
-    returnData = []
     # перебор всех писем
-    for id in id_list:
+    for uid in id_list:
         # need str(i)
-        result, data = mail.fetch(id, '(RFC822)')
+        result, data = mail.fetch(uid, '(RFC822)')
         for response_part in data:
             if isinstance(response_part, tuple):
                 email_message = email.message_from_bytes(response_part[1])
@@ -141,6 +139,11 @@ def getemail():
                 files = downloadAttachment(email_message)
                 # заполняем массив данных
                 returnData.append({'msg_id':email_msg_id, 'email_date':email_date, 'subject':email_subject, 'files':files})
+            # перемещаем отработанные письма
+            copy_res = mail.copy(uid, 'Completed')
+            if copy_res[0] == 'OK':
+                mail.store(uid, '+FLAGS', '\\Deleted')
+            log.print_r('Удаляем письмо ' + email_subject + ' от ' + email_from)
     # закрываем соединение
     mail.close()
     mail.logout()

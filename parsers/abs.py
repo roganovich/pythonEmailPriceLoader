@@ -1,11 +1,12 @@
-import sys
-sys.path.append('models')
+# author Roganovich.R.M.
 import os
 from zipfile import ZipFile
 import log
 import csv
+import config
 
-from models import articles, brands, prices, rests
+# получаем настройки приложения
+config = config.getConfig()
 
 class Absparser:
     name = "ABS"
@@ -14,16 +15,19 @@ class Absparser:
     filePath = ""
     # путь к каталогу с файлами
     filePathExtract = "files/ABS/"
+    resultFileName = "adb_price.csv"
     # делитель CSV
     delimiter = "\t"
     # пупустить первую строку в файле
     firstLine = True
 
-    # ['Артикул', 'Бренд', 'Окончательная цена', 'Количество', 'Наименование номенклатуры', 'Полный артикул']
-    colums = {"art":0,"bra":1,"price":2,"quality":3}
+    # в файле ['Артикул', 'Бренд', 'Окончательная цена', 'Количество', 'Наименование номенклатуры', 'Полный артикул']
+    # сопостовляем колонки в файле с назначениями полей
+    colums =     {"art": 0, "bra": 1, "price": 2, "quality": 3}
 
     # 20	ABS-AUTO
     # 158	ABS
+    # сопоставляем файлы и склады в базе
     unity = {
         #"ABS_AJUSA.txt":"1",
         #"ABS_Krasnodar.txt": "1",
@@ -52,17 +56,16 @@ class Absparser:
 
     # функция работы с файлами
     def workWidthFiles(self):
-        # проходим в цикле по массиву соответствия
-        for filename in self.unity:
-            # путь к файлу с данными
-            priceFile = self.filePathExtract + filename
-            # если нужный файл существует
-            if os.path.exists(priceFile):
-                log.print_r('Работаю с файлом ' + priceFile)
+        # находим все файлы прайсов в каталоге парсера поставщика
+        files = os.listdir(self.filePathExtract)
+        for file in files:
+            priceFile = self.filePathExtract + file
+            # проверяем файл по массиву соответствия
+            if(file in self.unity):
                 # читаем построчно файл
                 self.csvReader(priceFile)
-                exit()
-
+            log.print_r('Удаляю файл ' + priceFile)
+            os.remove(priceFile)
 
     # функция распаковки архива
     def zipdir(self):
@@ -89,6 +92,15 @@ class Absparser:
 
     # функция принимает путь файла, открывает его и работает построчно
     def csvReader(self,filePath):
+        log.print_r('Подготавливаю файл ' + filePath)
+        # открываем файл результата
+        resultFilePath = config.get('resultsFolder') + self.resultFileName
+
+        # очищаем файл результата
+        if os.path.exists(resultFilePath):
+            os.remove(resultFilePath)
+        resultFile = open(resultFilePath, 'a',newline='', encoding='utf-8')
+        writer = csv.writer(resultFile, delimiter=self.delimiter)
         with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
             reader = csv.reader(file_obj, delimiter=self.delimiter)
             i = 0
@@ -97,18 +109,23 @@ class Absparser:
                 # пропускаем первую строку
                 if(self.firstLine == True and i == 1):
                     continue
-
+                # берем из строки только нужные столбцы
                 colData = self.prepareColumns(row)
-                print(colData)
-                if (i > 10):
-                    exit()
+                # записываем в файл результата
+                writer.writerows([colData])
 
+            resultFile.close()
+
+    # функция из строки берет только нужные столбцы
     def prepareColumns(self, row):
         data = []
+        # берем из строки только нужные столбцы
         for key in self.colums:
-            #print(key + ' > '+ self.colums[key])
             data.append(row[self.colums[key]])
         return data
+
+
+
 
 
 
