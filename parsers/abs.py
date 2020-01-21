@@ -47,7 +47,7 @@ class Absparser:
     def upload(self):
         self.filePath = self.data['files']
         # если не существует дириктории создаем ее
-        if not os.path.exists(self.filePathExtract):
+        if(not os.path.exists(self.filePathExtract)):
             os.mkdir(self.filePathExtract)
         # распаковываем архивы
         self.zipdir()
@@ -95,7 +95,9 @@ class Absparser:
         log.print_r('Подготавливаю файл ' + filePath)
         # открываем файл результата
         resultFilePath = config.get('resultsFolder') + self.resultFileName
-
+        # если не существует дириктории результатов создаем ее
+        if not os.path.exists(config.get('resultsFolder')):
+            os.mkdir(config.get('resultsFolder'))
         # очищаем файл результата
         if os.path.exists(resultFilePath):
             os.remove(resultFilePath)
