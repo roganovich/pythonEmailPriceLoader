@@ -140,10 +140,10 @@ def getemail():
                 # заполняем массив данных
                 returnData.append({'msg_id':email_msg_id, 'email_date':email_date, 'subject':email_subject, 'files':files})
             # перемещаем отработанные письма
-            copy_res = mail.copy(uid, 'Completed')
-            if copy_res[0] == 'OK':
-                mail.store(uid, '+FLAGS', '\\Deleted')
-            log.print_r('Удаляем письмо ' + email_subject + ' от ' + email_from)
+            #copy_res = mail.copy(uid, 'Completed')
+            #if copy_res[0] == 'OK':
+            #    mail.store(uid, '+FLAGS', '\\Deleted')
+            #log.print_r('Удаляем письмо ' + email_subject + ' от ' + email_from)
     # закрываем соединение
     mail.close()
     mail.logout()
