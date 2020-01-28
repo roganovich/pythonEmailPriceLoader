@@ -177,7 +177,7 @@ class MailLoader():
                     email_msg_id = email_message['Message-Id']
                     # проверяем кирилицу
                     if(self.hascyrillic(email_subject)):
-                        email_subject = translit(email_subject)
+                        email_subject = self.translit(email_subject)
                     if (self.hascyrillic(email_from)):
                         email_from = self.translit(email_from)
                     # журнал
