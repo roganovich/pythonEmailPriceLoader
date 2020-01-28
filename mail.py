@@ -197,6 +197,8 @@ class MailLoader():
                     # удаляем письмо
                     self.deleteEmail(mail, uid, email_subject, email_from);
 
+        # удаляем письма помеченные флагом Deleted
+        mail.expunge()
         # закрываем соединение
         mail.close()
         mail.logout()
