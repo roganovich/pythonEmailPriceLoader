@@ -1,7 +1,7 @@
 import log
 import os
 import config
-import psycopg2
+#import psycopg2
 
 # получаем настройки приложения
 config = config.getConfig()

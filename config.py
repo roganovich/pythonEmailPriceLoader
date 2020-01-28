@@ -3,7 +3,7 @@ import os
 # путь к фалу настроек
 path = "settings.ini"
 
-# функция создает базовый фал настроек
+# функция создает базовый файл настроек
 def createConfig():
     config = configparser.ConfigParser()
     config.add_section("email")
