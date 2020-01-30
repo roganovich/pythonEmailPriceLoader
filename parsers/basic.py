@@ -1,7 +1,6 @@
 # author Roganovich.R.M.
 import os
 from zipfile import ZipFile
-import patoolib
 import log
 from os.path import splitext
 import config
