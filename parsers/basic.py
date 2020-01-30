@@ -178,7 +178,7 @@ class Basic:
         if(hasattr(self, 'unity')):
             warhouse_id = str(self.unity[file])
         elif(hasattr(self, 'warhouse_id')):
-            warhouse_id = self.warhouse_id
+            warhouse_id = str(self.warhouse_id)
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
         # формируем имя дириктории файла результата
         resultPath = config.get("email",
