@@ -20,6 +20,7 @@ class Absparser(Basic):
 	parsertype = "zip"
 	# тип файла прайса
 	filetype = "csv"
+	fileEncoding = "utf-8"
 	# делитель CSV
 	delimiter = "\t"
 	# пупустить первую строку в файле

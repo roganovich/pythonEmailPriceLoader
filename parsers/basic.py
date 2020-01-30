@@ -201,7 +201,7 @@ class Basic:
         writer = csv.writer(resultFile, delimiter=self.delimiter)
         # создаем класс загрузчика
         loader = Loader(suppliers_id, warhouse_id)
-        with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
+        with open(filePath, 'r', newline='', encoding=self.fileEncoding) as file_obj:
             reader = csv.reader(file_obj, delimiter=self.delimiter)
             i = 0
             for row in reader:
