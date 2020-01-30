@@ -150,7 +150,7 @@ class MailLoader():
                     if (self.hascyrillic(email_from)):
                         email_from = self.translit(email_from)
                     log.print_r('Нашел письмо ' + email_subject + ' от ' + email_from)
-                    returnData.append({'mail':mail,'msg_id': email_msg_id, 'email_date': email_date, 'subject': email_subject,
+                    returnData.append({'uid':uid,'mail':mail,'msg_id': email_msg_id, 'email_date': email_date, 'subject': email_subject,
                                        'email_from': email_from, 'email_message':email_message})
 
 
