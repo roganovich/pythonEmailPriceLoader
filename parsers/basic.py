@@ -171,8 +171,6 @@ class Basic:
                 writer.writerows([colData])
             # loader.writerests(colData)
             resultFile.close()
-        log.print_r('Удаляю файл ' + filePath)
-        os.remove(filePath)
 
     # функция принимает путь файла, открывает его и работает построчно
     def csvReader(self, file):
