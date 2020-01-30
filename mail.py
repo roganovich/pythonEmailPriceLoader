@@ -7,24 +7,21 @@ import log
 import os
 import re
 import config
-from parsers.abs import Absparser
-from parsers.autoray import Autorayparser
-from parsers.autoeuro import Autoeuro
 
 # получаем настройки приложения
 config = config.getConfig()
 
 class MailLoader():
+    connect = ''
     # функция удаляет письмо из каталога
     def deleteEmail(self, email):
-        mail = email['mail']
         uid = email['uid']
         email_subject = email['email_subject']
         email_from = email['email_from']
         # перемещаем отработанные письма
-        copy_res =mail.copy(uid, 'Completed')
+        copy_res = self.connect.copy(uid, 'Completed')
         if copy_res[0] == 'OK':
-            mail.store(uid, '+FLAGS', '\\Deleted')
+            self.connect.store(uid, '+FLAGS', '\\Deleted')
         log.print_r('Удаляем письмо ' + email_subject + ' от ' + email_from)
 
     # функция подключения к почтовому ящику по imaplib
@@ -111,13 +108,13 @@ class MailLoader():
         server = config.get("email", "server")
         user = config.get("email", "user")
         password = config.get("email", "password")
-        mail = self.auth(server, user, password)
+        self.connect = self.auth(server, user, password)
         # получаем список каталогов
-        mail.list()
+        self.connect.list()
         # выбираем входящие
-        mail.select("Prices")
+        self.connect.select("Prices")
         # Получаем массив со списком найденных почтовых сообщений
-        result, data = mail.search(None, "ALL")
+        result, data = self.connect.search(None, "ALL")
         # Сохраняем в переменную ids строку с номерами писем
         mail_ids = data[0]
         # Получаем массив номеров писем
@@ -130,7 +127,7 @@ class MailLoader():
             return returnData
         # перебор всех писем
         for uid in id_list:
-            result, data = mail.fetch(uid, '(RFC822)')
+            result, data = self.connect.fetch(uid, '(RFC822)')
             for response_part in data:
                 if isinstance(response_part, tuple):
                     email_message = email.message_from_bytes(response_part[1])
@@ -150,16 +147,8 @@ class MailLoader():
                     if (self.hascyrillic(email_from)):
                         email_from = self.translit(email_from)
                     log.print_r('Нашел письмо ' + email_subject + ' от ' + email_from)
-                    returnData.append({'uid':uid,'mail':mail,'msg_id': email_msg_id, 'email_date': email_date, 'email_subject': email_subject,
+                    returnData.append({'uid':uid,'msg_id': email_msg_id, 'email_date': email_date, 'email_subject': email_subject,
                                        'email_from': email_from, 'email_message':email_message})
 
-
-
-        # удаляем письма помеченные флагом Deleted
-        # mail.expunge()
-        # закрываем соединение
-        mail.close()
-        mail.logout()
-        # возвращаем массив данных
         return returnData
 
