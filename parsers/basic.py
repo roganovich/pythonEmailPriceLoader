@@ -5,13 +5,11 @@ import log
 from os.path import splitext
 import config
 import datetime
-from unrar import rarfile
 import csv
 import xlrd
 from loader import Loader
 # получаем настройки приложения
 config = config.getConfig()
-
 class Basic:
 
     def __init__(self):
@@ -79,18 +77,7 @@ class Basic:
                 extension = splitext(findFile)
                 # если это архив распаковываем
                 if(extension[1] == ".rar"):
-
-
-                    rarpath = 'my_file.rar'
-                    rf = rarfile.RarFile(findFile)
-                    rf.extractall()
-
-                    # работа с архивом
-                    #rf = rarfile.RarFile(findFile)
-                    #rf.extractall(self.filePathExtract)
-                    #log.print_r('Распаковываю архив ' + findFile)
-                    #patoolib.extract_archive(archive=findFile, verbosity=0, outdir= self.filePathExtract, program = r"C:\UnrarDLL\x64\UnRAR64.dll")
-                    # удаляем архив после распаковки
+                    os.system("unrar e " + findFile + " " + self.filePathExtract)
                     os.remove(findFile)
 
 
