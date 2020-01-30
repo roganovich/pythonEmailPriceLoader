@@ -22,6 +22,8 @@ class MailLoader():
         copy_res = self.connect.copy(uid, 'Completed')
         if copy_res[0] == 'OK':
             self.connect.store(uid, '+FLAGS', '\\Deleted')
+        else:
+            log.print_r('Не удалось скопировать ' + email_subject + ' от ' + email_from)
         log.print_r('Удаляем письмо ' + email_subject + ' от ' + email_from)
 
     # функция подключения к почтовому ящику по imaplib

@@ -45,7 +45,7 @@ with profiler.Profiler() as p:
         # удаляем письмо
         mLoader.deleteEmail(email);
     # удаляем письма помеченные флагом Deleted
-    # mLoader.expunge()
+    mLoader.expunge()
     # закрываем соединение
     mLoader.connect.close()
     mLoader.connect.logout()
