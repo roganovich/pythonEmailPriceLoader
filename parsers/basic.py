@@ -30,6 +30,7 @@ class Basic:
                 # читаем построчно файл csv
                 if (self.filetype == "csv"):
                     self.csvReader(file)
+                log.print_r('Удаляю файл ' + filePath)
                 os.remove(filePath)
 
 
@@ -228,8 +229,6 @@ class Basic:
             # loader.writerests(colData)
 
             resultFile.close()
-        log.print_r('Удаляю файл ' + filePath)
-        os.remove(filePath)
 
     # проверка. нужно ли грузить это письмо. ищем каталог результата в котором учитываетьс дата, склад, поставщик
     def needToLoad(self, ):
