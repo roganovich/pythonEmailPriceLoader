@@ -170,6 +170,7 @@ class Basic:
 
     # функция принимает путь файла, открывает его и работает построчно
     def csvReader(self, file):
+        warhouse_id = 0
         filePath = self.filePathExtract + file
         log.print_r('Подготавливаю файл ' + filePath)
         # открываем файл результата
@@ -180,6 +181,11 @@ class Basic:
                 warhouse_id = str(self.unity[file])
         elif(hasattr(self, 'warhouse_id')):
             warhouse_id = str(self.warhouse_id)
+
+        if(warhouse_id == 0):
+            log.print_r('Не нашел склад для загрузки')
+            return False
+
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
         # формируем имя дириктории файла результата
         resultPath = config.get("email",
