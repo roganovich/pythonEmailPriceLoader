@@ -175,7 +175,10 @@ class Basic:
         # открываем файл результата
         # формируем имя файла результата для этого поставщика
         suppliers_id = str(self.suppliers_id)
-        warhouse_id = str(self.unity[file])
+        if(self.unity):
+            warhouse_id = str(self.unity[file])
+        else:
+            warhouse_id = self.warhouse_id
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
         # формируем имя дириктории файла результата
         resultPath = config.get("email",
