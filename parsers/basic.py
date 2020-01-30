@@ -176,7 +176,8 @@ class Basic:
         # формируем имя файла результата для этого поставщика
         suppliers_id = str(self.suppliers_id)
         if(hasattr(self, 'unity')):
-            warhouse_id = str(self.unity[file])
+            if(file in self.unity):
+                warhouse_id = str(self.unity[file])
         elif(hasattr(self, 'warhouse_id')):
             warhouse_id = str(self.warhouse_id)
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
