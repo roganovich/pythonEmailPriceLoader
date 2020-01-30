@@ -5,6 +5,7 @@ import email
 import base64
 import log
 import os
+import re
 import config
 from parsers.abs import Absparser
 from parsers.autoray import Autorayparser
@@ -43,11 +44,16 @@ class MailLoader():
     # функция проверяет строку на кодировку base64(ей кодируют кирилицу)
     def hascyrillic(self, s):
         #=?utf-8?B?0YLQtdGB0YI=?=
-        return True if "?utf-8?B?" in s else False
+        return True if "?B?" in s else False
 
     # функция декодирует base64 в кирилицу
     def translit(self, s):
-        alpha = '=?utf-8?B'
+        if "?utf-8?B?" in s:
+            alpha = '=?utf-8?B'
+            char = 'utf-8'
+        elif "?windows-1251?B?" in s:
+            alpha = '=?windows-1251?B?'
+            char = 'windows-1251'
         bravo = '?='
         startpos = s.find(alpha) + len(alpha)
         endpos = s.find(bravo, startpos)
@@ -56,7 +62,7 @@ class MailLoader():
         #subjectutf8 = s[10:-2]
         ru_text_base = base64.b64decode(cirilic)
         # переводит тему в русский язык
-        ru_text = str(ru_text_base,'utf-8')
+        ru_text = str(ru_text_base,char)
         return ru_text
 
     # скачивания файла
@@ -74,11 +80,13 @@ class MailLoader():
                     filename = self.translit(filename)
                 # проверяем на наличие имени у файла
                 if filename:
+                    # очищаем имя файла от мусора
+                    clearName = re.sub(r'[^A-Za-z.]', '', filename)
                     # путь к сохранения файла
-                    filePath = path + filename
+                    filePath = path + clearName
                     # если этот файл уже есть удалить
                     if os.path.exists(filePath):
-                        log.print_r('Удаляем ' + filePath)
+                        log.print_r('Удаляем старый файл ' + filePath)
                         os.remove(filePath)
                     # открываем файл для записи
                     with open(filePath, 'wb') as new_file:
