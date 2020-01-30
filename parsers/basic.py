@@ -1,10 +1,15 @@
 # author Roganovich.R.M.
 import os
 from zipfile import ZipFile
+import patoolib
 import log
 from os.path import splitext
 import config
 import datetime
+from unrar import rarfile
+import csv
+import xlrd
+from loader import Loader
 # получаем настройки приложения
 config = config.getConfig()
 
@@ -12,6 +17,19 @@ class Basic:
 
     def __init__(self):
         self.prepareDir()
+
+    # функция работы с файлами
+    def workWidthFiles(self):
+        # находим все файлы прайсов в каталоге парсера поставщика
+        files = os.listdir(self.filePathExtract)
+        # перебираем все найденные файлы
+        for file in files:
+            # читаем построчно файл xls
+            if(self.filetype == "xls"):
+                self.xlsReader(file)
+            # читаем построчно файл csv
+            if (self.filetype == "csv"):
+                self.csvReader(file)
 
     # очистка мусора из каталога
     def clearDir(self):
@@ -41,12 +59,43 @@ class Basic:
         # если не существует дириктории создаем ее
         if (not os.path.exists(self.filePathExtract)):
             os.mkdir(self.filePathExtract)
-        # распаковываем архивы
-        self.zipdir()
+
+        if(self.parsertype == "zip"):
+            # распаковываем zip архивы
+            self.zipdir()
+        if (self.parsertype == "rar"):
+            # распаковываем rar архивы
+            self.unrardir()
         # работаем с файлами цен
         self.workWidthFiles()
 
-    # функция распаковки архива
+    # функция распаковки rar архива
+    def unrardir(self):
+        files = os.listdir(self.filePathExtract)
+        for file in files:
+            # получаем полный путь к файлу
+            findFile = self.filePathExtract + file
+            if os.path.exists(findFile):
+                # находим extension  файла
+                extension = splitext(findFile)
+                # если это архив распаковываем
+                if(extension[1] == ".rar"):
+
+
+                    rarpath = 'my_file.rar'
+                    rf = rarfile.RarFile(findFile)
+                    rf.extractall()
+
+                    # работа с архивом
+                    #rf = rarfile.RarFile(findFile)
+                    #rf.extractall(self.filePathExtract)
+                    #log.print_r('Распаковываю архив ' + findFile)
+                    #patoolib.extract_archive(archive=findFile, verbosity=0, outdir= self.filePathExtract, program = r"C:\UnrarDLL\x64\UnRAR64.dll")
+                    # удаляем архив после распаковки
+                    os.remove(findFile)
+
+
+    # функция распаковки zip архива
     def zipdir(self):
         # проходим все архивы из письма и распаковываем их
         files = os.listdir(self.filePathExtract)
@@ -73,3 +122,123 @@ class Basic:
         for key in self.colums:
             data.append(row[self.colums[key]])
         return data
+
+    # функция принимает путь файла, открывает его и работает построчно
+    def xlsReader(self, file):
+        # получаем путь нахождения файла
+        filePath = self.filePathExtract + file
+        log.print_r('Подготавливаю файл ' + filePath)
+        # открываем файл результата
+
+        # формируем имя файла результата для этого поставщика
+        suppliers_id = str(self.suppliers_id)
+        warhouse_id = str(self.warhouse_id)
+        dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
+        resultPath = config.get("email",
+                                "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
+
+        # имя файла
+        resultFileName = "price.csv"
+        # если не существует дириктории создаем ее
+        if (not os.path.exists(resultPath)):
+            log.print_r('Создаю директорию ' + resultPath)
+            os.makedirs(resultPath)
+        # путь к записи файла
+        resultFilePath = resultPath + resultFileName
+
+        # если не существует дириктории результатов создаем ее
+        if not os.path.exists(config.get("email", "resultsFolder")):
+            os.mkdir(config.get("email", "resultsFolder"))
+        # очищаем файл результата
+        if os.path.exists(resultFilePath):
+            os.remove(resultFilePath)
+
+        # начинаем работать с xls
+        rb = xlrd.open_workbook(filePath, formatting_info=True)
+        # открываем книгу
+        sheet = rb.sheet_by_index(0)
+
+        # открываем файл результата
+        resultFile = open(resultFilePath, 'a', newline='', encoding='utf-8')
+        writer = csv.writer(resultFile, delimiter=self.delimiter)
+        # создаем класс загрузчика
+        loader = Loader(suppliers_id, warhouse_id)
+        with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
+            reader = csv.reader(file_obj, delimiter=self.delimiter)
+            i = 0
+            for row in range(sheet.nrows):
+                i = i + 1
+                # пропускаем первую строку
+                if (self.firstLine == True and i == 1):
+                    continue
+                # берем столбцы строки
+                rowData = sheet.row_values(row)
+                # берем из строки только нужные столбцы
+                colData = self.prepareColumns(rowData)
+                # записываем в файл результата
+                writer.writerows([colData])
+            # loader.writerests(colData)
+            resultFile.close()
+        log.print_r('Удаляю файл ' + filePath)
+        os.remove(filePath)
+
+        # функция принимает путь файла, открывает его и работает построчно
+        def csvReader(self, file):
+            filePath = self.filePathExtract + file
+            log.print_r('Подготавливаю файл ' + filePath)
+            # открываем файл результата
+            # формируем имя файла результата для этого поставщика
+            suppliers_id = str(self.suppliers_id)
+            warhouse_id = str(self.unity[file])
+            dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
+            # формируем имя дириктории файла результата
+            resultPath = config.get("email",
+                                    "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
+            # имя файла
+            resultFileName = "price.csv"
+            # если не существует дириктории создаем ее
+            if (not os.path.exists(resultPath)):
+                log.print_r('Создаю директорию ' + resultPath)
+                os.makedirs(resultPath)
+            # путь к записи файла
+            resultFilePath = resultPath + resultFileName
+            # если не существует дириктории результатов создаем ее
+            if not os.path.exists(config.get("email", "resultsFolder")):
+                os.mkdir(config.get("email", "resultsFolder"))
+            # очищаем файл результата
+            if os.path.exists(resultFilePath):
+                os.remove(resultFilePath)
+            resultFile = open(resultFilePath, 'a', newline='', encoding='utf-8')
+            writer = csv.writer(resultFile, delimiter=self.delimiter)
+            # создаем класс загрузчика
+            loader = Loader(suppliers_id, warhouse_id)
+            with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
+                reader = csv.reader(file_obj, delimiter=self.delimiter)
+                i = 0
+                for row in reader:
+                    i = i + 1
+                    # пропускаем первую строку
+                    if (self.firstLine == True and i == 1):
+                        continue
+                    # берем из строки только нужные столбцы
+                    colData = self.prepareColumns(row)
+                    # записываем в файл результата
+                    writer.writerows([colData])
+                # loader.writerests(colData)
+
+                resultFile.close()
+            log.print_r('Удаляю файл ' + filePath)
+            os.remove(filePath)
+
+    # проверка. нужно ли грузить это письмо. ищем каталог результата в котором учитываетьс дата, склад, поставщик
+    def needToLoad(self, ):
+        if os.path.exists(self.defGetResultFolder()):
+            return False
+        return True
+
+    # получаем названия парсера, она же папка для регультата
+    def getParserPath(self):
+        self.clearDir()
+        return self.filePathExtract
+
+

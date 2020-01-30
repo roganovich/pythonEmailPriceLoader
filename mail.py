@@ -8,43 +8,23 @@ import os
 import config
 from parsers.abs import Absparser
 from parsers.autoray import Autorayparser
+from parsers.autoeuro import Autoeuro
 
 # получаем настройки приложения
 config = config.getConfig()
 
 class MailLoader():
     # функция удаляет письмо из каталога
-    def deleteEmail(self, mail, uid, email_subject, email_from):
+    def deleteEmail(self, email):
+        mail = email['mail']
+        uid = email['uid']
+        email_subject = email['email_subject']
+        email_from = email['email_from']
         # перемещаем отработанные письма
-        copy_res = mail.copy(uid, 'Completed')
+        copy_res =mail.copy(uid, 'Completed')
         if copy_res[0] == 'OK':
             mail.store(uid, '+FLAGS', '\\Deleted')
         log.print_r('Удаляем письмо ' + email_subject + ' от ' + email_from)
-
-    # проверка. нужно ли грузить это письмо. ищем каталог результата в котором учитываетьс дата, склад, поставщик
-    def needToLoad(self, mail_subject,email_from):
-        if "ABS-AUTO" in mail_subject:
-            obj = Absparser()
-            if os.path.exists(obj.defGetResultFolder()):
-                return False
-        if "pricekrd@auto-ray.com" in email_from:
-            obj = Autorayparser()
-            if os.path.exists(obj.defGetResultFolder()):
-                return False
-        return True
-
-    # получаем названия парсера, она же папка для регультата
-    def getParserPath(self, mail_subject,email_from):
-        if "ABS-AUTO" in mail_subject:
-            obj = Absparser()
-            # очистка мусора из каталога
-            obj.clearDir()
-            return obj.filePathExtract
-        if "pricekrd@auto-ray.com" in email_from:
-            obj = Autorayparser()
-            # очистка мусора из каталога
-            obj.clearDir()
-            return obj.filePathExtract
 
     # функция подключения к почтовому ящику по imaplib
     def auth(self, server, username, password):
@@ -95,7 +75,7 @@ class MailLoader():
                 # проверяем на наличие имени у файла
                 if filename:
                     # путь к сохранения файла
-                    filePath = path + "/" + filename
+                    filePath = path + filename
                     # если этот файл уже есть удалить
                     if os.path.exists(filePath):
                         log.print_r('Удаляем ' + filePath)
@@ -112,8 +92,11 @@ class MailLoader():
         # возвращаем массив с новыми файлами
         return files
 
+    def prepareMsg(self,data):
+        print()
+
     # выполняем подключение
-    def getemail(self):
+    def getemails(self):
         # будем возвращать массив данных
         returnData = []
             # настройки подключения
@@ -133,34 +116,12 @@ class MailLoader():
         id_list = mail_ids.split()
         # кол-во писем в ящике
         mail_coun = len(id_list)
+
         # если нет новых писем возвращаем пустой массив
         if(mail_coun == 0):
             return returnData
-        # Задаем переменную latest_email_id, значением которой будет номер первого письма
-        first_email_id = id_list[0]
-        # Задаем переменную latest_email_id, значением которой будет номер последнего письма
-        latest_email_id = id_list[-1]
-        # Получаем письмо с идентификатором latest_email_id (последнее письмо).
-        result, data = mail.fetch(latest_email_id, "(RFC822)")
-        # В переменную raw_email заносим необработанное письмо
-        raw_email = data[0][1]
-        # Переводим текст письма в кодировку UTF-8 и сохраняем в переменную raw_email_string
-        raw_email_string = raw_email.decode('UTF-8')
-        # Получаем заголовки и тело письма и заносим результат в переменную email_message.
-        email_message = email.message_from_string(raw_email_string)
-        # кому отправлено письмо
-        email_to = email_message['To']
-        # от кого отправлено письмо
-        email_from = email.utils.parseaddr(email_message['From'])
-        # дата отправки письма
-        email_date = email_message['Date']
-        # тема письма
-        email_subject = email_message['Subject']
-        # идентификатор письма
-        email_msg_id = email_message['Message-Id']
         # перебор всех писем
         for uid in id_list:
-            # need str(i)
             result, data = mail.fetch(uid, '(RFC822)')
             for response_part in data:
                 if isinstance(response_part, tuple):
@@ -180,25 +141,14 @@ class MailLoader():
                         email_subject = self.translit(email_subject)
                     if (self.hascyrillic(email_from)):
                         email_from = self.translit(email_from)
-                    # журнал
                     log.print_r('Нашел письмо ' + email_subject + ' от ' + email_from)
-                    if(self.needToLoad(email_subject,email_from) == False):
-                        # удаляем письмо
-                        self.deleteEmail(mail, uid, email_subject, email_from);
-                        log.print_r('Этот прайс уже загружали сегодня')
-                        continue
-                    # скачивания файла
-                    #получаем путь сохранения файла из письма
-                    path = self.getParserPath(email_subject,email_from)
-                    # получаем файлы вложенные в письмо
-                    files = self.downloadAttachment(email_message,path)
-                    # заполняем массив данных
-                    returnData.append({'msg_id':email_msg_id, 'email_date':email_date, 'subject':email_subject, 'email_from': email_from, 'files':files})
-                    # удаляем письмо
-                    self.deleteEmail(mail, uid, email_subject, email_from);
+                    returnData.append({'mail':mail,'msg_id': email_msg_id, 'email_date': email_date, 'subject': email_subject,
+                                       'email_from': email_from, 'email_message':email_message})
+
+
 
         # удаляем письма помеченные флагом Deleted
-        mail.expunge()
+        # mail.expunge()
         # закрываем соединение
         mail.close()
         mail.logout()

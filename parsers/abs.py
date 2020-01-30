@@ -16,11 +16,14 @@ class Absparser(Basic):
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/ABS/"
+	# тип файла вложения
+	parsertype = "zip"
+	# тип файла прайса
+	filetype = "csv"
 	# делитель CSV
 	delimiter = "\t"
 	# пупустить первую строку в файле
 	firstLine = True
-
 	# в файле ['Артикул', 'Бренд', 'Окончательная цена', 'Количество', 'Наименование номенклатуры', 'Полный артикул']
 	# сопостовляем колонки в файле с назначениями полей
 	colums ={"art": 0, "bra": 1, "price": 2, "quality": 3, "desc": 4, "art_sup":5}
@@ -43,18 +46,8 @@ class Absparser(Basic):
 		"ABS_Stolica_100_CS.txt":"122",
 	}
 
-	# функция работы с файлами
-	def workWidthFiles(self):
-		# находим все файлы прайсов в каталоге парсера поставщика
-		files = os.listdir(self.filePathExtract)
-		for file in files:
-			# проверяем файл по массиву соответствия
-			if(file in self.unity):
-				# читаем построчно файл
-				self.csvReader(file)
-
 	# функция принимает путь файла, открывает его и работает построчно
-	def csvReader(self,file):
+	def csvReader(self, file):
 		filePath = self.filePathExtract + file
 		log.print_r('Подготавливаю файл ' + filePath)
 		# открываем файл результата
@@ -63,11 +56,12 @@ class Absparser(Basic):
 		warhouse_id = str(self.unity[file])
 		dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
 		# формируем имя дириктории файла результата
-		resultPath = config.get("email", "resultsFolder")+ '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
+		resultPath = config.get("email",
+								"resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
 		# имя файла
 		resultFileName = "price.csv"
 		# если не существует дириктории создаем ее
-		if(not os.path.exists(resultPath)):
+		if (not os.path.exists(resultPath)):
 			log.print_r('Создаю директорию ' + resultPath)
 			os.makedirs(resultPath)
 		# путь к записи файла
@@ -78,7 +72,7 @@ class Absparser(Basic):
 		# очищаем файл результата
 		if os.path.exists(resultFilePath):
 			os.remove(resultFilePath)
-		resultFile = open(resultFilePath, 'a',newline='', encoding='utf-8')
+		resultFile = open(resultFilePath, 'a', newline='', encoding='utf-8')
 		writer = csv.writer(resultFile, delimiter=self.delimiter)
 		# создаем класс загрузчика
 		loader = Loader(suppliers_id, warhouse_id)
@@ -88,17 +82,19 @@ class Absparser(Basic):
 			for row in reader:
 				i = i + 1
 				# пропускаем первую строку
-				if(self.firstLine == True and i == 1):
+				if (self.firstLine == True and i == 1):
 					continue
 				# берем из строки только нужные столбцы
 				colData = self.prepareColumns(row)
 				# записываем в файл результата
 				writer.writerows([colData])
-				#loader.writerests(colData)
+			# loader.writerests(colData)
 
 			resultFile.close()
 		log.print_r('Удаляю файл ' + filePath)
-		os.remove(filePath)			
+		os.remove(filePath)
+
+
 
 
 

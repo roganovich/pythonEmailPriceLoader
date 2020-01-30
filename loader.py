@@ -1,7 +1,7 @@
 import log
 import os
 import config
-import psycopg2
+#import psycopg2
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -15,7 +15,8 @@ class Loader:
 
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
-		conn = psycopg2.connect(dbname=config.get("pgconfig","dbname"), user=config.get("pgconfig","user"),password=config.get("pgconfig","password"), host=config.get("pgconfig","host"))
+		return True
+		#conn = psycopg2.connect(dbname=config.get("pgconfig","dbname"), user=config.get("pgconfig","user"),password=config.get("pgconfig","password"), host=config.get("pgconfig","host"))
 		cursor = conn.cursor()
 		
 		# ищем бренд
