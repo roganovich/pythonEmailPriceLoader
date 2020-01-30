@@ -152,7 +152,7 @@ class Basic:
 
         # открываем файл результата
         resultFile = open(resultFilePath, 'a', newline='', encoding='utf-8')
-        writer = csv.writer(resultFile, delimiter=self.delimiter)
+        writer = csv.writer(resultFile, delimiter='\t')
         # создаем класс загрузчика
         loader = Loader(suppliers_id, warhouse_id)
         with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:

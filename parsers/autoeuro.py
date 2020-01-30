@@ -18,7 +18,7 @@ class Autoeuro(Basic):
 	# путь к каталогу с файлами
 	filePathExtract = "files/Autoeuro/"
 	# делитель CSV
-	delimiter = "\t"
+	delimiter = ";"
 	# пупустить первую строку в файле
 	firstLine = True
 	# тип файла вложения
