@@ -14,7 +14,7 @@ config = config.getConfig()
 
 # определяем каким парсером обрабатывать данные из письмо
 def checkParser(email):
-    if "ABS-AUTO" in email['subject']:
+    if "ABS-AUTO" in email['email_subject']:
         return Absparser()
     if "pricekrd@auto-ray.com" in email['email_from']:
         return Autorayparser()
