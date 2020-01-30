@@ -21,12 +21,17 @@ class Basic:
         files = os.listdir(self.filePathExtract)
         # перебираем все найденные файлы
         for file in files:
-            # читаем построчно файл xls
-            if(self.filetype == "xls"):
-                self.xlsReader(file)
-            # читаем построчно файл csv
-            if (self.filetype == "csv"):
-                self.csvReader(file)
+            # получаем путь нахождения файла
+            filePath = self.filePathExtract + file
+            if os.path.exists(filePath):
+                # читаем построчно файл xls
+                if(self.filetype == "xls"):
+                    self.xlsReader(file)
+                # читаем построчно файл csv
+                if (self.filetype == "csv"):
+                    self.csvReader(file)
+                os.remove(filePath)
+
 
     # очистка мусора из каталога
     def clearDir(self):
