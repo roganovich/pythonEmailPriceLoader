@@ -33,7 +33,7 @@ with profiler.Profiler() as p:
         obj = checkParser(email)
         if (obj.needToLoad() == False):
             # удаляем письмо
-            obj.deleteEmail();
+            mLoader.deleteEmail(email);
             log.print_r('Этот прайс уже загружали сегодня')
             continue
         # скачивания файла
