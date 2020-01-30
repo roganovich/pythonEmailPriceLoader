@@ -175,9 +175,9 @@ class Basic:
         # открываем файл результата
         # формируем имя файла результата для этого поставщика
         suppliers_id = str(self.suppliers_id)
-        if(self.unity):
+        if(hasattr(self, 'unity')):
             warhouse_id = str(self.unity[file])
-        else:
+        elif(hasattr(self, 'warhouse_id')):
             warhouse_id = self.warhouse_id
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
         # формируем имя дириктории файла результата
