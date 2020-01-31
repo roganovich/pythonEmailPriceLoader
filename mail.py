@@ -75,10 +75,10 @@ class MailLoader():
                 if part.get('Content-Disposition') is None:
                     continue
                 filename = part.get_filename()
-                if (self.hascyrillic(filename)):
-                    filename = self.translit(filename)
                 # проверяем на наличие имени у файла
                 if filename:
+                    if (self.hascyrillic(filename)):
+                        filename = self.translit(filename)
                     # очищаем имя файла от мусора
                     clearName = re.sub(r'[^A-Za-z.]', '', filename)
                     # путь к сохранения файла
