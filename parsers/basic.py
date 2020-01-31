@@ -220,7 +220,7 @@ class Basic:
             for row in reader:
                 i = i + 1
                 # пропускаем первую строку
-                if (self.firstLine == True and i == 1):
+                if (self.clearLine  and i <= self.firstLine):
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(row)
