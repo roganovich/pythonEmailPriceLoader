@@ -1,5 +1,6 @@
 # author Roganovich.R.M.
 import os
+import sys
 from zipfile import ZipFile
 import log
 from os.path import splitext
@@ -10,6 +11,8 @@ import xlrd
 from loader import Loader
 # получаем настройки приложения
 config = config.getConfig()
+# устанавливаем максимальную длину строки csv
+csv.field_size_limit(sys.maxsize)
 class Basic:
 
     def __init__(self):
