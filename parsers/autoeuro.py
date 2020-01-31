@@ -13,7 +13,7 @@ config = config.getConfig()
 class Autoeuro(Basic):
 	name = "Autoeuro"
 	suppliers_id = 65
-	warhouse_id = 125
+	warhouse_id = 92
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/Autoeuro/"
