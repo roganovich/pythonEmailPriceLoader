@@ -8,6 +8,7 @@ from mail import MailLoader
 from parsers.abs import Absparser
 from parsers.autoray import Autorayparser
 from parsers.autoeuro import Autoeuro
+from parsers.focusauto import Focusauto
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -19,7 +20,9 @@ def checkParser(email):
     if "pricekrd@auto-ray.com" in email['email_from']:
         return Autorayparser()
     if "ae@autoeuro.ru" in email['email_from']:
-        return  Autoeuro()
+        return Autoeuro()
+    if "no-reply@fokus-auto.com" in email['email_from']:
+        return Focusauto()
 
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:

@@ -7,13 +7,13 @@ import config
 # получаем настройки приложения
 config = config.getConfig()
 
-class Autorayparser(Basic):
-	name = "Autoray"
-	suppliers_id = 89
-	warhouse_id = 125
+class Focusauto(Basic):
+	name = "Focusauto"
+	suppliers_id = 129
+	warhouse_id = 196
 	data = []
 	# путь к каталогу с файлами
-	filePathExtract = "files/Autoray/"
+	filePathExtract = "files/Focusauto/"
 	# пупустить первую строку в файле
 	firstLine = True
 	# тип файла вложения
@@ -24,7 +24,7 @@ class Autorayparser(Basic):
 
 	# в файле [КатНомер	Наименование	Производитель	Применяемость	Кроссы	Цена	Наличие]
 	# сопостовляем колонки в файле с назначениями полей
-	colums = {"art": 0, "bra": 2, "price": 5, "quality": 6, "desc":1, "art_sup":0}
+	colums = {"art": 0, "bra": 1, "price": 4, "quality": 3, "desc":2, "art_sup":0}
 
 
 
