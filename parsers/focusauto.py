@@ -14,8 +14,8 @@ class Focusauto(Basic):
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/Focusauto/"
-	# пупустить первую строку в файле
-	firstLine = True
+	# пупустить строк в файле
+	clearLine = 3
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса

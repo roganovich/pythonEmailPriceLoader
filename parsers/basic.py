@@ -163,7 +163,7 @@ class Basic:
             for row in range(sheet.nrows):
                 i = i + 1
                 # пропускаем первую строку
-                if (self.firstLine == True and i == 1):
+                if (self.clearLine and i <= self.clearLine):
                     continue
                 # берем столбцы строки
                 rowData = sheet.row_values(row)
@@ -211,7 +211,7 @@ class Basic:
         if os.path.exists(resultFilePath):
             os.remove(resultFilePath)
         resultFile = open(resultFilePath, 'a', newline='', encoding='utf-8')
-        writer = csv.writer(resultFile, delimiter=self.delimiter)
+        writer = csv.writer(resultFile, delimiter='\t')
         # создаем класс загрузчика
         loader = Loader(suppliers_id, warhouse_id)
         with open(filePath, 'r', newline='', encoding=self.fileEncoding) as file_obj:

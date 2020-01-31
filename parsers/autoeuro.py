@@ -19,8 +19,8 @@ class Autoeuro(Basic):
 	filePathExtract = "files/Autoeuro/"
 	# делитель CSV
 	delimiter = ";"
-	# пупустить первую строку в файле
-	firstLine = True
+	# пупустить строк в файле
+	clearLine = 1
 	# тип файла вложения
 	parsertype = "rar"
 	# тип файла прайса
