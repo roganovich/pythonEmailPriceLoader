@@ -143,6 +143,12 @@ class MailLoader():
                     email_subject = email_message['Subject']
                     # идентификатор письма
                     email_msg_id = email_message['Message-Id']
+                    if(not email_subject):
+                        log.print_r('Плохое письмо: нет email_subject')
+                        continue
+                    if (not email_from):
+                        log.print_r('Плохое письмо: нет email_from')
+                        continue
                     # проверяем кирилицу
                     if(self.hascyrillic(email_subject)):
                         email_subject = self.translit(email_subject)
