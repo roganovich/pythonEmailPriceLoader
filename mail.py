@@ -134,15 +134,15 @@ class MailLoader():
                 if isinstance(response_part, tuple):
                     email_message = email.message_from_bytes(response_part[1])
                     # кому отправлено письмо
-                    email_to = email_message['To']
+                    email_to = str(email_message['To'])
                     # от кого отправлено письмо  #email.utils.parseaddr
-                    email_from = email_message['From']
+                    email_from = str(email_message['From'])
                     # дата отправки письма
-                    email_date = email_message['Date']
+                    email_date = str(email_message['Date'])
                     # тема письма
-                    email_subject = email_message['Subject']
+                    email_subject = str(email_message['Subject'])
                     # идентификатор письма
-                    email_msg_id = email_message['Message-Id']
+                    email_msg_id = str(email_message['Message-Id'])
                     if(not email_subject):
                         log.print_r('Плохое письмо: нет email_subject')
                         continue
