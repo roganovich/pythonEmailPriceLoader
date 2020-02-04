@@ -19,7 +19,7 @@ class Basic:
         self.prepareDir()
 
     # корневая директория
-    dirname = os.path.dirname(__file__)
+    basePath = ""
 
     # функция работы с файлами
     def workWidthFiles(self):
@@ -61,15 +61,16 @@ class Basic:
 
     # подготавливаем базовые директории
     def prepareDir(self):
+        self.basePath = config.get("path", "_DIR_")
         # если не существует дириктории создаем ее
-        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         if (not os.path.exists(filePathExtract)):
             os.mkdir(filePathExtract)
 
     # начинаем загрузку файла
     def upload(self):
         # если не существует дириктории создаем ее
-        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         if (not os.path.exists(filePathExtract)):
             os.mkdir(filePathExtract)
 
@@ -84,7 +85,7 @@ class Basic:
 
     # функция распаковки rar архива
     def unrardir(self):
-        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         files = os.listdir(filePathExtract)
         for file in files:
             # получаем полный путь к файлу
@@ -101,7 +102,7 @@ class Basic:
     # функция распаковки zip архива
     def zipdir(self):
         # проходим все архивы из письма и распаковываем их
-        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         files = os.listdir(filePathExtract)
         for file in files:
             # получаем полный путь к файлу
@@ -130,7 +131,7 @@ class Basic:
     # функция принимает путь файла, открывает его и работает построчно
     def xlsReader(self, file):
         # получаем путь нахождения файла
-        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
         log.print_r('Подготавливаю файл ' + filePath)
         # открываем файл результата
@@ -141,7 +142,7 @@ class Basic:
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
         resultPath = config.get("email",
                                 "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
-        resultPath = os.path.join(self.dirname, resultPath)
+        resultPath = os.path.join(self.basePath, resultPath)
         # имя файла
         resultFileName = "price.csv"
         # если не существует дириктории создаем ее
@@ -206,7 +207,7 @@ class Basic:
         # формируем имя дириктории файла результата
         resultPath = config.get("email",
                                 "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
-        resultPath = os.path.join(self.dirname, resultPath)
+        resultPath = os.path.join(self.basePath, resultPath)
         # имя файла
         resultFileName = "price.csv"
         # если не существует дириктории создаем ее
@@ -250,7 +251,7 @@ class Basic:
     # получаем названия парсера, она же папка для регультата
     def getParserPath(self):
         self.clearDir()
-        path = os.path.join(self.dirname, self.filePathExtract)
+        path = os.path.join(self.basePath, self.filePathExtract)
         return path
 
 
