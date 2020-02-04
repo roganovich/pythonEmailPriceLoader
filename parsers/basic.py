@@ -24,7 +24,7 @@ class Basic:
     # функция работы с файлами
     def workWidthFiles(self):
         # находим все файлы прайсов в каталоге парсера поставщика
-        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         files = os.listdir(filePathExtract)
         # перебираем все найденные файлы
         for file in files:
