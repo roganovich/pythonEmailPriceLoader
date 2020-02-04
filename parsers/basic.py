@@ -44,7 +44,7 @@ class Basic:
     # очистка мусора из каталога
     def clearDir(self):
         # очищаем папку от мусора
-        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         files = os.listdir(filePathExtract)
         for file in files:
             # получаем полный путь к файлу
