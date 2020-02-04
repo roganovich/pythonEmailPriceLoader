@@ -1,7 +1,12 @@
 import configparser
 import os
+
+# имя файла настроек
+filesettingsname = "settings.ini"
+# корневая директория
+dirname = os.path.dirname(__file__)
 # путь к фалу настроек
-path = "/settings.ini"
+path = os.path.join(dirname, filesettingsname)
 
 # функция создает базовый файл настроек
 def createConfig():

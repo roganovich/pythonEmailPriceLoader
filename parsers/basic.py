@@ -18,14 +18,18 @@ class Basic:
     def __init__(self):
         self.prepareDir()
 
+    # корневая директория
+    dirname = os.path.dirname(__file__)
+
     # функция работы с файлами
     def workWidthFiles(self):
         # находим все файлы прайсов в каталоге парсера поставщика
-        files = os.listdir(self.filePathExtract)
+        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        files = os.listdir(filePathExtract)
         # перебираем все найденные файлы
         for file in files:
             # получаем путь нахождения файла
-            filePath = self.filePathExtract + file
+            filePath = filePathExtract + file
             if os.path.exists(filePath):
                 # читаем построчно файл xls
                 if(self.filetype == "xls"):
@@ -40,10 +44,11 @@ class Basic:
     # очистка мусора из каталога
     def clearDir(self):
         # очищаем папку от мусора
-        files = os.listdir(self.filePathExtract)
+        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        files = os.listdir(filePathExtract)
         for file in files:
             # получаем полный путь к файлу
-            findFile = self.filePathExtract + file
+            findFile = filePathExtract + file
             if os.path.exists(findFile):
                 log.print_r("Удаляю " + findFile)
                 os.remove(findFile)
@@ -57,14 +62,16 @@ class Basic:
     # подготавливаем базовые директории
     def prepareDir(self):
         # если не существует дириктории создаем ее
-        if (not os.path.exists(self.filePathExtract)):
-            os.mkdir(self.filePathExtract)
+        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        if (not os.path.exists(filePathExtract)):
+            os.mkdir(filePathExtract)
 
     # начинаем загрузку файла
     def upload(self):
         # если не существует дириктории создаем ее
-        if (not os.path.exists(self.filePathExtract)):
-            os.mkdir(self.filePathExtract)
+        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        if (not os.path.exists(filePathExtract)):
+            os.mkdir(filePathExtract)
 
         if(self.parsertype == "zip"):
             # распаковываем zip архивы
@@ -77,26 +84,28 @@ class Basic:
 
     # функция распаковки rar архива
     def unrardir(self):
-        files = os.listdir(self.filePathExtract)
+        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        files = os.listdir(filePathExtract)
         for file in files:
             # получаем полный путь к файлу
-            findFile = self.filePathExtract + file
+            findFile = filePathExtract + file
             if os.path.exists(findFile):
                 # находим extension  файла
                 extension = splitext(findFile)
                 # если это архив распаковываем
                 if(extension[1] == ".rar"):
-                    os.system("unrar e " + findFile + " " + self.filePathExtract)
+                    os.system("unrar e " + findFile + " " + filePathExtract)
                     os.remove(findFile)
 
 
     # функция распаковки zip архива
     def zipdir(self):
         # проходим все архивы из письма и распаковываем их
-        files = os.listdir(self.filePathExtract)
+        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        files = os.listdir(filePathExtract)
         for file in files:
             # получаем полный путь к файлу
-            findFile = self.filePathExtract + file
+            findFile = filePathExtract + file
             if os.path.exists(findFile):
                 # находим extension  файла
                 extension = splitext(findFile)
@@ -105,7 +114,7 @@ class Basic:
                     # работа с архивом
                     zip = ZipFile(findFile)
                     log.print_r('Распаковываю архив ' + findFile)
-                    zip.extractall(self.filePathExtract)
+                    zip.extractall(filePathExtract)
                     zip.close()
                     # удаляем архив после распаковки
                     os.remove(findFile)
@@ -121,7 +130,8 @@ class Basic:
     # функция принимает путь файла, открывает его и работает построчно
     def xlsReader(self, file):
         # получаем путь нахождения файла
-        filePath = self.filePathExtract + file
+        filePathExtract = os.path.join(self.dirname, self.filePathExtract)
+        filePath = filePathExtract + file
         log.print_r('Подготавливаю файл ' + filePath)
         # открываем файл результата
 
@@ -131,7 +141,7 @@ class Basic:
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
         resultPath = config.get("email",
                                 "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
-
+        resultPath = os.path.join(self.dirname, resultPath)
         # имя файла
         resultFileName = "price.csv"
         # если не существует дириктории создаем ее
@@ -196,6 +206,7 @@ class Basic:
         # формируем имя дириктории файла результата
         resultPath = config.get("email",
                                 "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
+        resultPath = os.path.join(self.dirname, resultPath)
         # имя файла
         resultFileName = "price.csv"
         # если не существует дириктории создаем ее
@@ -239,6 +250,7 @@ class Basic:
     # получаем названия парсера, она же папка для регультата
     def getParserPath(self):
         self.clearDir()
-        return self.filePathExtract
+        path = os.path.join(self.dirname, self.filePathExtract)
+        return path
 
 

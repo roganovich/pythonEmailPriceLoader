@@ -12,6 +12,9 @@ import config
 config = config.getConfig()
 
 class MailLoader():
+    # корневая директория
+    dirname = os.path.dirname(__file__)
+
     connect = ''
     # функция удаляет письмо из каталога
     def deleteEmail(self, email):
