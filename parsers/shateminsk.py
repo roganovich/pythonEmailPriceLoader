@@ -13,6 +13,8 @@ class Shateminsk(Basic):
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/Shateminsk/"
+	# делитель CSV
+	delimiter = ";"
 	# пупустить строк в файле
 	clearLine = 1
 	# тип файла вложения

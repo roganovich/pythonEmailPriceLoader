@@ -13,6 +13,8 @@ class Shatepodolsk(Basic):
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/Shatepodolsk/"
+	# делитель CSV
+	delimiter = ";"
 	# пупустить строк в файле
 	clearLine = 1
 	# тип файла вложения
