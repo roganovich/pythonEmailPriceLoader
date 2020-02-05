@@ -47,7 +47,7 @@ class MailLoader():
     # функция проверяет строку на кодировку base64(ей кодируют кирилицу)
     def hascyrillic(self, s):
         #=?utf-8?B?0YLQtdGB0YI=?=
-        return True if "?B?" in s else False
+        return True if "=?" in s else False
 
     # функция декодирует base64 в кирилицу
     def translit(self, s):
