@@ -21,7 +21,7 @@ class Shateminsk(Basic):
 	parsertype = "zip"
 	# тип файла прайса
 	filetype = "csv"
-	fileEncoding = "utf-8"
+	fileEncoding = "windows-1251"
 
 	# в файле [КатНомер	Наименование	Производитель	Применяемость	Кроссы	Цена	Наличие]
 	# сопостовляем колонки в файле с назначениями полей
