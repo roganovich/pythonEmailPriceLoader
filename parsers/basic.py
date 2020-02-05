@@ -57,7 +57,9 @@ class Basic:
         # формируем имя файла результата для этого поставщика
         suppliers_id = str(self.suppliers_id)
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
-        return config.get("email", "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/'
+        path = config.get("email", "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/'
+        result = os.path.join(self.basePath, path)
+        return result
 
     # подготавливаем базовые директории
     def prepareDir(self):
