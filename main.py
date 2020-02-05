@@ -9,6 +9,8 @@ from parsers.abs import Absparser
 from parsers.autoray import Autorayparser
 from parsers.autoeuro import Autoeuro
 from parsers.focusauto import Focusauto
+from parsers.shatem import Shatem
+
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -23,6 +25,9 @@ def checkParser(email):
         return Autoeuro()
     if "no-reply@fokus-auto.com" in email['email_from']:
         return Focusauto()
+    if "prices_export@shate-m.com" in email['email_from']:
+        if "Склад Подольск" in email['email_subject']:
+         return Shatem()
 
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:
