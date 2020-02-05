@@ -51,17 +51,20 @@ class MailLoader():
 
     # функция декодирует base64 в кирилицу
     def translit(self, s):
-        if "=?utf-8" in s:
+        if "=?utf-8?B?" in s:
             alpha = '=?utf-8?B'
             char = 'utf-8'
-        elif "=?UTF-8" in s:
+        elif "=?UTF-8?B?" in s:
             alpha = '=?UTF-8?B?'
             char = 'utf-8'
-        elif "=?windows-1251" in s:
+        elif "=?windows-1251?B?" in s:
             alpha = '=?windows-1251?B?'
             char = 'windows-1251'
-        elif "=?WINDOWS-1251" in s:
+        elif "=?WINDOWS-1251?B?" in s:
             alpha = '=?WINDOWS-1251?B?'
+            char = 'windows-1251'
+        elif "=?WINDOWS-1251?Q?" in s:
+            alpha = '=?WINDOWS-1251?Q?'
             char = 'windows-1251'
         bravo = '?='
         startpos = s.find(alpha) + len(alpha)
