@@ -188,7 +188,9 @@ class Basic:
     # функция принимает путь файла, открывает его и работает построчно
     def csvReader(self, file):
         warhouse_id = 0
-        filePath = self.filePathExtract + file
+        # находим все файлы прайсов в каталоге парсера поставщика
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
+        filePath = filePathExtract + file
         log.print_r('Подготавливаю файл ' + filePath)
         # открываем файл результата
         # формируем имя файла результата для этого поставщика
