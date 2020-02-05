@@ -3,6 +3,7 @@
 import imaplib
 import email
 import base64
+import quopri
 import log
 import os
 import re
@@ -54,28 +55,35 @@ class MailLoader():
         if "=?utf-8?B?" in s:
             alpha = '=?utf-8?B'
             char = 'utf-8'
+            type = 'base64'
         elif "=?UTF-8?B?" in s:
             alpha = '=?UTF-8?B?'
             char = 'utf-8'
+            type = 'base64'
         elif "=?windows-1251?B?" in s:
             alpha = '=?windows-1251?B?'
             char = 'windows-1251'
+            type = 'base64'
         elif "=?windows-1251?Q?" in s:
             alpha = '=?WINDOWS-1251?Q?'
             char = 'windows-1251'
+            type = 'quopri'
         elif "=?WINDOWS-1251?B?" in s:
             alpha = '=?WINDOWS-1251?B?'
             char = 'windows-1251'
+            type = 'base64'
         elif "=?WINDOWS-1251?Q?" in s:
             alpha = '=?WINDOWS-1251?Q?'
             char = 'windows-1251'
+            type = 'quopri'
         bravo = '?='
-        startpos = s.find(alpha) + len(alpha)
-        endpos = s.find(bravo, startpos)
-        cirilic = s[startpos:endpos]
         # обрезаем лишние символы
-        #subjectutf8 = s[10:-2]
-        ru_text_base = base64.b64decode(cirilic)
+        cirilic = s.replace(alpha,'')
+        cirilic = cirilic.replace(bravo, '')
+        if(type == 'base64'):
+            ru_text_base = base64.b64decode(cirilic)
+        if(type == 'quopri'):
+            ru_text_base = quopri.decodestring(cirilic)
         # переводит тему в русский язык
         ru_text = str(ru_text_base,char)
         return ru_text
