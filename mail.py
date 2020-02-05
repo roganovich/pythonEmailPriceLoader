@@ -42,6 +42,7 @@ class MailLoader():
         except:
             # журнал
             log.print_r("Не удалось подключиться к " + username)
+            log.print_r(imap.lastErrorText())
             exit()
 
     # функция проверяет строку на кодировку base64(ей кодируют кирилицу)
