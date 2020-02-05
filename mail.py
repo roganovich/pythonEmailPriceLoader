@@ -60,6 +60,9 @@ class MailLoader():
         elif "=?windows-1251?B?" in s:
             alpha = '=?windows-1251?B?'
             char = 'windows-1251'
+        elif "=?windows-1251?Q?" in s:
+            alpha = '=?WINDOWS-1251?Q?'
+            char = 'windows-1251'
         elif "=?WINDOWS-1251?B?" in s:
             alpha = '=?WINDOWS-1251?B?'
             char = 'windows-1251'
