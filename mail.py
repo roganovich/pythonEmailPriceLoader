@@ -80,11 +80,7 @@ class MailLoader():
             s = s.replace('_', ' ')
         bravo = '?='
         # обрезаем лишние символы
-        cirilic = s.replace("\r", "")
-        cirilic = cirilic.replace("\n", "")
-        cirilic = cirilic.replace(alpha, '')
-        cirilic = cirilic.replace(bravo, '')
-
+        cirilic = s.replace(alpha, '').replace(bravo, '')
         if (type == 'base64'):
             ru_text_base = base64.b64decode(cirilic)
         if (type == 'quopri'):
