@@ -140,8 +140,7 @@ class Basic:
         suppliers_id = str(self.suppliers_id)
         warhouse_id = str(self.warhouse_id)
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
-        resultPath = config.get("email",
-                                "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
+        resultPath = config.get("email", "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
         resultPath = os.path.join(self.basePath, resultPath)
         # имя файла
         resultFileName = "price.csv"
@@ -152,9 +151,6 @@ class Basic:
         # путь к записи файла
         resultFilePath = resultPath + resultFileName
 
-        # если не существует дириктории результатов создаем ее
-        if not os.path.exists(config.get("email", "resultsFolder")):
-            os.mkdir(config.get("email", "resultsFolder"))
         # очищаем файл результата
         if os.path.exists(resultFilePath):
             os.remove(resultFilePath)
@@ -207,8 +203,7 @@ class Basic:
 
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
         # формируем имя дириктории файла результата
-        resultPath = config.get("email",
-                                "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
+        resultPath = config.get("email","resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
         resultPath = os.path.join(self.basePath, resultPath)
         # имя файла
         resultFileName = "price.csv"
@@ -218,9 +213,6 @@ class Basic:
             os.makedirs(resultPath)
         # путь к записи файла
         resultFilePath = resultPath + resultFileName
-        # если не существует дириктории результатов создаем ее
-        if not os.path.exists(config.get("email", "resultsFolder")):
-            os.mkdir(config.get("email", "resultsFolder"))
         # очищаем файл результата
         if os.path.exists(resultFilePath):
             os.remove(resultFilePath)
