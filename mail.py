@@ -65,27 +65,33 @@ class MailLoader():
             char = 'windows-1251'
             type = 'base64'
         elif "=?windows-1251?Q?" in s:
-            alpha = '=?WINDOWS-1251?Q?'
+            alpha = '=?windows-1251?Q?'
             char = 'windows-1251'
             type = 'quopri'
+            s = s.replace('_', ' ')
         elif "=?WINDOWS-1251?B?" in s:
             alpha = '=?WINDOWS-1251?B?'
             char = 'windows-1251'
             type = 'base64'
         elif "=?WINDOWS-1251?Q?" in s:
-            alpha = '=?WINDOWS-1251?Q?'
+            alpha = '=?windows-1251?Q?'
             char = 'windows-1251'
             type = 'quopri'
+            s = s.replace('_', ' ')
         bravo = '?='
         # обрезаем лишние символы
-        cirilic = s.replace(alpha,'')
+        cirilic = s.replace("\r", "")
+        cirilic = cirilic.replace("\n", "")
+        cirilic = cirilic.replace(alpha, '')
         cirilic = cirilic.replace(bravo, '')
-        if(type == 'base64'):
+
+        if (type == 'base64'):
             ru_text_base = base64.b64decode(cirilic)
-        if(type == 'quopri'):
+        if (type == 'quopri'):
             ru_text_base = quopri.decodestring(cirilic)
         # переводит тему в русский язык
-        ru_text = str(ru_text_base,char)
+        ru_text = str(ru_text_base, char)
+
         return ru_text
 
     # скачивания файла
