@@ -28,8 +28,7 @@ def checkParser(email):
         return Focusauto()
     if "prices_export@shate-m.com" in email['email_from']:
         if "Склад Подольск" in email['email_subject']:
-         return Shatepodolsk()
-    if "prices_export@shate-m.com" in email['email_from']:
+            return Shatepodolsk()
         if "Склад Минск" in email['email_subject']:
             return Shateminsk()
 

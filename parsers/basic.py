@@ -239,7 +239,7 @@ class Basic:
             resultFile.close()
 
     # проверка. нужно ли грузить это письмо. ищем каталог результата в котором учитываетьс дата, склад, поставщик
-    def needToLoad(self, ):
+    def needToLoad(self):
         if os.path.exists(self.defGetResultFolder()):
             return False
         return True
