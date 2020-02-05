@@ -6,13 +6,13 @@ import config
 # получаем настройки приложения
 config = config.getConfig()
 
-class Shatem(Basic):
-	name = "Shatem"
-	suppliers_id = 40
-	warhouse_id = 60
+class Shateminsk(Basic):
+	name = "Shateminsk"
+	suppliers_id = 56
+	warhouse_id = 59
 	data = []
 	# путь к каталогу с файлами
-	filePathExtract = "files/Shatem/"
+	filePathExtract = "files/Shateminsk/"
 	# пупустить строк в файле
 	clearLine = 1
 	# тип файла вложения
