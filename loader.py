@@ -13,8 +13,8 @@ class Loader:
 	# конструктор
 	def __init__(self, obj):
 		self.obj = obj
-		self.war_id= obj.war_id
-		self.sup_id = obj.sup_id
+		self.war_id= obj.warhouse_id
+		self.sup_id = obj.suppliers_id
 
 		dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
 		resultPath = config.get("email","resultsFolder") + '/' + dateCreate + '/' + self.sup_id + '/' + self.war_id + '/'
