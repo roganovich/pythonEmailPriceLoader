@@ -37,7 +37,8 @@ class Loader:
 		cursor = conn.cursor()
 		print(self)
 		dateCreate = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M"))
-		createtime = time.mktime(dateCreate)
+		ttuple = time.strptime(dateCreate, "%Y-%m-%d %H:%M")
+		createtime = time.mktime(ttuple)
 
 		columns = {self.email['email_from'],self.sup_id,self.war_id, createtime}
 		cursor.execute("INSERT INTO public.prices_file(prf_email_from, prf_sup_id, prf_war_id, prf_createtime)VALUES (%S, %S, %S, %S, %S, %S, %S, %S, %S)", (columns))
