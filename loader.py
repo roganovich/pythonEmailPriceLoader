@@ -40,7 +40,7 @@ class Loader:
 		ttuple = time.strptime(dateCreate, '%d/%m/%Y %H:%M')
 		createtime = time.mktime(ttuple)
 
-		columns = {self.email['email_from'],self.,self.war_id, createtime}
+		columns = {self.email['email_from'],self.sup_id,self.war_id, createtime}
 		cursor.execute("INSERT INTO public.prices_file(prf_email_from, prf_sup_id, prf_war_id, prf_createtime)VALUES (%S, %S, %S, %S, %S, %S, %S, %S, %S)", (columns))
 		conn.commit()
 		cursor.close()
