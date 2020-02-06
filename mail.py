@@ -79,8 +79,10 @@ class MailLoader():
             type = 'quopri'
             s = s.replace('_', ' ')
         bravo = '?='
+
         # обрезаем лишние символы
-        cirilic = s.replace(alpha, '').replace(bravo, '')
+        cirilic = s.replace("\r","").replace("\n","").replace(alpha, '').replace(bravo, '')
+
         if (type == 'base64'):
             ru_text_base = base64.b64decode(cirilic)
         if (type == 'quopri'):
@@ -88,6 +90,7 @@ class MailLoader():
         # переводит тему в русский язык
         ru_text = str(ru_text_base, char)
 
+  
         return ru_text
 
     # скачивания файла
@@ -178,8 +181,8 @@ class MailLoader():
                     # проверяем кирилицу
                     if(self.hascyrillic(email_subject)):
                         email_subject = self.translit(email_subject)
-                    if (self.hascyrillic(email_from)):
-                        email_from = self.translit(email_from)
+                    #if (self.hascyrillic(email_from)):
+                    #email_from = email_from
                     log.print_r('Нашел письмо ' + email_subject + ' от ' + email_from)
                     returnData.append({'uid':uid,'msg_id': email_msg_id, 'email_date': email_date, 'email_subject': email_subject,
                                        'email_from': email_from, 'email_message':email_message})
