@@ -15,7 +15,8 @@ config = config.getConfig()
 csv.field_size_limit(sys.maxsize)
 class Basic:
 
-    def __init__(self):
+    def __init__(self,email):
+        self.email = email
         self.prepareDir()
 
     # корневая директория
@@ -143,7 +144,7 @@ class Basic:
         warhouse_id = str(self.warhouse_id)
 
         # создаем класс загрузчика
-        loader = Loader(suppliers_id, warhouse_id)
+        loader = Loader(self)
         # начинаем работать с xls
         rb = xlrd.open_workbook(filePath, formatting_info=True)
         # открываем книгу

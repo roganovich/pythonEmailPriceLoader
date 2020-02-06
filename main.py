@@ -19,18 +19,18 @@ config = config.getConfig()
 # определяем каким парсером обрабатывать данные из письмо
 def checkParser(email):
     if "ABS-AUTO" in email['email_subject']:
-        return Absparser()
+        return Absparser(email)
     if "pricekrd@auto-ray.com" in email['email_from']:
-        return Autorayparser()
+        return Autorayparser(email)
     if "ae@autoeuro.ru" in email['email_from']:
-        return Autoeuro()
+        return Autoeuro(email)
     if "no-reply@fokus-auto.com" in email['email_from']:
-        return Focusauto()
+        return Focusauto(email)
     if "prices_export@shate-m.com" in email['email_from']:
         if "Склад Подольск" in email['email_subject']:
-            return Shatepodolsk()
+            return Shatepodolsk(email)
         if "Склад Минск" in email['email_subject']:
-            return Shateminsk()
+            return Shateminsk(email)
 
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:

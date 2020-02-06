@@ -2,6 +2,7 @@ import log
 import os
 import config
 import datetime
+import time
 import csv
 import psycopg2
 
@@ -10,9 +11,10 @@ config = config.getConfig()
 
 class Loader:
 	# конструктор
-	def __init__(self, war_id, sup_id):
-		self.war_id= war_id
-		self.sup_id = sup_id
+	def __init__(self, obj):
+		self.obj = obj
+		self.war_id= obj.war_id
+		self.sup_id = obj.sup_id
 
 		dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
 		resultPath = config.get("email","resultsFolder") + '/' + dateCreate + '/' + self.sup_id + '/' + self.war_id + '/'
@@ -27,6 +29,24 @@ class Loader:
 		# открываем файл результата
 		self.resultFile = open(self.resultFilePath, 'a', newline='', encoding='utf-8')
 		self.writer = csv.writer(self.resultFile, delimiter='\t')
+		self.createPricesFile()
+
+	# функция создает новую запись в prices_file
+	def createPricesFile(self):
+		conn = psycopg2.connect(dbname=config.get("pgconfig","dbname"), user=config.get("pgconfig","user"),password=config.get("pgconfig","password"), host=config.get("pgconfig","host"))
+		cursor = conn.cursor()
+		print(self)
+		dateCreate = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M"))
+		ttuple = time.strptime(dateCreate, '%d/%m/%Y %H:%M')
+		createtime = time.mktime(ttuple)
+
+		columns = {self.email['email_from'],self.,self.war_id, createtime}
+		cursor.execute("INSERT INTO public.prices_file(prf_email_from, prf_sup_id, prf_war_id, prf_createtime)VALUES (%S, %S, %S, %S, %S, %S, %S, %S, %S)", (columns))
+		conn.commit()
+		cursor.close()
+		conn.close()
+		print(createtime)
+		exit()
 
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
@@ -35,7 +55,7 @@ class Loader:
 		print(data)
 		exit()
 		columns = {}
-		cursor.execute("INSERT INTO public.parsertask(pt_date_start, pt_date_end, pt_param, pt_status, pt_src_id, pt_tmpfile, pt_table, pt_brand) VALUES (%S, %S, %S, %S, %S, %S, %S, %S, %S)", (columns))
+		cursor.execute("INSERT INTO public.prices_file(prf_id, prf_email_from, prf_sup_id, prf_war_id, prf_src_id, prf_createtime,prf_begintime, prf_endtime, status)VALUES (%S, %S, %S, %S, %S, %S, %S, %S, %S)", (columns))
 
 		# ищем бренд
 		find_brand_sql = "SELECT * FROM brands WHERE bra_name = '" + data[1] + "'"
