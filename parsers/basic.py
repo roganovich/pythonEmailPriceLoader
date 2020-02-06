@@ -141,32 +141,14 @@ class Basic:
         # формируем имя файла результата для этого поставщика
         suppliers_id = str(self.suppliers_id)
         warhouse_id = str(self.warhouse_id)
-        dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
-        resultPath = config.get("email", "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
-        resultPath = os.path.join(self.basePath, resultPath)
-        # имя файла
-        resultFileName = "price.csv"
-        # если не существует дириктории создаем ее
-        if (not os.path.exists(resultPath)):
-            log.print_r('Создаю директорию ' + resultPath)
-            os.makedirs(resultPath)
-        # путь к записи файла
-        resultFilePath = resultPath + resultFileName
 
-        # очищаем файл результата
-        if os.path.exists(resultFilePath):
-            os.remove(resultFilePath)
-
+        # создаем класс загрузчика
+        loader = Loader(suppliers_id, warhouse_id)
         # начинаем работать с xls
         rb = xlrd.open_workbook(filePath, formatting_info=True)
         # открываем книгу
         sheet = rb.sheet_by_index(0)
 
-        # открываем файл результата
-        resultFile = open(resultFilePath, 'a', newline='', encoding='utf-8')
-        writer = csv.writer(resultFile, delimiter='\t')
-        # создаем класс загрузчика
-        loader = Loader(suppliers_id, warhouse_id)
         with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
             i = 0
             for row in range(sheet.nrows):
@@ -178,10 +160,12 @@ class Basic:
                 rowData = sheet.row_values(row)
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(rowData)
+
+                # записываем в таблицу загрузки
+                loader.writerests(colData)
                 # записываем в файл результата
-                writer.writerows([colData])
-            # loader.writerests(colData)
-            resultFile.close()
+                loader.writer.writerows([colData])
+            loader.resultFile.close()
 
     # функция принимает путь файла, открывает его и работает построчно
     def csvReader(self, file):
@@ -202,24 +186,6 @@ class Basic:
         if(warhouse_id == 0):
             log.print_r('Не нашел склад для загрузки')
             return False
-
-        dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
-        # формируем имя дириктории файла результата
-        resultPath = config.get("email","resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/' + warhouse_id + '/'
-        resultPath = os.path.join(self.basePath, resultPath)
-        # имя файла
-        resultFileName = "price.csv"
-        # если не существует дириктории создаем ее
-        if (not os.path.exists(resultPath)):
-            log.print_r('Создаю директорию ' + resultPath)
-            os.makedirs(resultPath)
-        # путь к записи файла
-        resultFilePath = resultPath + resultFileName
-        # очищаем файл результата
-        if os.path.exists(resultFilePath):
-            os.remove(resultFilePath)
-        resultFile = open(resultFilePath, 'a', newline='', encoding='utf-8')
-        writer = csv.writer(resultFile, delimiter='\t')
         # создаем класс загрузчика
         loader = Loader(suppliers_id, warhouse_id)
         with open(filePath, 'r', newline='', encoding=self.fileEncoding) as file_obj:
@@ -232,11 +198,12 @@ class Basic:
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(row)
-                # записываем в файл результата
-                writer.writerows([colData])
-            # loader.writerests(colData)
 
-            resultFile.close()
+                # записываем в таблицу загрузки
+                loader.writerests(colData)
+                # записываем в файл результата
+                loader.writer.writerows([colData])
+            loader.resultFile.close()
 
     # проверка. нужно ли грузить это письмо. ищем каталог результата в котором учитываетьс дата, склад, поставщик
     def needToLoad(self):
