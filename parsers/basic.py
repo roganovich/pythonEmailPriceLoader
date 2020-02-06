@@ -19,9 +19,6 @@ class Basic:
         self.email = email
         self.prepareDir()
 
-    # корневая директория
-    basePath = ""
-
     # функция работы с файлами
     def workWidthFiles(self):
         # находим все файлы прайсов в каталоге парсера поставщика

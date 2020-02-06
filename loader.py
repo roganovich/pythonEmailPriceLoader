@@ -18,7 +18,7 @@ class Loader:
 
 		dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
 		resultPath = config.get("email","resultsFolder") + '/' + dateCreate + '/' + self.sup_id + '/' + self.war_id + '/'
-		self.file_path = os.path.join(self.basePath, resultPath)
+		self.file_path = os.path.join(self.obj.basePath, resultPath)
 		self.file_name = "price.csv"
 		# если не существует дириктории создаем ее
 		if (not os.path.exists(self.file_path)):
