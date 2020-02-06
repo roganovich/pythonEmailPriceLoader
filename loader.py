@@ -30,6 +30,8 @@ class Loader:
 		self.resultFile = open(self.resultFilePath, 'a', newline='', encoding='utf-8')
 		self.writer = csv.writer(self.resultFile, delimiter='\t')
 		self.createPricesFile()
+		self.conn = psycopg2.connect(dbname=config.get("pgconfig","dbname"), user=config.get("pgconfig","user"),password=config.get("pgconfig","password"), host=config.get("pgconfig","host"))
+		self.cursor = self.conn.cursor()
 
 	# функция создает новую запись в prices_file
 	def createPricesFile(self):
@@ -47,42 +49,11 @@ class Loader:
 
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
-		conn = psycopg2.connect(dbname=config.get("pgconfig","dbname"), user=config.get("pgconfig","user"),password=config.get("pgconfig","password"), host=config.get("pgconfig","host"))
-		cursor = conn.cursor()
-		print(self.prf_id)
-		print(data)
-		exit()
-		columns = {}
-		cursor.execute("INSERT INTO public.prices_file(prf_id, prf_email_from, prf_sup_id, prf_war_id, prf_src_id, prf_createtime,prf_begintime, prf_endtime, status)VALUES (%S, %S, %S, %S, %S, %S, %S, %S, %S)", (columns))
+		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s)")
+		data = (self.prf_id, data[0], data[1], data[2], data[3])
+		self.cursor.execute(query, data)
+		self.conn.commit()
 
-		# ищем бренд
-		find_brand_sql = "SELECT * FROM brands WHERE bra_name = '" + data[1] + "'"
-		print(find_brand_sql)
-		cursor.execute(find_brand_sql)
-		brand = cursor.fetchone()
-		bra_id = str(brand[0])
-		#print(brand)
-		# ищем артикул
-		find_article_sql = "SELECT * FROM articles WHERE art_bra_id = "+ bra_id +" AND art_article = '" + data[0] + "'"
-		print(find_article_sql)
-		cursor.execute(find_article_sql)
-		article = cursor.fetchone()
-		if(not article):
-			print('Не нашел '+ data[0] + ' '+ data[1])
-			exit()
-		art_id = str(article[0])
-		print(article)
-		#удаляем цены
-		delete_rests_sql = "DELETE * FROM prices WHERE prc_art_id = "+ art_id +" AND prc_sup_id = " + self.war_id
-		print(delete_rests_sql)
-
-
-		#удаляем остатки
-		delete_prices_sql = "DELETE FROM rests WHERE  rst_art_id = "+ art_id +" AND rst_war_id = " + self.sup_id
-		print(delete_rests_sql)
-		
-		conn.commit()
-		cursor.close()
-		conn.close()
-		
-		exit()
+	def closeWrite(self):
+		self.cursor.close()
+		self.conn.close()

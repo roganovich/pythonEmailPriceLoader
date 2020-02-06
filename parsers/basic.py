@@ -164,6 +164,7 @@ class Basic:
                 # записываем в файл результата
                 loader.writer.writerows([colData])
             loader.resultFile.close()
+            loader.closeWrite()
 
     # функция принимает путь файла, открывает его и работает построчно
     def csvReader(self, file):
@@ -202,6 +203,7 @@ class Basic:
                 # записываем в файл результата
                 loader.writer.writerows([colData])
             loader.resultFile.close()
+            loader.closeWrite()
 
     # проверка. нужно ли грузить это письмо. ищем каталог результата в котором учитываетьс дата, склад, поставщик
     def needToLoad(self):
