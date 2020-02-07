@@ -163,7 +163,6 @@ class Basic:
 
     # функция принимает путь файла, открывает его и работает построчно
     def csvReader(self, file):
-        warhouse_id = 0
         # находим все файлы прайсов в каталоге парсера поставщика
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
@@ -176,7 +175,7 @@ class Basic:
         elif(hasattr(self, 'warhouse_id')):
             self.warhouse_id = str(self.warhouse_id)
 
-        if(warhouse_id == 0):
+        if(self.warhouse_id == 0):
             log.print_r('Не нашел склад для загрузки')
             return False
         # создаем класс загрузчика
