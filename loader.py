@@ -5,6 +5,7 @@ import datetime
 import time
 import csv
 import psycopg2
+import re
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -49,8 +50,14 @@ class Loader:
 
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
+		prfc_prices_file_id = self.prf_id
+		prfc_brand = str(re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\s+]+', r'', data[0].strip()))
+		prfc_article = str(re.sub(r'[^0-9A-Za-z\s+]+', r'', data[1].strip()))
+		prfc_price = re.sub(r'[^0-9.]+', r'', data[2].strip().replace(',', '.'))
+		prfc_quality = round(re.sub(r'[^0-9.]+', r'', data[3].strip().replace(',', '.')))
+
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s)")
-		data = (self.prf_id, data[0], data[1], data[2], data[3])
+		data = (prfc_prices_file_id, prfc_brand, prfc_article, prfc_price, prfc_quality)
 		self.cursor.execute(query, data)
 		self.conn.commit()
 
