@@ -72,7 +72,7 @@ class Loader:
 		self.conn.commit()
 
 	# функция проверяет являетьс яли строка числом
-	def is_number(s):
+	def is_number(self,s):
 		if(s.isdigit()):
 			return True
 		else:
