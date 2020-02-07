@@ -41,8 +41,8 @@ class Loader:
 		cursor = conn.cursor()
 		#2020-02-04 11:30:12
 		createtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
-		query = ("INSERT INTO public.prices_file(prf_email_from, prf_sup_id, prf_war_id, prf_createtime)VALUES (%s, %s, %s, %s) RETURNING prf_id")
-		data = (self.obj.email['email_from'],self.sup_id,self.war_id, createtime)
+		query = ("INSERT INTO public.prices_file(prf_email_from, prf_sup_id, prf_war_id, prf_createtime, prf_begintime, status)VALUES (%s, %s, %s, %s, %s, %s) RETURNING prf_id")
+		data = (self.obj.email['email_from'],self.sup_id,self.war_id, createtime, createtime, 1)
 		cursor.execute(query, data)
 		self.prf_id = cursor.fetchone()[0]
 		conn.commit()
@@ -66,6 +66,12 @@ class Loader:
 		self.conn.commit()
 
 	def closeWrite(self):
+		endtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
+		query = ("UPDATE public.prices_file SET prf_endtime = '"+endtime+"', status = 3 WHERE	prf_id = "+ self.prf_id)
+		log.print_r(query)
+		log.print_r('Закончил загрузку файла в базу ' + config.get("pgconfig", "dbname"))
+		self.cursor.execute(query)
+
 		self.cursor.close()
 		self.conn.close()
 		log.print_r('Закрыл соединение с ' + config.get("pgconfig", "dbname"))
