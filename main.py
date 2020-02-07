@@ -53,7 +53,7 @@ with profiler.Profiler() as p:
         # получаем файлы вложенные в письмо
         files = mLoader.downloadAttachment(email['email_message'], path)
         # удаляем письмо
-        mLoader.deleteEmail(email);
+        #mLoader.deleteEmail(email);
         # загружаем файл в базу
         obj.upload()
     # удаляем письма помеченные флагом Deleted

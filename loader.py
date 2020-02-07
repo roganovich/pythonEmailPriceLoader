@@ -61,9 +61,13 @@ class Loader:
 		priceClaer = re.sub(r'[^0-9.]+', r'', data[2].strip().replace(',', '.'))
 		if(self.is_number(priceClaer)):
 			prfc_price = round(float(priceClaer),2)
+		else:
+			return False
 		qualityClaer = re.sub(r'[^0-9.]+', r'', data[3].strip().replace(',', '.'))
 		if (self.is_number(qualityClaer)):
 			prfc_quality = round(float(qualityClaer))
+		else:
+			return False
 
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s, %s)")
 		dataClear = (str(prfc_prices_file_id), str(prfc_brand), str(prfc_article), str(prfc_price), str(prfc_quality))
