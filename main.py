@@ -52,9 +52,10 @@ with profiler.Profiler() as p:
         path = obj.getParserPath()
         # получаем файлы вложенные в письмо
         files = mLoader.downloadAttachment(email['email_message'], path)
-        obj.upload()
         # удаляем письмо
         mLoader.deleteEmail(email);
+        # загружаем файл в базу
+        obj.upload()
     # удаляем письма помеченные флагом Deleted
     mLoader.connect.expunge()
     # закрываем соединение

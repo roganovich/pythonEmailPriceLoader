@@ -13,10 +13,18 @@ import config
 config = config.getConfig()
 
 class MailLoader():
-    # корневая директория
-    dirname = os.path.dirname(__file__)
 
-    connect = ''
+
+    def __init__(self):
+        # корневая директория
+        self.dirname = os.path.dirname(__file__)
+        # настройки подключения
+        server = config.get("email", "server")
+        user = config.get("email", "user")
+        password = config.get("email", "password")
+        self.connect = self.auth(server, user, password)
+
+
     # функция удаляет письмо из каталога
     def deleteEmail(self, email):
         uid = email['uid']
@@ -47,7 +55,6 @@ class MailLoader():
 
     # функция проверяет строку на кодировку base64(ей кодируют кирилицу)
     def hascyrillic(self, s):
-        #=?utf-8?B?0YLQtdGB0YI=?=
         return True if "=?" in s else False
 
     # функция декодирует base64 в кирилицу
@@ -135,11 +142,7 @@ class MailLoader():
     def getemails(self):
         # будем возвращать массив данных
         returnData = []
-            # настройки подключения
-        server = config.get("email", "server")
-        user = config.get("email", "user")
-        password = config.get("email", "password")
-        self.connect = self.auth(server, user, password)
+
         # получаем список каталогов
         self.connect.list()
         # выбираем входящие

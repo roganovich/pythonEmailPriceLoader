@@ -40,6 +40,7 @@ class Loader:
 		conn = psycopg2.connect(dbname=config.get("pgconfig","dbname"), user=config.get("pgconfig","user"),password=config.get("pgconfig","password"), host=config.get("pgconfig","host"))
 		cursor = conn.cursor()
 		#2020-02-04 11:30:12
+		# создаем ид файла загрузки
 		createtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
 		query = ("INSERT INTO public.prices_file(prf_email_from, prf_sup_id, prf_war_id, prf_createtime, prf_begintime, status)VALUES (%s, %s, %s, %s, %s, %s) RETURNING prf_id")
 		data = (self.obj.email['email_from'],self.sup_id,self.war_id, createtime, createtime, 1)
@@ -52,6 +53,7 @@ class Loader:
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
 		log.print_r(data)
+		# подготавливаем поля для записи
 		prfc_prices_file_id = self.prf_id
 		prfc_article = re.sub(r'[^0-9A-Za-z\s+]+', r'', data[0].strip())
 		prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\-\s+]+', r'', data[1].strip())
@@ -61,16 +63,18 @@ class Loader:
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s, %s)")
 		dataClear = (str(prfc_prices_file_id), str(prfc_brand), str(prfc_article), str(prfc_price), str(prfc_quality))
 		log.print_r(dataClear)
-		log.print_r('Идет запись в ' + config.get("pgconfig", "dbname")+'> '+', '.join([str(i) for i in dataClear]))
 		self.cursor.execute(query, dataClear)
 		self.conn.commit()
 
+	# функция закрывает соединение с БД
 	def closeWrite(self):
+		# меняем статус загрузки
 		endtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
 		query = "UPDATE public.prices_file SET prf_endtime = '"+endtime+"', status = 3 WHERE prf_id = " + str(self.prf_id)
 		log.print_r(query)
 		log.print_r('Закончил загрузку файла в базу ' + config.get("pgconfig", "dbname"))
 		self.cursor.execute(query)
+		self.conn.commit()
 
 		self.cursor.close()
 		self.conn.close()
