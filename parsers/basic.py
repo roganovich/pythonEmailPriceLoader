@@ -172,6 +172,8 @@ class Basic:
         if(hasattr(self, 'unity')):
             if(file in self.unity):
                 self.warhouse_id = str(self.unity[file])
+            else:
+                return False
         elif(hasattr(self, 'warhouse_id')):
             self.warhouse_id = str(self.warhouse_id)
 
