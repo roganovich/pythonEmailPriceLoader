@@ -59,7 +59,7 @@ class Loader:
 
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s)")
 		data = (prfc_prices_file_id, prfc_brand, prfc_article, prfc_price, prfc_quality)
-		log.print_r('Идет запись в ' + config.get("pgconfig", "dbname")+' '+prfc_prices_file_id+' '+prfc_brand+' '+prfc_article+' '+prfc_price+' '+prfc_quality)
+		log.print_r('Идет запись в ' + config.get("pgconfig", "dbname")+': '.join([str(i) for i in data]))
 		self.cursor.execute(query, data)
 		self.conn.commit()
 
