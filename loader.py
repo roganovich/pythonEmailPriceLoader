@@ -53,13 +53,13 @@ class Loader:
 	def writerests(self, data):
 		log.print_r(data)
 		prfc_prices_file_id = self.prf_id
-		prfc_brand = str(re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\s+]+', r'', data[0].strip()))
-		prfc_article = str(re.sub(r'[^0-9A-Za-z\s+]+', r'', data[1].strip()))
+		prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\s+]+', r'', data[0].strip())
+		prfc_article = re.sub(r'[^0-9A-Za-z\s+]+', r'', data[1].strip())
 		prfc_price = float(re.sub(r'[^0-9.]+', r'', data[2].strip().replace(',', '.')))
 		prfc_quality = round(float(re.sub(r'[^0-9.]+', r'', data[3].strip().replace(',', '.'))))
 
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s)")
-		dataClear = (prfc_prices_file_id, prfc_brand, prfc_article, prfc_price, prfc_quality)
+		dataClear = (str(prfc_prices_file_id), str(prfc_brand), str(prfc_article), str(prfc_price), str(prfc_quality))
 		log.print_r(dataClear)
 		log.print_r('Идет запись в ' + config.get("pgconfig", "dbname")+': '.join([str(i) for i in dataClear]))
 		self.cursor.execute(query, dataClear)
