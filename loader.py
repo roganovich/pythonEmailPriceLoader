@@ -67,7 +67,7 @@ class Loader:
 
 	def closeWrite(self):
 		endtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
-		query = "UPDATE public.prices_file SET prf_endtime = '"+endtime+"', status = 3 WHERE prf_id = " + self.prf_id
+		query = "UPDATE public.prices_file SET prf_endtime = '"+endtime+"', status = 3 WHERE prf_id = " + str(elf.prf_id)
 		log.print_r(query)
 		log.print_r('Закончил загрузку файла в базу ' + config.get("pgconfig", "dbname"))
 		self.cursor.execute(query)
