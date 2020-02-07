@@ -58,7 +58,7 @@ class Loader:
 		prfc_price = float(re.sub(r'[^0-9.]+', r'', data[2].strip().replace(',', '.')))
 		prfc_quality = round(float(re.sub(r'[^0-9.]+', r'', data[3].strip().replace(',', '.'))))
 
-		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, '%s', '%s', %s, %s)")
+		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s, %s)")
 		dataClear = (str(prfc_prices_file_id), str(prfc_brand), str(prfc_article), str(prfc_price), str(prfc_quality))
 		log.print_r(dataClear)
 		log.print_r('Идет запись в ' + config.get("pgconfig", "dbname")+'> '+', '.join([str(i) for i in dataClear]))
