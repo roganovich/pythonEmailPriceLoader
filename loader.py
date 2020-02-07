@@ -53,8 +53,8 @@ class Loader:
 	def writerests(self, data):
 		log.print_r(data)
 		prfc_prices_file_id = self.prf_id
-		prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\-\s+]+', r'', data[0].strip())
-		prfc_article = re.sub(r'[^0-9A-Za-z\s+]+', r'', data[1].strip())
+		prfc_article = re.sub(r'[^0-9A-Za-z\s+]+', r'', data[0].strip())
+		prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\-\s+]+', r'', data[1].strip())
 		prfc_price = float(re.sub(r'[^0-9.]+', r'', data[2].strip().replace(',', '.')))
 		prfc_quality = round(float(re.sub(r'[^0-9.]+', r'', data[3].strip().replace(',', '.'))))
 
