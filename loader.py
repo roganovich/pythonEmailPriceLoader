@@ -51,6 +51,7 @@ class Loader:
 
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
+		log.print_r(data)
 		prfc_prices_file_id = self.prf_id
 		prfc_brand = str(re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\s+]+', r'', data[0].strip()))
 		prfc_article = str(re.sub(r'[^0-9A-Za-z\s+]+', r'', data[1].strip()))
@@ -58,9 +59,10 @@ class Loader:
 		prfc_quality = round(float(re.sub(r'[^0-9.]+', r'', data[3].strip().replace(',', '.'))))
 
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s)")
-		data = (prfc_prices_file_id, prfc_brand, prfc_article, prfc_price, prfc_quality)
-		log.print_r('Идет запись в ' + config.get("pgconfig", "dbname")+': '.join([str(i) for i in data]))
-		self.cursor.execute(query, data)
+		dataClear = (prfc_prices_file_id, prfc_brand, prfc_article, prfc_price, prfc_quality)
+		log.print_r(dataClear)
+		log.print_r('Идет запись в ' + config.get("pgconfig", "dbname")+': '.join([str(i) for i in dataClear]))
+		self.cursor.execute(query, dataClear)
 		self.conn.commit()
 
 	def closeWrite(self):
