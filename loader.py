@@ -57,14 +57,30 @@ class Loader:
 		prfc_prices_file_id = self.prf_id
 		prfc_article = re.sub(r'[^0-9A-Za-z\s+]+', r'', data[0].strip())
 		prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\-\s+]+', r'', data[1].strip())
-		prfc_price = float(re.sub(r'[^0-9.]+', r'', data[2].strip().replace(',', '.')))
-		prfc_quality = round(float(re.sub(r'[^0-9.]+', r'', data[3].strip().replace(',', '.'))))
+
+		priceClaer = re.sub(r'[^0-9.]+', r'', data[2].strip().replace(',', '.'))
+		if(self.is_number(priceClaer)):
+			prfc_price = round(float(priceClaer),2)
+		qualityClaer = re.sub(r'[^0-9.]+', r'', data[3].strip().replace(',', '.'))
+		if (self.is_number(qualityClaer)):
+			prfc_quality = round(float(qualityClaer))
 
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s, %s)")
 		dataClear = (str(prfc_prices_file_id), str(prfc_brand), str(prfc_article), str(prfc_price), str(prfc_quality))
 		log.print_r(dataClear)
 		self.cursor.execute(query, dataClear)
 		self.conn.commit()
+
+	# функция проверяет являетьс яли строка числом
+	def is_number(s):
+		if(s.isdigit()):
+			return True
+		else:
+			try:
+				float(s)
+				return True
+			except ValueError:
+				return False
 
 	# функция закрывает соединение с БД
 	def closeWrite(self):
