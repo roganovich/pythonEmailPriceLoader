@@ -33,6 +33,7 @@ class Loader:
 		self.createPricesFile()
 		self.conn = psycopg2.connect(dbname=config.get("pgconfig","dbname"), user=config.get("pgconfig","user"),password=config.get("pgconfig","password"), host=config.get("pgconfig","host"))
 		self.cursor = self.conn.cursor()
+		log.print_r('Открыл соединение с '+config.get("pgconfig","dbname"))
 
 	# функция создает новую запись в prices_file
 	def createPricesFile(self):
@@ -58,9 +59,11 @@ class Loader:
 
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s)")
 		data = (prfc_prices_file_id, prfc_brand, prfc_article, prfc_price, prfc_quality)
+		log.print_r('Идет запись в ' + config.get("pgconfig", "dbname") + ' '  + data)
 		self.cursor.execute(query, data)
 		self.conn.commit()
 
 	def closeWrite(self):
 		self.cursor.close()
 		self.conn.close()
+		log.print_r('Закрыл соединение с ' + config.get("pgconfig", "dbname"))
