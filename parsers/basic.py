@@ -134,11 +134,6 @@ class Basic:
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
         log.print_r('Подготавливаю файл ' + filePath)
-        # открываем файл результата
-
-        # формируем имя файла результата для этого поставщика
-        suppliers_id = str(self.suppliers_id)
-        warhouse_id = str(self.warhouse_id)
 
         # создаем класс загрузчика
         loader = Loader(self)
@@ -175,12 +170,11 @@ class Basic:
         log.print_r('Подготавливаю файл ' + filePath)
         # открываем файл результата
         # формируем имя файла результата для этого поставщика
-        suppliers_id = str(self.suppliers_id)
         if(hasattr(self, 'unity')):
             if(file in self.unity):
-                warhouse_id = str(self.unity[file])
+                self.warhouse_id = str(self.unity[file])
         elif(hasattr(self, 'warhouse_id')):
-            warhouse_id = str(self.warhouse_id)
+            self.warhouse_id = str(self.warhouse_id)
 
         if(warhouse_id == 0):
             log.print_r('Не нашел склад для загрузки')
