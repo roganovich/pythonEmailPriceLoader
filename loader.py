@@ -50,8 +50,7 @@ class Loader:
 		cursor.close()
 		conn.close()
 
-	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
-	def writerests(self, data):
+	def validate(self, data):
 		log.print_r(data)
 		# подготавливаем поля для записи
 		prfc_prices_file_id = self.prf_id
@@ -59,8 +58,8 @@ class Loader:
 		prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\-\s+]+', r'', data[1].strip())
 
 		priceClaer = re.sub(r'[^0-9.]+', r'', data[2].strip().replace(',', '.'))
-		if(self.is_number(priceClaer)):
-			prfc_price = round(float(priceClaer),2)
+		if (self.is_number(priceClaer)):
+			prfc_price = round(float(priceClaer), 2)
 		else:
 			return False
 		qualityClaer = re.sub(r'[^0-9.]+', r'', data[3].strip().replace(',', '.'))
@@ -69,11 +68,16 @@ class Loader:
 		else:
 			return False
 
+		return {'prfc_prices_file_id':str(prfc_prices_file_id),'prfc_article':str(prfc_article),'prfc_brand':str(prfc_brand),'prfc_price':str(prfc_price),'prfc_quality':str(prfc_quality)}
+
+	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
+	def writerests(self, data):
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s, %s)")
-		dataClear = (str(prfc_prices_file_id), str(prfc_brand), str(prfc_article), str(prfc_price), str(prfc_quality))
+		dataClear = (data.prfc_prices_file_id, data.prfc_brand, data.prfc_article, data.prfc_price, data.prfc_quality)
 		log.print_r(dataClear)
 		self.cursor.execute(query, dataClear)
 		self.conn.commit()
+		return True
 
 	# функция проверяет являетьс яли строка числом
 	def is_number(self,s):

@@ -154,10 +154,13 @@ class Basic:
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(rowData)
 
-                # записываем в таблицу загрузки
-                loader.writerests(colData)
-                # записываем в файл результата
-                loader.writer.writerows([colData])
+                # проверяем данные
+                clearData = loader.validate(colData)
+                if(clearData):
+                    # записываем в таблицу загрузки
+                    loader.writerests(clearData)
+                    # записываем в файл результата
+                    loader.writer.writerows([clearData])
             loader.resultFile.close()
             loader.closeWrite()
 
