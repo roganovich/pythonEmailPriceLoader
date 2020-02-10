@@ -128,7 +128,7 @@ class Basic:
             # проверяем на наличие ключа в списке колонок строки
             try:
                 d = row[self.colums[key]]
-            except ValueError:
+            except IndexError:
                 d = '-'
             data.append(d)
         return data
