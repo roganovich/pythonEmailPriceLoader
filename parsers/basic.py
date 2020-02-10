@@ -125,11 +125,12 @@ class Basic:
         data = []
         # берем из строки только нужные столбцы
         for key in self.colums:
-            value = self.colums[key]
-            if value in row:
-                data.append(row[value])
-            else:
-                data.append('-')
+            # проверяем на наличие ключа в списке колонок строки
+            try:
+                d = row[self.colums[key]]
+            except ValueError:
+                d = '-'
+            data.append(d)
         return data
 
     # функция принимает путь файла, открывает его и работает построчно
