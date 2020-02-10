@@ -128,6 +128,8 @@ class Basic:
             value = self.colums[key]
             if value in row:
                 data.append(row[value])
+            else:
+                data.append('-')
         return data
 
     # функция принимает путь файла, открывает его и работает построчно
@@ -158,6 +160,8 @@ class Basic:
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(rowData)
+                if (len(colData) < 5):
+                    continue
                 # проверяем данные
                 clearData = loader.validate(colData)
                 if(clearData):
@@ -201,6 +205,8 @@ class Basic:
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(row)
+                if (len(colData) < 5):
+                    continue
                 # проверяем данные
                 clearData = loader.validate(colData)
                 if(clearData):
