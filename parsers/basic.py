@@ -125,8 +125,9 @@ class Basic:
         data = []
         # берем из строки только нужные столбцы
         for key in self.colums:
-            if key in self.colums:
-                data.append(row[self.colums[key]])
+            value = self.colums[key]
+            if value in row:
+                data.append(row[value])
         return data
 
     # функция принимает путь файла, открывает его и работает построчно
@@ -153,7 +154,7 @@ class Basic:
 
                 # берем столбцы строки
                 rowData = sheet.row_values(row)
-                if (not rowData):
+                if(len(rowData) <5):
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(rowData)
@@ -196,7 +197,7 @@ class Basic:
                 # пропускаем первую строку
                 if (self.clearLine  and i <= self.clearLine):
                     continue
-                if(not row):
+                if(len(row) <5):
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(row)
