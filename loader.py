@@ -100,6 +100,10 @@ class Loader:
 		log.print_r('Закончил загрузку файла в базу ' + config.get("pgconfig", "dbname"))
 		self.cursor.execute(query)
 		self.conn.commit()
+		# обновляем счетчики прайсов
+		countSQL = "UPDATE public.prices_file SET prf_count=(SELECT count(prfc_id)  FROM public.prices_file_col where prfc_prices_file_id = prf_id)"
+		self.cursor.execute(countSQL)
+		self.conn.commit()
 
 		self.cursor.close()
 		self.conn.close()
