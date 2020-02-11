@@ -169,7 +169,7 @@ class Basic:
                     # записываем в таблицу загрузки
                     #loader.writerests(clearData)
                     # записываем в файл результата
-                    loader.writer.writerows([clearData])
+                    loader.writer.writerows([clearData.values()])
             loader.resultFile.close()
             loader.closeWrite()
 
@@ -214,7 +214,7 @@ class Basic:
                     # записываем в таблицу загрузки
                     #loader.writerests(clearData)
                     # записываем в файл результата
-                    loader.writer.writerows([clearData])
+                    loader.writer.writerows([clearData.values()])
             loader.resultFile.close()
             loader.closeWrite()
 
