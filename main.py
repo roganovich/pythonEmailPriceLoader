@@ -12,6 +12,10 @@ from parsers.focusauto import Focusauto
 from parsers.shatepodolk import Shatepodolsk
 from parsers.shateminsk import Shateminsk
 
+from parsers.autopartner import Autopartner
+from parsers.kyariz import Kyariz
+from parsers.variant import Variant
+
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -31,6 +35,12 @@ def checkParser(email):
             return Shatepodolsk(email)
         if "Склад Минск" in email['email_subject']:
             return Shateminsk(email)
+    if "Авто-Партнер" in email['email_subject']:
+        return Autopartner(email)
+    if "Остатки Kyariz" in email['email_subject']:
+        return Kyariz(email)
+    if "Прайс-лист ВАРИАНТ" in email['email_subject']:
+        return Variant(email)
 
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:
@@ -52,8 +62,6 @@ with profiler.Profiler() as p:
         path = obj.getParserPath()
         # получаем файлы вложенные в письмо
         files = mLoader.downloadAttachment(email['email_message'], path)
-        # удаляем письмо
-        mLoader.deleteEmail(email);
         # загружаем файл в базу
         obj.upload()
     # удаляем письма помеченные флагом Deleted

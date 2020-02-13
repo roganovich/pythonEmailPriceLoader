@@ -2,9 +2,8 @@ import log
 import os
 import config
 import datetime
-import time
 import csv
-import psycopg2
+#import psycopg2
 import re
 
 # получаем настройки приложения

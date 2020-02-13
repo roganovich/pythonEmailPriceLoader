@@ -115,10 +115,13 @@ class MailLoader():
                 if filename:
                     if (self.hascyrillic(filename)):
                         filename = self.translit(filename)
+
+
                     # очищаем имя файла от мусора
-                    clearName = re.sub(r'[^A-Za-z.]', '', filename)
+                    clearName = re.sub(r'[^A-Za-zА-я0-9.\s]', '', filename)
                     # путь к сохранения файла
                     filePath = path + clearName
+
                     # если этот файл уже есть удалить
                     if os.path.exists(filePath):
                         log.print_r('Удаляем старый файл ' + filePath)

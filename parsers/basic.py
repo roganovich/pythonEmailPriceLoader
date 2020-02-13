@@ -7,7 +7,8 @@ from os.path import splitext
 import config
 import datetime
 import csv
-import xlrd
+#import xlrd
+import openpyxl
 from loader import Loader
 # получаем настройки приложения
 config = config.getConfig()
@@ -31,6 +32,8 @@ class Basic:
             if os.path.exists(filePath):
                 # читаем построчно файл xls
                 if(self.filetype == "xls"):
+                    self.xlsReader(file)
+                if (self.filetype == "xlsx"):
                     self.xlsReader(file)
                 # читаем построчно файл csv
                 if (self.filetype == "csv"):
@@ -64,6 +67,7 @@ class Basic:
         self.basePath = config.get("path", "_DIR_")
         # если не существует дириктории создаем ее
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
+
         if (not os.path.exists(filePathExtract)):
             os.mkdir(filePathExtract)
 
@@ -135,43 +139,62 @@ class Basic:
 
     # функция принимает путь файла, открывает его и работает построчно
     def xlsReader(self, file):
+
         # получаем путь нахождения файла
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
         log.print_r('Подготавливаю файл ' + filePath)
 
+        # находим все файлы прайсов в каталоге парсера поставщика
+        if(hasattr(self, 'unity')):
+            for unity in self.unity:
+                if (unity in file):
+                    self.warhouse_id = str(self.unity[unity])
+        elif(hasattr(self, 'warhouse_id')):
+            self.warhouse_id = str(self.warhouse_id)
+
+        if(self.warhouse_id == 0):
+            log.print_r('Не нашел склад для загрузки')
+            return False
+
         # создаем класс загрузчика
         loader = Loader(self)
         # начинаем работать с xls
-        rb = xlrd.open_workbook(filePath, formatting_info=True)
+        rb = openpyxl.load_workbook(filePath)
         # открываем книгу
-        sheet = rb.sheet_by_index(0)
+        sheet = rb.active
+        rows = sheet.rows
 
-        with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
-            i = 0
-            for row in range(sheet.nrows):
-                i = i + 1
-                # пропускаем первую строку
-                if (self.clearLine and i <= self.clearLine):
-                    continue
+        i = 0
+        for row in rows:
+            i = i + 1
+            # пропускаем первую строку
+            if (self.clearLine and i <= self.clearLine):
+                continue
+            k = 0
+            rowData = []
+            for cell in row:
+                rowData.append(cell.value)
+                k = k + 1
 
-                # берем столбцы строки
-                rowData = sheet.row_values(row)
-                if(len(rowData) <5):
-                    continue
-                # берем из строки только нужные столбцы
-                colData = self.prepareColumns(rowData)
-                if (len(colData) < 5):
-                    continue
-                # проверяем данные
-                clearData = loader.validate(colData)
-                if(clearData):
-                    # записываем в таблицу загрузки
-                    loader.writerests(clearData)
-                    # записываем в файл результата
-                    loader.writer.writerows([clearData.values()])
-            loader.resultFile.close()
-            loader.closeWrite()
+            # берем столбцы строки
+            if(len(rowData) <4):
+                continue
+            #берем из строки только нужные столбцы
+            colData = self.prepareColumns(rowData)
+
+            if (len(colData) < 5):
+                continue
+
+            #проверяем данные
+            clearData = loader.validate(colData)
+            if(clearData):
+                # записываем в таблицу загрузки
+                #loader.writerests(clearData)
+                # записываем в файл результата
+                loader.writer.writerows([clearData.values()])
+        loader.resultFile.close()
+        loader.closeWrite()
 
     # функция принимает путь файла, открывает его и работает построчно
     def csvReader(self, file):

@@ -7,23 +7,29 @@ import config
 # получаем настройки приложения
 config = config.getConfig()
 
-class Autorayparser(Basic):
-	name = "Autoray"
-	suppliers_id = 89
-	warhouse_id = 125
+class Autopartner(Basic):
+	name = "Autopartner"
+	suppliers_id = 125
 	data = []
 	# путь к каталогу с файлами
-	filePathExtract = "files/Autoray/"
+	filePathExtract = "files/Autopartner/"
 	# пупустить строк в файле
 	clearLine = 1
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
-	filetype = "xls"
+	filetype = "xlsx"
 	fileEncoding = "utf-8"
 
 	# сопостовляем колонки в файле с назначениями полей
-	colums = {"art": 0, "bra": 2, "price": 5, "quality": 6, "desc":1, "art_sup":0}
+	colums = {"art": 1, "bra": 0, "price": 4, "quality": 3, "desc":2, "art_sup":1}
+
+	#находим файл склада по созвучую названия
+	unity= {
+		"Севастополь": "190",
+		"Симферополь": "191",
+	}
+
 
 
 
