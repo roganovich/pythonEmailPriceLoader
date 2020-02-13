@@ -7,7 +7,6 @@ from os.path import splitext
 import config
 import datetime
 import csv
-#import xlrd
 import openpyxl
 from loader import Loader
 # получаем настройки приложения
