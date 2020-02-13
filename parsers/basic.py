@@ -189,7 +189,7 @@ class Basic:
             clearData = loader.validate(colData)
             if(clearData):
                 # записываем в таблицу загрузки
-                #loader.writerests(clearData)
+                loader.writerests(clearData)
                 # записываем в файл результата
                 loader.writer.writerows([clearData.values()])
         loader.resultFile.close()
