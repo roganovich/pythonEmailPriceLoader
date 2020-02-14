@@ -29,9 +29,9 @@ class Loader:
 		# открываем файл результата
 		self.resultFile = open(self.resultFilePath, 'a', newline='', encoding='utf-8')
 		self.writer = csv.writer(self.resultFile, delimiter='\t')
-		self.createPricesFile()
 		self.conn = psycopg2.connect(dbname=config.get("pgconfig","dbname"), user=config.get("pgconfig","user"),password=config.get("pgconfig","password"), host=config.get("pgconfig","host"))
 		self.cursor = self.conn.cursor()
+		self.createPricesFile()
 		log.print_r('Открыл соединение с '+config.get("pgconfig","dbname"))
 
 	# функция создает новую запись в prices_file
