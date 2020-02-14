@@ -36,18 +36,14 @@ class Loader:
 
 	# функция создает новую запись в prices_file
 	def createPricesFile(self):
-		conn = psycopg2.connect(dbname=config.get("pgconfig","dbname"), user=config.get("pgconfig","user"),password=config.get("pgconfig","password"), host=config.get("pgconfig","host"))
-		cursor = conn.cursor()
 		#2020-02-04 11:30:12
 		# создаем ид файла загрузки
 		createtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
 		query = ("INSERT INTO public.prices_file(prf_email_from, prf_sup_id, prf_war_id, prf_createtime, status)VALUES (%s, %s, %s, %s, %s) RETURNING prf_id")
 		data = (self.obj.email['email_from'],self.sup_id,self.war_id, createtime, 0)
-		cursor.execute(query, data)
-		self.prf_id = cursor.fetchone()[0]
-		conn.commit()
-		cursor.close()
-		conn.close()
+		self.cursor.execute(query, data)
+		self.prf_id = self.cursor.fetchone()[0]
+		self.conn.commit()
 
 	def validate(self, data):
 		log.print_r(data)
