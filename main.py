@@ -64,12 +64,13 @@ with profiler.Profiler() as p:
         files = mLoader.downloadAttachment(email['email_message'], path)
         # загружаем файл в базу
         obj.upload()
-    # удаляем письма помеченные флагом Deleted
-    mLoader.connect.expunge()
-    # закрываем соединение
-    mLoader.connect.close()
-    mLoader.connect.logout()
-    # возвращаем массив данных
+        # грузим только 1 письмо. т.к время соединения с базой заканчиваеться
+        # удаляем письма помеченные флагом Deleted
+        mLoader.connect.expunge()
+        # закрываем соединение
+        mLoader.connect.close()
+        mLoader.connect.logout()
+        # возвращаем массив данных
 
 
 
