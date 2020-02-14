@@ -71,6 +71,7 @@ with profiler.Profiler() as p:
         mLoader.connect.close()
         mLoader.connect.logout()
         # возвращаем массив данных
+        exit()
 
 
 
