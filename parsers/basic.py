@@ -8,6 +8,7 @@ import config
 import datetime
 import csv
 import openpyxl
+import xlrd
 from loader import Loader
 # получаем настройки приложения
 config = config.getConfig()
@@ -33,7 +34,7 @@ class Basic:
                 if(self.filetype == "xls"):
                     self.xlsReader(file)
                 if (self.filetype == "xlsx"):
-                    self.xlsReader(file)
+                    self.xlsxReader(file)
                 # читаем построчно файл csv
                 if (self.filetype == "csv"):
                     self.csvReader(file)
@@ -138,6 +139,46 @@ class Basic:
 
     # функция принимает путь файла, открывает его и работает построчно
     def xlsReader(self, file):
+        # получаем путь нахождения файла
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
+        filePath = filePathExtract + file
+        log.print_r('Подготавливаю файл ' + filePath)
+
+        # создаем класс загрузчика
+        loader = Loader(self)
+        # начинаем работать с xls
+        rb = xlrd.open_workbook(filePath, formatting_info=True)
+        # открываем книгу
+        sheet = rb.sheet_by_index(0)
+
+        with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
+            i = 0
+            for row in range(sheet.nrows):
+                i = i + 1
+                # пропускаем первую строку
+                if (self.clearLine and i <= self.clearLine):
+                    continue
+
+                # берем столбцы строки
+                rowData = sheet.row_values(row)
+                if (len(rowData) < 5):
+                    continue
+                # берем из строки только нужные столбцы
+                colData = self.prepareColumns(rowData)
+                if (len(colData) < 5):
+                    continue
+                # проверяем данные
+                clearData = loader.validate(colData)
+                if (clearData):
+                    # записываем в таблицу загрузки
+                    # loader.writerests(clearData)
+                    # записываем в файл результата
+                    loader.writer.writerows([clearData.values()])
+            loader.resultFile.close()
+            loader.closeWrite()
+
+    # функция принимает путь файла, открывает его и работает построчно
+    def xlsxReader(self, file):
 
         # получаем путь нахождения файла
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
