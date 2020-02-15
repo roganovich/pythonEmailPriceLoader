@@ -37,6 +37,8 @@ class MailLoader():
         else:
             log.print_r('Не удалось скопировать ' + email_subject + ' от ' + email_from)
         log.print_r('Удаляем письмо ' + email_subject + ' от ' + email_from)
+        # удаляем письма помеченные флагом Deleted
+        self.connect.expunge()
 
     # функция подключения к почтовому ящику по imaplib
     def auth(self, server, username, password):
