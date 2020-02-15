@@ -21,7 +21,7 @@ class Paliyauto(Basic):
 	parsertype = "file"
 	# тип файла прайса
 	# не ясный формат. excel
-	filetype = "xls"
+	filetype = "xlsx"
 
 	# сопостовляем колонки в файле с назначениями полей
 	colums = {"art": 1, "bra": 0, "price": 5, "quality": 3, "desc":2, "art_sup":1}
