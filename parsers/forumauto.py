@@ -21,7 +21,7 @@ class ForumAuto(Basic):
 	parsertype = "zip"
 	# тип файла прайса
 	filetype = "csv"
-	fileEncoding = "utf-8"
+	fileEncoding = "windows-1251"
 
 	# сопостовляем колонки в файле с назначениями полей
 	colums = {"art": 1, "bra": 0, "price": 3, "quality": 4, "desc":2, "art_sup":1}
