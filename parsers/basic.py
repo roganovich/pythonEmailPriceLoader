@@ -147,7 +147,8 @@ class Basic:
         # создаем класс загрузчика
         loader = Loader(self)
         # начинаем работать с xls
-        rb = xlrd.open_workbook(filePath, formatting_info=True)
+        #, formatting_info=True
+        rb = xlrd.open_workbook(filePath)
         # открываем книгу
         sheet = rb.sheet_by_index(0)
 
