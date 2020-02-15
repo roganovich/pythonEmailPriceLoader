@@ -19,7 +19,8 @@ from parsers.armtekmoscow import ArmtekMoscow
 from parsers.armtekkrasnodar import ArmtekKrasnodar
 from parsers.vivat import Vivat
 from parsers.forumauto import ForumAuto
-
+from parsers.paliyauto import Paliyauto
+from parsers.autolux import Autolux
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -45,10 +46,14 @@ def checkParser(email):
         return Kyariz(email)
     if "Прайс-лист ВАРИАНТ" in email['email_subject']:
         return Variant(email)
-    if "Прайс-лист ВАРИАНТ" in email['email_subject']:
-        return Variant(email)
     if "post@mx.forum-auto.ru" in email['email_from']:
         return ForumAuto(email)
+    if "vivatavtos@mail.ru" in email['email_from']:
+        return Vivat(email)
+    if "paliyauto@mail.ru" in email['email_from']:
+        return Paliyauto(email)
+    if "a.sergeev@autoluks.com" in email['email_from']:
+        return Autolux(email)
     if "price@armtek.ru" in email['email_from']:
         if "Ostatki_Moscow" in email['email_subject']:
             return ArmtekMoscow(email)
