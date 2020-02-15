@@ -185,7 +185,7 @@ class Basic:
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         #переименовываем разрешение файла
         filePathOld = filePathExtract + file
-        renameFile = file.replace('.xls', '.xslx')
+        renameFile = file.replace('.xls', '.xlsx')
         filePath = filePathExtract + renameFile
         os.rename(filePathOld, filePath)
         log.print_r('Подготавливаю файл ' + filePath)
