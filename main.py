@@ -18,6 +18,7 @@ from parsers.variant import Variant
 from parsers.armtekmoscow import ArmtekMoscow
 from parsers.armtekkrasnodar import ArmtekKrasnodar
 from parsers.vivat import Vivat
+from parsers.forumauto import ForumAuto
 
 
 # получаем настройки приложения
@@ -44,8 +45,10 @@ def checkParser(email):
         return Kyariz(email)
     if "Прайс-лист ВАРИАНТ" in email['email_subject']:
         return Variant(email)
-    if "vivatavtos@mail.ru" in email['email_from']:
-        return Vivat(email)
+    if "Прайс-лист ВАРИАНТ" in email['email_subject']:
+        return Variant(email)
+    if "post@mx.forum-auto.ru" in email['email_from']:
+        return ForumAuto(email)
     if "price@armtek.ru" in email['email_from']:
         if "Ostatki_Moscow" in email['email_subject']:
             return ArmtekMoscow(email)
