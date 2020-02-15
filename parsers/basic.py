@@ -180,9 +180,14 @@ class Basic:
     # функция принимает путь файла, открывает его и работает построчно
     def xlsxReader(self, file):
 
+
         # получаем путь нахождения файла
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
-        filePath = filePathExtract + file
+        #переименовываем разрешение файла
+        filePathOld = filePathExtract + file
+        renameFile = file.replace('.xls', '.xslx')
+        filePath = filePathExtract + renameFile
+        os.rename(filePathOld, filePath)
         log.print_r('Подготавливаю файл ' + filePath)
 
         # находим все файлы прайсов в каталоге парсера поставщика
