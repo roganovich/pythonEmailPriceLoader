@@ -45,7 +45,7 @@ def checkParser(email):
     if "Прайс-лист ВАРИАНТ" in email['email_subject']:
         return Variant(email)
     if "vivatavtos@mail.ru" in email['email_from']:
-        return Variant(email)
+        return Vivat(email)
     if "price@armtek.ru" in email['email_from']:
         if "Ostatki_Moscow" in email['email_subject']:
             return ArmtekMoscow(email)
