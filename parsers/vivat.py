@@ -9,8 +9,8 @@ config = config.getConfig()
 
 class Vivat(Basic):
 	name = "Vivat"
-	suppliers_id = 129
-	warhouse_id = 196
+	suppliers_id = 68
+	warhouse_id = 95
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/Vivat/"
