@@ -7,29 +7,22 @@ import config
 # получаем настройки приложения
 config = config.getConfig()
 
-class Autopartner(Basic):
-	name = "Autopartner"
-	suppliers_id = 125
+class Vivat(Basic):
+	name = "Vivat"
+	suppliers_id = 129
+	warhouse_id = 196
 	data = []
 	# путь к каталогу с файлами
-	filePathExtract = "files/Autopartner/"
+	filePathExtract = "files/Vivat/"
 	# пупустить строк в файле
-	clearLine = 1
+	clearLine = 2
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
 	filetype = "xlsx"
-	fileEncoding = "utf-8"
 
 	# сопостовляем колонки в файле с назначениями полей
-	colums = {"art": 1, "bra": 0, "price": 3, "quality": 3, "desc":2, "art_sup":1}
-
-	#находим файл склада по созвучую названия
-	unity= {
-		"Севастополь": "190",
-		"Симферополь": "191",
-	}
-
+	colums = {"art": 2, "bra": 1, "price": 5, "quality": 4, "desc":3, "art_sup":2}
 
 
 

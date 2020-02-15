@@ -1,34 +1,31 @@
 # author Roganovich.R.M.
-import os
-import log
+
 from parsers.basic import Basic
 import config
 
 # получаем настройки приложения
 config = config.getConfig()
 
-class Autopartner(Basic):
-	name = "Autopartner"
-	suppliers_id = 125
+class Tisrostov(Basic):
+	name = "Tisrostov"
+	suppliers_id = 108
+	warhouse_id = 166
 	data = []
 	# путь к каталогу с файлами
-	filePathExtract = "files/Autopartner/"
+	filePathExtract = "files/Tisrostov/"
+	# делитель CSV
+	delimiter = "\t"
 	# пупустить строк в файле
 	clearLine = 1
 	# тип файла вложения
-	parsertype = "file"
+	parsertype = "zip"
 	# тип файла прайса
-	filetype = "xlsx"
-	fileEncoding = "utf-8"
+	filetype = "xls"
+	fileEncoding = "windows-1251"
 
 	# сопостовляем колонки в файле с назначениями полей
-	colums = {"art": 1, "bra": 0, "price": 3, "quality": 3, "desc":2, "art_sup":1}
+	colums = {"art": 1, "bra": 0, "price": 5, "quality": 4, "desc":2, "art_sup":3}
 
-	#находим файл склада по созвучую названия
-	unity= {
-		"Севастополь": "190",
-		"Симферополь": "191",
-	}
 
 
 

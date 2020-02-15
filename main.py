@@ -15,6 +15,9 @@ from parsers.shateminsk import Shateminsk
 from parsers.autopartner import Autopartner
 from parsers.kyariz import Kyariz
 from parsers.variant import Variant
+from parsers.armtekmoscow import ArmtekMoscow
+from parsers.armtekkrasnodar import ArmtekKrasnodar
+from parsers.vivat import Vivat
 
 
 # получаем настройки приложения
@@ -41,6 +44,13 @@ def checkParser(email):
         return Kyariz(email)
     if "Прайс-лист ВАРИАНТ" in email['email_subject']:
         return Variant(email)
+    if "vivatavtos@mail.ru" in email['email_from']:
+        return Variant(email)
+    if "price@armtek.ru" in email['email_from']:
+        if "Ostatki_Moscow" in email['email_subject']:
+            return ArmtekMoscow(email)
+        if "Ostatki_Krasnodar" in email['email_subject']:
+            return ArmtekKrasnodar(email)
 
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:
