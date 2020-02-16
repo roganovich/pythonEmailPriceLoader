@@ -1,5 +1,6 @@
 # author Roganovich.R.M.
-
+import os
+import log
 from parsers.basic import Basic
 import config
 
@@ -8,25 +9,20 @@ config = config.getConfig()
 
 class Tisrostov(Basic):
 	name = "Tisrostov"
-	suppliers_id = 108
-	warhouse_id = 166
+	suppliers_id = 117
+	warhouse_id = 177
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/Tisrostov/"
-	# делитель CSV
-	delimiter = "\t"
 	# пупустить строк в файле
-	clearLine = 1
+	clearLine = 6
 	# тип файла вложения
 	parsertype = "zip"
 	# тип файла прайса
 	filetype = "xls"
-	fileEncoding = "windows-1251"
 
 	# сопостовляем колонки в файле с назначениями полей
-	colums = {"art": 1, "bra": 0, "price": 5, "quality": 4, "desc":2, "art_sup":3}
-
-
+	colums = {"art": 3, "bra": 1, "price": 8, "quality": 10, "desc":2, "art_sup":3}
 
 
 
