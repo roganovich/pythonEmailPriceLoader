@@ -58,9 +58,9 @@ def checkParser(email):
     if "shop1.formula82@yandex.ru" in email['email_from']:
         return Formula82(email)
     if "price@armtek.ru" in email['email_from']:
-        if "Ostatki_Moscow" in email['email_subject']:
+        if "Moscow" in email['email_subject']:
             return ArmtekMoscow(email)
-        if "Ostatki_Krasnodar" in email['email_subject']:
+        if "Krasnodar" in email['email_subject']:
             return ArmtekKrasnodar(email)
 
 # profiler позволяет посчитать время выполнения процедуры внутри него
