@@ -22,6 +22,7 @@ from parsers.forumauto import ForumAuto
 from parsers.paliyauto import Paliyauto
 from parsers.autolux import Autolux
 from parsers.formula82 import Formula82
+from parsers.tisrostov import Tisrostov
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -57,6 +58,8 @@ def checkParser(email):
         return Autolux(email)
     if "shop1.formula82@yandex.ru" in email['email_from']:
         return Formula82(email)
+    if "krym_price@mail2.tpm.ru" in email['email_from']:
+        return Tisrostov(email)
     if "price@armtek.ru" in email['email_from']:
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow(email)
