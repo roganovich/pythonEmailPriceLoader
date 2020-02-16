@@ -69,6 +69,10 @@ class Basic:
         suppliers_id = str(self.suppliers_id)
         dateCreate = str(datetime.datetime.today().strftime("%Y%m%d"))
         path = config.get("email", "resultsFolder") + '/' + dateCreate + '/' + suppliers_id + '/'
+        # дополнительно проверяем по складу
+        if (hasattr(self, 'warhouse_id')):
+            path = path + str(self.warhouse_id) + '/'
+
         result = os.path.join(self.basePath, path)
         return result
 
