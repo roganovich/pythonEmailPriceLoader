@@ -9,20 +9,24 @@ from parsers.abs import Absparser
 from parsers.autoray import Autorayparser
 from parsers.autoeuro import Autoeuro
 from parsers.focusauto import Focusauto
-from parsers.shatepodolk import Shatepodolsk
-from parsers.shateminsk import Shateminsk
-
+from parsers.shatem import Shatepodolsk
+from parsers.shatem import Shateminsk
 from parsers.autopartner import Autopartner
 from parsers.kyariz import Kyariz
 from parsers.variant import Variant
-from parsers.armtekmoscow import ArmtekMoscow
-from parsers.armtekkrasnodar import ArmtekKrasnodar
+from parsers.armtek import ArmtekMoscow
+from parsers.armtek import ArmtekKrasnodar
 from parsers.vivat import Vivat
 from parsers.forumauto import ForumAuto
 from parsers.paliyauto import Paliyauto
 from parsers.autolux import Autolux
 from parsers.formula82 import Formula82
 from parsers.tisrostov import Tisrostov
+from parsers.transstarter import Transstarter
+from parsers.vwsevastopol import VwSevastopol
+from parsers.vwsevastopol import VwSimferopol
+from parsers.autoalians import Autoalians
+
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -60,11 +64,20 @@ def checkParser(email):
         return Formula82(email)
     if "krym_price@mail2.tpm.ru" in email['email_from']:
         return Tisrostov(email)
-    if "price@armtek.ru" in email['email_from']:
+    if "noreply@tstarter.ru" in email['email_from']:
+        return Transstarter(email)
+    if "script@autoopt.ru" in email['email_from']:
+        return Autoalians(email)
+    if("vwadmin_sev@vwcrimea.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow(email)
         if "Krasnodar" in email['email_subject']:
             return ArmtekKrasnodar(email)
+    if "vwparts@vw-avtoholding.ru" in email['email_from']:
+        if "Севастополь" in email['email_subject']:
+            return VwSevastopol(email)
+        if "Симферополь" in email['email_subject']:
+            return VwSevastopol(email)
 
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:

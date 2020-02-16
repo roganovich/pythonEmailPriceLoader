@@ -6,25 +6,22 @@ import config
 # получаем настройки приложения
 config = config.getConfig()
 
-class ArmtekKrasnodar(Basic):
-	name = "ArmtekKrasnodar"
-	suppliers_id = 72
-	warhouse_id = 103
+class Transstarter(Basic):
+	name = "Transstarter"
+	suppliers_id = 116
+	warhouse_id = 176
 	data = []
 	# путь к каталогу с файлами
-	filePathExtract = "files/ArmtekKrasnodar/"
-	# делитель CSV
-	delimiter = "\t"
+	filePathExtract = "files/Transstarter/"
 	# пупустить строк в файле
 	clearLine = 1
 	# тип файла вложения
-	parsertype = "zip"
+	parsertype = "file"
 	# тип файла прайса
-	filetype = "csv"
-	fileEncoding = "windows-1251"
+	filetype = "xlsx"
 
 	# сопостовляем колонки в файле с назначениями полей
-	colums = {"art": 1, "bra": 0, "price": 5, "quality": 4, "desc":2, "art_sup":3}
+	colums = {"art": 2, "bra": 4, "price": 6, "quality": 5, "desc":1, "art_sup":2}
 
 
 
