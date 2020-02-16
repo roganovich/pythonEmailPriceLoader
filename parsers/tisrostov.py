@@ -9,8 +9,8 @@ config = config.getConfig()
 
 class Tisrostov(Basic):
 	name = "Tisrostov"
-	suppliers_id = 117
-	warhouse_id = 177
+	suppliers_id = 108
+	warhouse_id = 166
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/Tisrostov/"
