@@ -29,16 +29,21 @@ class Basic:
         for file in files:
             # получаем путь нахождения файла
             filePath = filePathExtract + file
+            # найти разрешение фапйла. что бы не грузил картинки и прочее
+            #.split(".")[-1]
             if os.path.exists(filePath):
                 # читаем построчно файл xls
                 if(self.filetype == "xls"):
                     self.xlsReader(file)
                 if (self.filetype == "xlsx"):
+                    # находим extension  файла
+                    extension = splitext(filePath)
                     # меняем разрещшение файла xls на xlsx
-                    filePathOld = filePath
-                    file = file.replace('.xls', '.xlsx')
-                    filePath = filePathExtract + file
-                    os.rename(filePathOld, filePath)
+                    if (extension[1] == ".xls"):
+                        filePathOld = filePath
+                        file = file.replace('.xls', '.xlsx')
+                        filePath = filePathExtract + file
+                        os.rename(filePathOld, filePath)
                     self.xlsxReader(file)
                 # читаем построчно файл csv
                 if (self.filetype == "csv"):
