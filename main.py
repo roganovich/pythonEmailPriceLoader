@@ -68,12 +68,13 @@ def checkParser(email):
         return Transstarter(email)
     if "script@autoopt.ru" in email['email_from']:
         return Autoalians(email)
-    if("vwadmin_sev@vwcrimea.ru" in email['email_from']):
+    if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow(email)
         if "Krasnodar" in email['email_subject']:
             return ArmtekKrasnodar(email)
-    if "vwparts@vw-avtoholding.ru" in email['email_from']:
+    # vwparts@vw-avtoholding.ru
+    if "vwadmin_sev@vwcrimea.ru" in email['email_from']:
         if "Севастополь" in email['email_subject']:
             return VwSevastopol(email)
         if "Симферополь" in email['email_subject']:
