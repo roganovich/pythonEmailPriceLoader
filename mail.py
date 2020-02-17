@@ -61,6 +61,7 @@ class MailLoader():
 
     # функция декодирует base64 в кирилицу
     def translit(self, s):
+        print(s)
         if "=?utf-8?B?" in s:
             alpha = '=?utf-8?B?'
             char = 'utf-8'
@@ -68,6 +69,10 @@ class MailLoader():
         elif "=?UTF-8?B?" in s:
             alpha = '=?UTF-8?B?'
             char = 'utf-8'
+            type = 'base64'
+        elif "=?windows-1251?b?" in s:
+            alpha = '=?windows-1251?B?'
+            char = 'windows-1251'
             type = 'base64'
         elif "=?windows-1251?B?" in s:
             alpha = '=?windows-1251?B?'
@@ -99,7 +104,6 @@ class MailLoader():
         # переводит тему в русский язык
         ru_text = str(ru_text_base, char)
 
-  
         return ru_text
 
     # скачивания файла
