@@ -27,12 +27,12 @@ def getConfig():
     if os.path.exists(path):
         config = configparser.ConfigParser()
         config.read(path)
-        if (config.get("system", "print") == "1"):
-            print('Файл ' + path + ' существует')
+        #if (config.get("system", "print") == "1"):
+        #    print('Файл ' + path + ' существует')
     else:
         createConfig(path)
         config = configparser.ConfigParser()
         config.read(path)
-        if (config.get("system", "print") == "1"):
-            print('Файл ' + path + ' будет создан')
+        #if (config.get("system", "print") == "1"):
+        #    print('Файл ' + path + ' будет создан')
     return config
