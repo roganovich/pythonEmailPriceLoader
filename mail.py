@@ -61,14 +61,8 @@ class MailLoader():
 
     # функция декодирует base64 в кирилицу
     def translit(self, s):
-        alpha = ""
-        bravo = ""
-        type = ""
-        char = ""
-        ru_text_base = ""
-        ru_text = s
         if "=?utf-8?B?" in s:
-            alpha = '=?utf-8?B'
+            alpha = '=?utf-8?B?'
             char = 'utf-8'
             type = 'base64'
         elif "=?UTF-8?B?" in s:
@@ -103,8 +97,7 @@ class MailLoader():
         if (type == 'quopri'):
             ru_text_base = quopri.decodestring(cirilic)
         # переводит тему в русский язык
-        if(char):
-            ru_text = str(ru_text_base, char)
+        ru_text = str(ru_text_base, char)
 
   
         return ru_text
