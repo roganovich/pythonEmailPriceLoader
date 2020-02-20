@@ -70,7 +70,7 @@ class Loader:
 		#log.print_r(data)
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s, %s)")
 		dataClear = (data['prfc_prices_file_id'], data['prfc_brand'], data['prfc_article'], data['prfc_price'], data['prfc_quality'])
-		log.print_r(dataClear)
+		#log.print_r(dataClear)
 		self.cursor.execute(query, dataClear)
 		self.conn.commit()
 		return True
@@ -91,7 +91,7 @@ class Loader:
 		# меняем статус загрузки
 		#endtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
 		query = "UPDATE public.prices_file SET status = 1 WHERE prf_id = " + str(self.prf_id)
-		log.print_r(query)
+		#log.print_r(query)
 		log.print_r('Закончил загрузку файла в базу ' + config.get("pgconfig", "dbname"))
 		self.cursor.execute(query)
 		self.conn.commit()
