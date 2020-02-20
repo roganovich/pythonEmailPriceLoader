@@ -30,24 +30,24 @@ class Basic:
             # получаем путь нахождения файла
             filePath = filePathExtract + file
             # найти разрешение фапйла. что бы не грузил картинки и прочее
-            #.split(".")[-1]
-            if os.path.exists(filePath):
-                # читаем построчно файл xls
-                if(self.filetype == "xls"):
-                    self.xlsReader(file)
-                if (self.filetype == "xlsx"):
-                    # находим extension  файла
-                    extension = splitext(filePath)
-                    # меняем разрещшение файла xls на xlsx
-                    if (extension[1] == ".xls"):
-                        filePathOld = filePath
-                        file = file.replace('.xls', '.xlsx')
-                        filePath = filePathExtract + file
-                        os.rename(filePathOld, filePath)
-                    self.xlsxReader(file)
-                # читаем построчно файл csv
-                if (self.filetype == "csv"):
-                    self.csvReader(file)
+            # находим extension  файла
+            extension = splitext(filePath)
+            if(extension[1] in ['.csv','.xls', '.xlsx', '.txt']):
+                if os.path.exists(filePath):
+                    # читаем построчно файл xls
+                    if(self.filetype == "xls"):
+                        self.xlsReader(file)
+                    if (self.filetype == "xlsx"):
+                        # меняем разрещшение файла xls на xlsx
+                        if (extension[1] == ".xls"):
+                            filePathOld = filePath
+                            file = file.replace('.xls', '.xlsx')
+                            filePath = filePathExtract + file
+                            os.rename(filePathOld, filePath)
+                        self.xlsxReader(file)
+                    # читаем построчно файл csv
+                    if (self.filetype == "csv"):
+                        self.csvReader(file)
                 log.print_r('Удаляю файл ' + filePath)
                 os.remove(filePath)
 
