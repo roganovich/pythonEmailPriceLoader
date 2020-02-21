@@ -26,6 +26,7 @@ from parsers.transstarter import Transstarter
 from parsers.vwsevastopol import VwSevastopol
 from parsers.vwsevastopol import VwSimferopol
 from parsers.autoalians import Autoalians
+from parsers.seatrade import Satrade
 
 
 # получаем настройки приложения
@@ -68,17 +69,21 @@ def checkParser(email):
         return Transstarter(email)
     if "script@autoopt.ru" in email['email_from']:
         return Autoalians(email)
+    if "price@variantauto.com" in email['email_from']:
+        return Variant(email)
+    if "seatrade-2012@mail.ru" in email['email_from']:
+        return Satrade(email)
     if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow(email)
         if "Krasnodar" in email['email_subject']:
             return ArmtekKrasnodar(email)
-    # vwparts@vw-avtoholding.ru
     if "vwadmin_sev@vwcrimea.ru" in email['email_from']:
         if "Севастополь" in email['email_subject']:
             return VwSevastopol(email)
+    if "vwparts@vw-avtoholding.ru" in email['email_from']:
         if "Симферополь" in email['email_subject']:
-            return VwSevastopol(email)
+            return VwSimferopol(email)
 
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:
