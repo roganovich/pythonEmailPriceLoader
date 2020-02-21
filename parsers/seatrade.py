@@ -17,8 +17,6 @@ class Satrade(Basic):
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/Satrade/"
-	#если файл еще вложен в доп каталог
-	filePathDopDir = 'out_pr/'
 	# пупустить строк в файле
 	clearLine = 3
 	# тип файла вложения

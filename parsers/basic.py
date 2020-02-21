@@ -22,10 +22,6 @@ class Basic:
 
     # функция работы с файлами
     def workWidthFiles(self):
-        # если файл еще вложен в доп каталог
-        if(self.filePathDopDir):
-            self.filePathExtract = self.filePathExtract + self.filePathDopDir
-
         # находим все файлы прайсов в каталоге парсера поставщика
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         files = os.listdir(filePathExtract)
