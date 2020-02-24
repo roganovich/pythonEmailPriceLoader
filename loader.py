@@ -69,7 +69,7 @@ class Loader:
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
 		#log.print_r(data)
-		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality, prfc_desc) VALUES (%s, %s, %s, %s, %s)")
+		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality, prfc_desc) VALUES (%s, %s, %s, %s, %s, %s)")
 		dataClear = (data['prfc_prices_file_id'], data['prfc_brand'], data['prfc_article'], data['prfc_price'], data['prfc_quality'], data['prfc_desc'])
 		#log.print_r(dataClear)
 		self.cursor.execute(query, dataClear)
