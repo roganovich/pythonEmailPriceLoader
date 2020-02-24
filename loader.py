@@ -51,6 +51,7 @@ class Loader:
 		prfc_prices_file_id = self.prf_id
 		prfc_article = re.sub(r'[^0-9A-Za-z\s+]+', r'', str(data[0]).strip())
 		prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\-\s+]+', r'', str(data[1]).strip())
+		prfc_desc = str(data[4]).strip()
 
 		priceClaer = re.sub(r'[^0-9.]+', r'', str(data[2]).strip().replace(',', '.'))
 		if (self.is_number(priceClaer)):
@@ -63,13 +64,13 @@ class Loader:
 		else:
 			return False
 
-		return {'prfc_prices_file_id':str(prfc_prices_file_id),'prfc_article':str(prfc_article),'prfc_brand':str(prfc_brand),'prfc_price':str(prfc_price),'prfc_quality':str(prfc_quality)}
+		return {'prfc_prices_file_id':str(prfc_prices_file_id),'prfc_article':str(prfc_article),'prfc_brand':str(prfc_brand),'prfc_price':str(prfc_price),'prfc_quality':str(prfc_quality),'prfc_desc':str(prfc_desc)}
 
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
 		#log.print_r(data)
-		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality) VALUES (%s, %s, %s, %s, %s)")
-		dataClear = (data['prfc_prices_file_id'], data['prfc_brand'], data['prfc_article'], data['prfc_price'], data['prfc_quality'])
+		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality, prfc_desc) VALUES (%s, %s, %s, %s, %s)")
+		dataClear = (data['prfc_prices_file_id'], data['prfc_brand'], data['prfc_article'], data['prfc_price'], data['prfc_quality'], data['prfc_desc'])
 		#log.print_r(dataClear)
 		self.cursor.execute(query, dataClear)
 		self.conn.commit()
