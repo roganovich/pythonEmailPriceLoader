@@ -121,24 +121,27 @@ class MailLoader():
                 if filename:
                     if (self.hascyrillic(filename)):
                         filename = self.translit(filename)
-
-
                     # очищаем имя файла от мусора
                     clearName = re.sub(r'[^A-Za-zА-я0-9.\s]', '', filename)
                     # путь к сохранения файла
                     filePath = path + clearName
-
                     # если этот файл уже есть удалить
                     if os.path.exists(filePath):
                         log.print_r('Удаляем старый файл ' + filePath)
                         os.remove(filePath)
                     # открываем файл для записи
-                    with open(filePath, 'wb') as new_file:
-                        # сохраняем файл в папку для дальнейшей загрузки
+                    new_file = open(filePath, 'wb')
+                    # сохраняем файл в папку для дальнейшей загрузки
+                    try:
                         new_file.write(part.get_payload(decode=True))
-                        log.print_r('Нашел файл. Сохраняем ' + filePath)
+                        log.print_r('Нашел файл '+clearName+'. Сохраняем в ' + filePath)
                         # добавляем путь к файлу в массив с данными
                         files.append(filePath)
+                    finally:
+                        log.print_r('Нашел файл '+clearName+'. Не смог скопировать в ' + filePath)
+                    # закрытие файла
+                    new_file.close()
+
         if (not  files):
             log.print_r('Нет файлов для скачивания')
         # возвращаем массив с новыми файлами
@@ -195,7 +198,7 @@ class MailLoader():
                         email_subject = self.translit(email_subject)
                     #if (self.hascyrillic(email_from)):
                     #email_from = email_from
-                    log.print_r('Нашел письмо ' + email_subject + ' от ' + email_from)
+                    log.print_r('Нашел письмо "' + email_subject + '"' )
                     returnData.append({'uid':uid,'msg_id': email_msg_id, 'email_date': email_date, 'email_subject': email_subject,
                                        'email_from': email_from, 'email_message':email_message})
 

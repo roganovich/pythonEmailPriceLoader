@@ -89,13 +89,7 @@ class Loader:
 
 	# функция закрывает соединение с БД
 	def closeWrite(self):
-		# меняем статус загрузки
-		#endtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
-		query = "UPDATE public.prices_file SET status = 1 WHERE prf_id = " + str(self.prf_id)
-		#log.print_r(query)
-		log.print_r('Закончил загрузку файла в базу ' + config.get("pgconfig", "dbname"))
-		self.cursor.execute(query)
-		self.conn.commit()
+
 
 		self.cursor.execute("SELECT count(prfc_id) as count  FROM public.prices_file_col where prfc_prices_file_id = "+ str(self.prf_id))
 		countRow = str(self.cursor.fetchone()[0])
@@ -105,6 +99,13 @@ class Loader:
 		self.cursor.execute(countSQL)
 		self.conn.commit()
 
+		# меняем статус загрузки
+		#endtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
+		query = "UPDATE public.prices_file SET status = 1 WHERE prf_id = " + str(self.prf_id)
+		#log.print_r(query)
+		log.print_r('Закончил загрузку файла в базу ' + config.get("pgconfig", "dbname"))
+		self.cursor.execute(query)
+		self.conn.commit()
 
 		self.cursor.close()
 		self.conn.close()

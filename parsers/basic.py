@@ -16,8 +16,7 @@ config = config.getConfig()
 csv.field_size_limit(sys.maxsize)
 class Basic:
 
-    def __init__(self,email):
-        self.email = email
+    def __init__(self):
         self.prepareDir()
 
     # функция работы с файлами
