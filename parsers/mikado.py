@@ -5,12 +5,16 @@ import config
 from urllib.request import urlopen
 import os
 import log
+from os.path import splitext
 from zipfile import ZipFile
+import csv
+from loader import Loader
 
 # получаем настройки приложения
 config = config.getConfig()
 
 class Mikado(Basic):
+
 	name = "Mikado"
 	suppliers_id = 52
 	data = []
@@ -36,10 +40,14 @@ class Mikado(Basic):
 	# сопостовляем колонки в файле с назначениями полей
 	colums = {"art": 1, "bra": 2, "price": 4, "quality": 5, "desc":3, "art_sup":0}
 
-	def downloadFiles(self):
+	def __init__(self):
+		self.prepareDir()
+
+	def prepareDir(self):
 		basePath = config.get("path", "_DIR_")
 		self.filePathExtract = os.path.join(basePath, self.filePathExtract)
 
+	def downloadFiles(self):
 		if (not os.path.exists(self.filePathExtract)):
 			os.mkdir(self.filePathExtract)
 		# скачиваем файлы прайса
@@ -76,8 +84,51 @@ class Mikado(Basic):
 			# удаляем архив после распаковки
 			os.remove(fileName)
 
-	def workWidthFiles(self):
-		log.print_r('Копируем в ')
+	# функция формирует путь файла, открывает его и работает построчно
+	def workWidthFiles(self,warhouse_id):
+		# назначаем склад для этого файла поставщика
+		self.warhouse_id = str(warhouse_id)
+		# получаем полный путь файла склада
+		pathExtract = os.path.join(self.filePathExtract, warhouse_id)
+		# находим все файлы прайсов в каталоге парсера поставщика
+		files = os.listdir(pathExtract)
+		# перебираем все найденные файлы
+		for file in files:
+			# получаем путь нахождения файла
+			filePath = pathExtract + "/" + file
+
+			# найти разрешение фапйла. что бы не грузил картинки и прочее
+			# находим extension  файла
+			extension = splitext(filePath)
+			if (extension[1] in ['.csv']):
+				log.print_r('Работаю с файлом ' + filePath)
+				# создаем класс загрузчика
+				loader = Loader(self)
+				with open(filePath, 'r', newline='', encoding=self.fileEncoding) as file_obj:
+					reader = csv.reader(file_obj, delimiter=self.delimiter)
+					i = 0
+					for row in reader:
+						i = i + 1
+						# пропускаем первую строку
+						if (self.clearLine and i <= self.clearLine):
+							continue
+						if (len(row) < 5):
+							continue
+						# берем из строки только нужные столбцы
+						colData = self.prepareColumns(row)
+						if (len(colData) < 5):
+							continue
+						# проверяем данные
+						clearData = loader.validate(colData)
+						if (clearData):
+							# записываем в таблицу загрузки
+							loader.writerests(clearData)
+							# записываем в файл результата
+							loader.writer.writerows([clearData.values()])
+					loader.resultFile.close()
+					loader.closeWrite()
+
+
 
 
 

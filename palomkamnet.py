@@ -10,9 +10,12 @@ config = config.getConfig()
 with profiler.Profiler() as p:
 
     model = Mikado()
+
     # скачиваем все прайсы
     model.downloadFiles()
-    model.workWidthFiles()
+    # загружаем файлы в базу
+    for warhouse_id in model.pricesFiles:
+        model.workWidthFiles(warhouse_id)
 
 
     exit()

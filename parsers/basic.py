@@ -155,7 +155,7 @@ class Basic:
         # получаем путь нахождения файла
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
-        log.print_r('Подготавливаю файл ' + filePath)
+        log.print_r('Работаю с файлом ' + filePath)
 
         # создаем класс загрузчика
         loader = Loader(self)
@@ -195,7 +195,7 @@ class Basic:
         # получаем путь нахождения файла
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
-        log.print_r('Подготавливаю файл ' + filePath)
+        log.print_r('Работаю с файлом ' + filePath)
 
         # находим все файлы прайсов в каталоге парсера поставщика
         if(hasattr(self, 'unity')):
@@ -253,7 +253,7 @@ class Basic:
         # находим все файлы прайсов в каталоге парсера поставщика
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
-        log.print_r('Подготавливаю файл ' + filePath)
+        log.print_r('Работаю с файлом ' + filePath)
         # открываем файл результата
         # формируем имя файла результата для этого поставщика
         if(hasattr(self, 'unity')):

@@ -132,6 +132,7 @@ class MailLoader():
                     new_file = open(filePath, 'wb')
                     # сохраняем файл в папку для дальнейшей загрузки
                     try:
+                        os.chmod(filePath, 0o600)
                         new_file.write(part.get_payload(decode=True))
                         log.print_r('Нашел файл '+clearName+'. Сохраняем в ' + filePath)
                         # добавляем путь к файлу в массив с данными
