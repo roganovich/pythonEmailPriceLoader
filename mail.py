@@ -35,8 +35,8 @@ class MailLoader():
         if copy_res[0] == 'OK':
             self.connect.store(uid, '+FLAGS', '\\Deleted')
         else:
-            log.print_r('Не удалось скопировать ' + email_subject + ' от ' + email_from)
-        log.print_r('Удаляем письмо ' + email_subject + ' от ' + email_from)
+            log.print_r('Не удалось скопировать "' + email_subject + '"')
+        log.print_r('Удаляем письмо "' + email_subject + '"')
         # удаляем письма помеченные флагом Deleted
         self.connect.expunge()
 
@@ -198,7 +198,7 @@ class MailLoader():
                         email_subject = self.translit(email_subject)
                     #if (self.hascyrillic(email_from)):
                     #email_from = email_from
-                    log.print_r('Нашел письмо "' + email_subject + '"' )
+                    log.print_r('Нашел письмо "' + email_subject + '"')
                     returnData.append({'uid':uid,'msg_id': email_msg_id, 'email_date': email_date, 'email_subject': email_subject,
                                        'email_from': email_from, 'email_message':email_message})
 
