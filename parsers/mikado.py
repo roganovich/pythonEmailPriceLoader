@@ -44,8 +44,8 @@ class Mikado(Basic):
 		self.prepareDir()
 
 	def prepareDir(self):
-		basePath = config.get("path", "_DIR_")
-		self.filePathExtract = os.path.join(basePath, self.filePathExtract)
+		self.basePath = config.get("path", "_DIR_")
+		self.filePathExtract = os.path.join(self.basePath, self.filePathExtract)
 
 	def downloadFiles(self):
 		if (not os.path.exists(self.filePathExtract)):
