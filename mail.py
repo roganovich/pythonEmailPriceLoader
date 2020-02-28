@@ -136,7 +136,7 @@ class MailLoader():
                         log.print_r('Нашел файл '+clearName+'. Сохраняем в ' + filePath)
                         # добавляем путь к файлу в массив с данными
                         files.append(filePath)
-                    finally:
+                    except:
                         log.print_r('Нашел файл '+clearName+'. Не смог скопировать в ' + filePath)
                     # закрытие файла
                     new_file.close()
