@@ -61,7 +61,6 @@ class MailLoader():
 
     # функция декодирует base64 в кирилицу
     def translit(self, s):
-        print(s)
         if "=?utf-8?B?" in s:
             alpha = '=?utf-8?B?'
             char = 'utf-8'
@@ -146,9 +145,6 @@ class MailLoader():
             log.print_r('Нет файлов для скачивания')
         # возвращаем массив с новыми файлами
         return files
-
-    def prepareMsg(self,data):
-        print()
 
     # выполняем подключение
     def getemails(self):
