@@ -94,6 +94,7 @@ with profiler.Profiler() as p:
         log.print_r('Нет новыйх писем')
         exit()
     for email in emails:
+        log.print_r('Нашел письмо "' + email['email_subject'] + '"')
         obj = checkParser(email)
         obj.email = email
         if (obj.needToLoad() == False):
