@@ -256,6 +256,7 @@ class Basic:
 
     # функция принимает путь файла, открывает его и работает
     def xmlReader(self, file):
+        exit()
         # находим все файлы прайсов в каталоге парсера поставщика
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
