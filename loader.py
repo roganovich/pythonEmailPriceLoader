@@ -40,7 +40,9 @@ class Loader:
 		# создаем ид файла загрузки
 		createtime = str(datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
 		query = ("INSERT INTO public.prices_file(prf_email_from, prf_sup_id, prf_war_id, prf_createtime, status)VALUES (%s, %s, %s, %s, %s) RETURNING prf_id")
-		data = (self.obj.email['email_from'],self.sup_id,self.war_id, createtime, 0)
+		fromEmail = self.obj.email['email_from']
+		fromEmailClear = re.sub(r'[^0-9A-Za-z@.-_]+', r'', fromEmail)
+		data = (fromEmailClear,self.sup_id,self.war_id, createtime, 0)
 		self.cursor.execute(query, data)
 		self.prf_id = self.cursor.fetchone()[0]
 		self.conn.commit()
