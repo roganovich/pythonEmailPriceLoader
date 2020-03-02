@@ -27,6 +27,7 @@ from parsers.vwsevastopol import VwSevastopol
 from parsers.vwsevastopol import VwSimferopol
 from parsers.autoalians import Autoalians
 from parsers.seatrade import Satrade
+from parsers.avtosputnik import Avtosputnik
 
 
 # получаем настройки приложения
@@ -73,6 +74,8 @@ def checkParser(email):
         return Variant()
     if "seatrade-2012@mail.ru" in email['email_from']:
         return Satrade()
+    if "robot@auto-sputnik.ru" in email['email_from']:
+        return Avtosputnik()
     if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow()
