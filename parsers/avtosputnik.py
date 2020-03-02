@@ -8,8 +8,8 @@ config = config.getConfig()
 
 class Avtosputnik(Basic):
 	name = "Avtosputnik"
-	suppliers_id = 72
-	warhouse_id = 102
+	suppliers_id = 63
+	warhouse_id = 90
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/Avtosputnik/"
