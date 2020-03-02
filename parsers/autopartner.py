@@ -22,7 +22,7 @@ class Autopartner(Basic):
 	fileEncoding = "utf-8"
 
 	# сопостовляем колонки в файле с назначениями полей
-	colums = {"art": 1, "bra": 0, "price": 3, "quality": 3, "desc":2, "art_sup":1}
+	colums = {"art": 1, "bra": 0, "price": 4, "quality": 3, "desc":2, "art_sup":1}
 
 	#находим файл склада по созвучую названия
 	unity= {
