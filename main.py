@@ -102,7 +102,7 @@ with profiler.Profiler() as p:
         obj.email = email
         if (obj.needToLoad() == False):
             # удаляем письмо
-            #mLoader.deleteEmail(email);
+            mLoader.deleteEmail(email);
             log.print_r('Этот прайс уже загружали сегодня')
             continue
         # скачивания файла
