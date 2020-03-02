@@ -9,6 +9,8 @@ import datetime
 import csv
 import openpyxl
 import xlrd
+from xml.dom import minidom
+
 from loader import Loader
 # получаем настройки приложения
 config = config.getConfig()
@@ -31,7 +33,7 @@ class Basic:
             # найти разрешение фапйла. что бы не грузил картинки и прочее
             # находим extension  файла
             extension = splitext(filePath)
-            if(extension[1] in ['.csv','.xls', '.xlsx', '.txt']):
+            if(extension[1] in ['.csv','.xls', '.xlsx', '.txt', '.xml']):
                 if os.path.exists(filePath):
                     # читаем построчно файл xls
                     if(self.filetype == "xls"):
@@ -47,6 +49,9 @@ class Basic:
                     # читаем построчно файл csv
                     if (self.filetype == "csv"):
                         self.csvReader(file)
+                    # читаем  файл xml
+                    if (self.filetype == "xml"):
+                        self.xmlReader(file)
                 log.print_r('Удаляю файл ' + filePath)
                 os.remove(filePath)
 
@@ -155,7 +160,7 @@ class Basic:
         # получаем путь нахождения файла
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
-        log.print_r('Работаю с файлом ' + filePath)
+        log.print_r('Работаю с файлом xls ' + filePath)
 
         # создаем класс загрузчика
         loader = Loader(self)
@@ -195,7 +200,7 @@ class Basic:
         # получаем путь нахождения файла
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
-        log.print_r('Работаю с файлом ' + filePath)
+        log.print_r('Работаю с файлом xlsx ' + filePath)
 
         # находим все файлы прайсов в каталоге парсера поставщика
         if(hasattr(self, 'unity')):
@@ -248,12 +253,25 @@ class Basic:
         loader.resultFile.close()
         loader.closeWrite()
 
+
+    # функция принимает путь файла, открывает его и работает
+    def xmlReader(self, file):
+        # находим все файлы прайсов в каталоге парсера поставщика
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
+        filePath = filePathExtract + file
+        log.print_r('Работаю с файлом xml ' + filePath)
+        mydoc = minidom.parse(filePath)
+        rows = mydoc.getElementsByTagName('row')
+        for row in rows:
+            print(row.attributes['name'].value)
+        exit()
+
     # функция принимает путь файла, открывает его и работает построчно
     def csvReader(self, file):
         # находим все файлы прайсов в каталоге парсера поставщика
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
-        log.print_r('Работаю с файлом ' + filePath)
+        log.print_r('Работаю с файлом csv ' + filePath)
         # открываем файл результата
         # формируем имя файла результата для этого поставщика
         if(hasattr(self, 'unity')):
