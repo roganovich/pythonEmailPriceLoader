@@ -47,7 +47,7 @@ def checkParser(email):
             return Shatepodolsk()
         if "Склад Минск" in email['email_subject']:
             return Shateminsk()
-    if "Авто-Партнер" in email['email_subject']:
+    if "avtopartner99@bk.ru" in email['email_from']:
         return Autopartner()
     if "Остатки Kyariz" in email['email_subject']:
         return Kyariz()
