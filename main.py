@@ -28,6 +28,8 @@ from parsers.vwsevastopol import VwSimferopol
 from parsers.autoalians import Autoalians
 from parsers.seatrade import Satrade
 from parsers.avtosputnik import Avtosputnik
+from parsers.profitliga import PFLKrasnodar
+from parsers.profitliga import PFLRostov
 
 
 # получаем настройки приложения
@@ -76,6 +78,10 @@ def checkParser(email):
         return Satrade()
     if "robot@auto-sputnik.ru" in email['email_from']:
         return Avtosputnik()
+    if "ПрофитЛига склад Краснодар" in email['email_subject']:
+        return PFLKrasnodar()
+    if "ПрофитЛига склад Ростов" in email['email_subject']:
+        return PFLRostov()
     if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow()
