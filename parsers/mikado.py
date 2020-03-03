@@ -108,30 +108,27 @@ class Mikado(Basic):
                 with open(filePath, 'r', newline='', encoding=self.fileEncoding) as file_obj:
                     reader = csv.reader(file_obj, delimiter=self.delimiter)
                     # проверка на целостность данных
-                    try:
-                        i = 0
-                        for row in reader:
-                            i = i + 1
-                            # пропускаем первую строку
-                            if (self.clearLine and i <= self.clearLine):
-                                continue
-                            if (len(row) < 5):
-                                continue
-                            # берем из строки только нужные столбцы
-                            colData = self.prepareColumns(row)
-                            if (len(colData) < 5):
-                                continue
-                            # проверяем данные
-                            clearData = loader.validate(colData)
-                            if (clearData):
-                                # записываем в таблицу загрузки
-                                loader.writerests(clearData)
-                                # записываем в файл результата
-                                loader.writer.writerows([clearData.values()])
-                        loader.resultFile.close()
-                        loader.closeWrite()
-                    except:
-                        log.print_r("Не удалось прочитать строку")
+                    i = 0
+                    for row in reader:
+                        i = i + 1
+                        # пропускаем первую строку
+                        if (self.clearLine and i <= self.clearLine):
+                            continue
+                        if (len(row) < 5):
+                            continue
+                        # берем из строки только нужные столбцы
+                        colData = self.prepareColumns(row)
+                        if (len(colData) < 5):
+                            continue
+                        # проверяем данные
+                        clearData = loader.validate(colData)
+                        if (clearData):
+                            # записываем в таблицу загрузки
+                            loader.writerests(clearData)
+                            # записываем в файл результата
+                            loader.writer.writerows([clearData.values()])
+                    loader.resultFile.close()
+                    loader.closeWrite()
 
             # удаляем файл
             os.remove(filePath)
