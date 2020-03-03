@@ -174,8 +174,7 @@ class MailLoader():
             for response_part in data:
                 if isinstance(response_part, tuple):
                     email_message = email.message_from_bytes(response_part[1])
-                    print(email_message)
-                    exit()
+
                     # кому отправлено письмо
                     email_to = str(email_message['To'])
                     # от кого отправлено письмо  #email.utils.parseaddr
@@ -183,20 +182,34 @@ class MailLoader():
                     # дата отправки письма
                     email_date = str(email_message['Date'])
                     # тема письма
-                    email_subject = str(email_message['Subject'])
+                    email_subject_data = str(email_message['Subject'])
                     # идентификатор письма
                     email_msg_id = str(email_message['Message-Id'])
+
+                    email_subject = ""
+                    # разбиваем тему на абзацы
+                    subjectsRows = email_subject_data.split('\n')
+                    if(len(subjectsRows)>1):
+                        for subj in subjectsRows:
+                            if (self.hascyrillic(subj)):
+                                email_subject += self.translit(subj)
+                    else:
+                        # проверяем кирилицу
+                        if (self.hascyrillic(email_subject_data)):
+                            email_subject = self.translit(email_subject_data)
                     if(not email_subject):
                         log.print_r('Плохое письмо: нет email_subject')
                         continue
                     if (not email_from):
                         log.print_r('Плохое письмо: нет email_from')
                         continue
-                    # проверяем кирилицу
-                    if(self.hascyrillic(email_subject)):
-                        email_subject = self.translit(email_subject)
-                    #if (self.hascyrillic(email_from)):
-                    #email_from = email_from
+                    #разбиваем адресата на имя и адрес ящика
+                    email_from_data = email_from.split('<')
+                    if (len(email_from_data)>1):
+                        email_from = email_from_data[1].replace('<', '').replace('>', '')
+                    else:
+                        email_from = email_from
+
                     returnData.append({'uid':uid,'msg_id': email_msg_id, 'email_date': email_date, 'email_subject': email_subject,
                                        'email_from': email_from, 'email_message':email_message})
 
