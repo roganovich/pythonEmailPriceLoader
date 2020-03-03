@@ -204,10 +204,14 @@ class MailLoader():
                         for subj in subjectsRows:
                             if (self.hascyrillic(subj)):
                                 email_subject += self.translit(subj)
+                            else:
+                                email_subject += subj
                     else:
                         # проверяем кирилицу
                         if (self.hascyrillic(email_subject_data)):
                             email_subject = self.translit(email_subject_data)
+                        else:
+                            email_subject = email_subject_data
                     if(not email_subject):
                         log.print_r('Плохое письмо: нет email_subject')
                         continue
