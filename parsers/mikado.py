@@ -112,7 +112,7 @@ class Mikado(Basic):
                     for row in reader:
 
                         i = i + 1
-                        log.print_r('Работаю со строкой ' + i  +" "+ row)
+                        log.print_r('Работаю со строкой ' + str(i) + ' ' + str(row))
                         # пропускаем первую строку
                         if (self.clearLine and i <= self.clearLine):
                             continue
