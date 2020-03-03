@@ -80,10 +80,13 @@ def checkParser(email):
         return Satrade()
     if "Avtosputnik" in email['email_subject']:
         return Avtosputnik()
-    if "ПрофитЛига склад К" in email['email_subject']:
-        return PFLKrasnodar()
-    if "ПрофитЛига склад Р" in email['email_subject']:
-        return PFLRostov()
+    if("robot@pr-lg.ru" in email['email_from']):
+        print(email['email_subject'])
+        exit()
+        if "ПрофитЛига склад К" in email['email_subject']:
+            return PFLKrasnodar()
+        if "ПрофитЛига склад Р" in email['email_subject']:
+            return PFLRostov()
     if "optprice@ats-auto.ru" in email['email_from']:
         return Toyotanova()
     if("price@armtek.ru" in email['email_from']):
