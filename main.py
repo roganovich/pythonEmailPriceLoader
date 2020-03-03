@@ -30,6 +30,7 @@ from parsers.seatrade import Satrade
 from parsers.avtosputnik import Avtosputnik
 from parsers.profitliga import PFLKrasnodar
 from parsers.profitliga import PFLRostov
+from parsers.toyotanova import Toyotanova
 
 
 # получаем настройки приложения
@@ -83,6 +84,8 @@ def checkParser(email):
         return PFLKrasnodar()
     if "ПрофитЛига склад Р" in email['email_subject']:
         return PFLRostov()
+    if "optprice@ats-auto.ru" in email['email_from']:
+        return Toyotanova()
     if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow()
