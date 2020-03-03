@@ -81,7 +81,7 @@ def checkParser(email):
     if "Avtosputnik" in email['email_subject']:
         return Avtosputnik()
     if("robot@pr-lg.ru" in email['email_from']):
-        print(email['email_subject'])
+        print(email)
         exit()
         if "ПрофитЛига склад К" in email['email_subject']:
             return PFLKrasnodar()
