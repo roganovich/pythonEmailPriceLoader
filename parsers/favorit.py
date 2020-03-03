@@ -24,6 +24,10 @@ class FavoritBasic(Basic):
     # тип файла прайса
     filetype = "xlsx"
 
+
+    # сопостовляем колонки в файле с назначениями полей
+    colums = {"art": 1, "bra": 0, "price": 3, "quality": 4, "desc": 2, "art_sup": 1}
+
     def __init__(self):
         self.prepareDir()
 
@@ -68,5 +72,3 @@ class FavoritKRS(FavoritBasic):
     fileName = "FAVORIT_KRS.xlsx"
     # путь к каталогу с файлами
     filePathExtract = "files/FavoritKRS/"
-    # сопостовляем колонки в файле с назначениями полей
-    colums = {"art": 1, "bra": 0, "price": 3, "quality": 4, "desc": 2, "art_sup": 1}
