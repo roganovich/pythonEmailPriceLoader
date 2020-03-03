@@ -126,9 +126,13 @@ class MailLoader():
                         for name in longFilenameRows:
                             if (self.hascyrillic(name)):
                                 longFilename += self.translit(name)
+                            else:
+                                longFilename += name
                     else:
                         if (self.hascyrillic(filename)):
                             longFilename = self.translit(filename)
+                        else:
+                            longFilename = filename
 
                     # очищаем имя файла от мусора
                     clearName = re.sub(r'[^A-Za-zА-я0-9.\s]', '', longFilename)
