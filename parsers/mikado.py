@@ -110,7 +110,9 @@ class Mikado(Basic):
                     # проверка на целостность данных
                     i = 0
                     for row in reader:
+
                         i = i + 1
+                        log.print_r('Работаю со строкой ' + i  +" "+ row)
                         # пропускаем первую строку
                         if (self.clearLine and i <= self.clearLine):
                             continue
@@ -118,6 +120,7 @@ class Mikado(Basic):
                             continue
                         # берем из строки только нужные столбцы
                         colData = self.prepareColumns(row)
+
                         if (len(colData) < 5):
                             continue
                         # проверяем данные
