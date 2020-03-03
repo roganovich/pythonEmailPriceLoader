@@ -13,13 +13,13 @@ with profiler.Profiler() as p:
     favoritModel = Favorit()
     # скачиваем все прайсы
     favoritModel.downloadFiles()
-    #favoritModel.workWidthFiles()
+    favoritModel.workWidthFiles()
 
     log.print_r("Начал работу с FavoritKRS")
     favoritKRSModel = FavoritKRS()
     # скачиваем все прайсы
     favoritKRSModel.downloadFiles()
-    #favoritKRSModel.workWidthFiles()
+    favoritKRSModel.workWidthFiles()
     exit()
 
 
