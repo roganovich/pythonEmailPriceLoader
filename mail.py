@@ -118,10 +118,20 @@ class MailLoader():
                 filename = part.get_filename()
                 # проверяем на наличие имени у файла
                 if filename:
-                    if (self.hascyrillic(filename)):
-                        filename = self.translit(filename)
+
+                    longFilename = ""
+                    # разбиваем тему на абзацы
+                    longFilenameRows = filename.split('\n')
+                    if (len(longFilenameRows) > 1):
+                        for name in longFilenameRows:
+                            if (self.hascyrillic(name)):
+                                longFilename += self.translit(name)
+                    else:
+                        if (self.hascyrillic(filename)):
+                            longFilename = self.translit(filename)
+
                     # очищаем имя файла от мусора
-                    clearName = re.sub(r'[^A-Za-zА-я0-9.\s]', '', filename)
+                    clearName = re.sub(r'[^A-Za-zА-я0-9.\s]', '', longFilename)
                     # путь к сохранения файла
                     filePath = path + clearName
                     # если этот файл уже есть удалить
@@ -131,6 +141,7 @@ class MailLoader():
                     # открываем файл для записи
                     new_file = open(filePath, 'wb')
                     # сохраняем файл в папку для дальнейшей загрузки
+
                     try:
                         os.chmod(filePath, 0o600)
                         new_file.write(part.get_payload(decode=True))
