@@ -91,7 +91,7 @@ class Mikado(Basic):
         # назначаем склад для этого файла поставщика
         self.warhouse_id = str(warhouse_id)
         # получаем полный путь файла склада
-        pathExtract = os.path.join(self.filePathExtract, warhouse_id)
+        pathExtract = os.path.join(self.filePathExtract, self.warhouse_id)
         # находим все файлы прайсов в каталоге парсера поставщика
         files = os.listdir(pathExtract)
         # перебираем все найденные файлы
