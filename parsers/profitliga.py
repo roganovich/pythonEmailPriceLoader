@@ -27,7 +27,7 @@ class PFLRostov(Basic):
 class PFLKrasnodar(Basic):
 	name = "PFLKrasnodar"
 	suppliers_id = 69
-	warhouse_id = 96
+	warhouse_id = 98
 	data = []
 	# путь к каталогу с файлами
 	filePathExtract = "files/PFLKrasnodar/"
