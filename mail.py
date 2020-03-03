@@ -174,6 +174,8 @@ class MailLoader():
             for response_part in data:
                 if isinstance(response_part, tuple):
                     email_message = email.message_from_bytes(response_part[1])
+                    print(email_message)
+                    exit()
                     # кому отправлено письмо
                     email_to = str(email_message['To'])
                     # от кого отправлено письмо  #email.utils.parseaddr
