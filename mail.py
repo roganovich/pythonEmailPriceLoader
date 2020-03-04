@@ -137,8 +137,6 @@ class MailLoader():
                             longFilename = self.translit(filename)
                         else:
                             longFilename = filename
-                    print(longFilename)
-                    exit()
                     # очищаем имя файла от мусора
                     clearName = re.sub(r'[^A-Za-zА-я0-9.\s]', '', longFilename)
                     # путь к сохранения файла
