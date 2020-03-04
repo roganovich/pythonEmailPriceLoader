@@ -308,16 +308,18 @@ class Basic:
                 colData = self.prepareColumns(row)
                 if (len(colData) < 5):
                     continue
+                print(colData)
                 # проверяем данные
                 try:
                     clearData = loader.validate(colData)
+                    print(colData)
                     if(clearData):
                         # записываем в таблицу загрузки
                         loader.writerests(clearData)
                         # записываем в файл результата
                         loader.writer.writerows([clearData.values()])
                 except:
-                    log.print_r('Не смог прочитать файл')
+                    log.print_r('Не смог прочитать строку')
                     continue
 
             log.print_r('Обработал ' + str(i) + " строк")
