@@ -169,7 +169,7 @@ class Basic:
         # открываем книгу
         sheet = rb.sheet_by_index(0)
 
-        with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
+        with open(filePath, 'r', newline='', encoding='utf-8', errors='ignore') as file_obj:
             i = 0
             for row in range(sheet.nrows):
                 i = i + 1
