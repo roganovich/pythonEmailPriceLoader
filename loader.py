@@ -58,29 +58,35 @@ class Loader:
 		prfc_desc = str(data[4]).strip()
 
 		# подготавливаем дополнительыне поля для поставщика JTC
-		if(data[6]):
-			price1Claer = re.sub(r'[^0-9.]+', r'', str(data[6]).strip().replace(',', '.'))
+		try:
+			item = data[6]
+			price1Claer = re.sub(r'[^0-9.]+', r'', str(item).strip().replace(',', '.'))
 			if (self.is_number(price1Claer)):
 				prfc_price_dop1 = round(float(price1Claer), 2)
 			else:
 				prfc_price_dop1 = 0
-		else:
+		except IndexError:
 			prfc_price_dop1 = 0
-		if (data[7]):
-			price2Claer = re.sub(r'[^0-9.]+', r'', str(data[7]).strip().replace(',', '.'))
+
+		try:
+			item = data[7]
+			price2Claer = re.sub(r'[^0-9.]+', r'', str(item).strip().replace(',', '.'))
 			if (self.is_number(price2Claer)):
 				prfc_price_dop2 = round(float(price2Claer), 2)
 			else:
 				prfc_price_dop2 = 0
-		else:
+		except IndexError:
 			prfc_price_dop2 = 0
-		if (data[8]):
-			price3Claer = re.sub(r'[^0-9.]+', r'', str(data[8]).strip().replace(',', '.'))
+
+
+		try:
+			item = data[8]
+			price3Claer = re.sub(r'[^0-9.]+', r'', str(item).strip().replace(',', '.'))
 			if (self.is_number(price3Claer)):
 				prfc_price_dop3 = round(float(price3Claer), 2)
 			else:
 				prfc_price_dop3 = 0
-		else:
+		except IndexError:
 			prfc_price_dop3 = 0
 
 		# проверяем цену
