@@ -29,7 +29,7 @@ class Mikado(Basic):
     parsertype = "zip"
     # тип файла прайса
     filetype = "csv"
-    fileEncoding = "cp1251"
+    fileEncoding = "ANSI"
 
     pricesFiles = {
                     "76": "https://polomkam.net/office/GetFile.asp?File=MikadoStock.zip&CLID=12370&PSW=xmmlra152",
