@@ -300,7 +300,7 @@ class Basic:
             return False
         # создаем класс загрузчика
         loader = Loader(self)
-        with open(filePath, 'r', newline='', encoding=self.fileEncoding) as file_obj:
+        with open(filePath, 'r', newline='', encoding=self.fileEncoding, errors='ignore') as file_obj:
             reader = csv.reader(file_obj, delimiter=self.delimiter)
             i = 0
             for row in reader:

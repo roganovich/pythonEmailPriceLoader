@@ -9,6 +9,7 @@ from os.path import splitext
 from zipfile import ZipFile
 import csv
 from loader import Loader
+import io
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -107,7 +108,7 @@ class Mikado(Basic):
                 log.print_r('Работаю с файлом ' + filePath)
                 # создаем класс загрузчика
                 loader = Loader(self)
-                with open(filePath, 'r', newline='', encoding=self.fileEncoding) as file_obj:
+                with open(filePath, 'r', newline='', encoding=self.fileEncoding, errors='ignore') as file_obj:
                     reader = csv.reader(file_obj, delimiter=self.delimiter)
                     # проверка на целостность данных
                     i = 0
