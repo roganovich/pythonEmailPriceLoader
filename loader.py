@@ -3,7 +3,7 @@ import os
 import config
 import datetime
 import csv
-#import psycopg2
+import psycopg2
 import re
 
 # получаем настройки приложения
