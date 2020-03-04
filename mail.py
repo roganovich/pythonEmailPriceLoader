@@ -120,9 +120,8 @@ class MailLoader():
                 filename = part.get_filename()
                 # проверяем на наличие имени у файла
                 if filename:
-
                     # очищаем имя файла от мусора
-                    clearName = "price.".obj.filetype
+                    clearName = "price."+obj.filetype
                     # путь к сохранения файла
                     filePath = path + clearName
                     # если этот файл уже есть удалить
