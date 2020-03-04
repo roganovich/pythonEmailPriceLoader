@@ -195,7 +195,7 @@ class Basic:
                         loader.writer.writerows([clearData.values()])
             except:
                 log.print_r('Не смог прочитать файл')
-            log.print_r('Обработал ' + str(i) + "строк")
+            log.print_r('Обработал ' + str(i) + " строк")
             loader.resultFile.close()
             loader.closeWrite()
 
@@ -250,6 +250,7 @@ class Basic:
 
                 #проверяем данные
                 clearData = loader.validate(colData)
+                print(clearData)
                 if(clearData):
                     # записываем в таблицу загрузки
                     loader.writerests(clearData)
@@ -257,7 +258,7 @@ class Basic:
                     loader.writer.writerows([clearData.values()])
         except:
             log.print_r('Не смог прочитать файл')
-        log.print_r('Обработал ' + str(i) + "строк")
+        log.print_r('Обработал ' + str(i) + " строк")
         loader.resultFile.close()
         loader.closeWrite()
 
@@ -275,7 +276,7 @@ class Basic:
         for row in rows:
             i = i + 1
             print(row.attributes['name'].value)
-        log.print_r('Обработал ' + str(i) + "строк")
+        log.print_r('Обработал ' + str(i) + " строк")
         exit()
 
     # функция принимает путь файла, открывает его и работает построчно
@@ -323,7 +324,7 @@ class Basic:
                         loader.writer.writerows([clearData.values()])
             except:
                 log.print_r('Не смог прочитать файл')
-            log.print_r('Обработал ' + str(i) + "строк")
+            log.print_r('Обработал ' + str(i) + " строк")
             loader.resultFile.close()
             loader.closeWrite()
 
