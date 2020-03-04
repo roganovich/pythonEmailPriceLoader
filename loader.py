@@ -51,8 +51,8 @@ class Loader:
 		#log.print_r(data)
 		# подготавливаем поля для записи
 		prfc_prices_file_id = self.prf_id
-		prfc_article = re.sub(r'[^0-9A-Za-z\s+]+', r'', str(data[0]).strip())
-		prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\-\s+]+', r'', str(data[1]).strip())
+		prfc_article = re.sub(r'[^0-9A-Za-z\/.\-\\\s+]+', r'', str(data[0]).strip())
+		prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\/\.\-\\\s+]+', r'', str(data[1]).strip())
 		prfc_desc = str(data[4]).strip()
 
 		priceClaer = re.sub(r'[^0-9.]+', r'', str(data[2]).strip().replace(',', '.'))
