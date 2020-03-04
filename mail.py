@@ -121,7 +121,10 @@ class MailLoader():
                 # проверяем на наличие имени у файла
                 if filename:
                     # очищаем имя файла от мусора
-                    clearName = "price."+obj.filetype
+                    if(obj.parsertype == 'file'):
+                        clearName = "price." + obj.filetype
+                    else:
+                        clearName = "price." + obj.parsertype
                     # путь к сохранения файла
                     filePath = path + clearName
                     # если этот файл уже есть удалить
