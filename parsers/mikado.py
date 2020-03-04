@@ -113,6 +113,13 @@ class Mikado(Basic):
                     i = 0
                     for row in reader:
                         i = i + 1
+
+                        try:
+                            row
+                        except:
+                            log.print_r('Не смог прочитать строку ' + str(i))
+                            continue
+
                         #log.print_r('Работаю со строкой ' + str(i) + ' ' + str(row))
                         # пропускаем первую строку
                         if (self.clearLine and i <= self.clearLine):

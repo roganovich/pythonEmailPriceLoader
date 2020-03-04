@@ -305,6 +305,11 @@ class Basic:
             i = 0
             for row in reader:
                 i = i + 1
+                try:
+                    row
+                except:
+                    log.print_r('Не смог прочитать строку ' + str(i))
+                    continue
                 # пропускаем первую строку
                 if (self.clearLine  and i <= self.clearLine):
                     continue
