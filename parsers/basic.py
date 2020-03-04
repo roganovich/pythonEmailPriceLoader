@@ -171,30 +171,27 @@ class Basic:
 
         with open(filePath, 'r', newline='', encoding='utf-8') as file_obj:
             i = 0
-            try:
-                for row in range(sheet.nrows):
-                    i = i + 1
-                    # пропускаем первую строку
-                    if (self.clearLine and i <= self.clearLine):
-                        continue
+            for row in range(sheet.nrows):
+                i = i + 1
+                # пропускаем первую строку
+                if (self.clearLine and i <= self.clearLine):
+                    continue
 
-                    # берем столбцы строки
-                    rowData = sheet.row_values(row)
-                    if (len(rowData) < 5):
-                        continue
-                    # берем из строки только нужные столбцы
-                    colData = self.prepareColumns(rowData)
-                    if (len(colData) < 5):
-                        continue
-                    # проверяем данные
-                    clearData = loader.validate(colData)
-                    if (clearData):
-                        # записываем в таблицу загрузки
-                        loader.writerests(clearData)
-                        # записываем в файл результата
-                        loader.writer.writerows([clearData.values()])
-            except:
-                log.print_r('Не смог прочитать файл')
+                # берем столбцы строки
+                rowData = sheet.row_values(row)
+                if (len(rowData) < 5):
+                    continue
+                # берем из строки только нужные столбцы
+                colData = self.prepareColumns(rowData)
+                if (len(colData) < 5):
+                    continue
+                # проверяем данные
+                clearData = loader.validate(colData)
+                if (clearData):
+                    # записываем в таблицу загрузки
+                    loader.writerests(clearData)
+                    # записываем в файл результата
+                    loader.writer.writerows([clearData.values()])
             log.print_r('Обработал ' + str(i) + " строк")
             loader.resultFile.close()
             loader.closeWrite()
@@ -227,37 +224,35 @@ class Basic:
         rows = sheet.rows
 
         i = 0
-        try:
-            for row in rows:
-                i = i + 1
-                # пропускаем первую строку
-                if (self.clearLine and i <= self.clearLine):
-                    continue
-                k = 0
-                rowData = []
-                for cell in row:
-                    rowData.append(cell.value)
-                    k = k + 1
+        for row in rows:
+            i = i + 1
+            # пропускаем первую строку
+            if (self.clearLine and i <= self.clearLine):
+                continue
+            k = 0
+            rowData = []
+            for cell in row:
+                rowData.append(cell.value)
+                k = k + 1
 
-                # берем столбцы строки
-                if(len(rowData) <4):
-                    continue
-                #берем из строки только нужные столбцы
-                colData = self.prepareColumns(rowData)
+            # берем столбцы строки
+            if(len(rowData) <4):
+                continue
+            #берем из строки только нужные столбцы
+            colData = self.prepareColumns(rowData)
 
-                if (len(colData) < 5):
-                    continue
+            if (len(colData) < 5):
+                continue
 
-                #проверяем данные
-                clearData = loader.validate(colData)
-                print(clearData)
-                if(clearData):
-                    # записываем в таблицу загрузки
-                    loader.writerests(clearData)
-                    # записываем в файл результата
-                    loader.writer.writerows([clearData.values()])
-        except:
-            log.print_r('Не смог прочитать файл')
+            #проверяем данные
+            clearData = loader.validate(colData)
+            print(clearData)
+            if(clearData):
+                # записываем в таблицу загрузки
+                loader.writerests(clearData)
+                # записываем в файл результата
+                loader.writer.writerows([clearData.values()])
+
         log.print_r('Обработал ' + str(i) + " строк")
         loader.resultFile.close()
         loader.closeWrite()
