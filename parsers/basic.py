@@ -309,8 +309,6 @@ class Basic:
                 if (len(colData) < 5):
                     continue
                 clearData = loader.validate(colData)
-                print(clearData)
-                exit()
                 # проверяем данные
                 try:
                     clearData = loader.validate(colData)
