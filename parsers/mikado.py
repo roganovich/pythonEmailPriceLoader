@@ -31,7 +31,9 @@ class Mikado(Basic):
     filetype = "csv"
     fileEncoding = "cp1251"
 
-    pricesFiles = {"76": "https://polomkam.net/office/GetFile.asp?File=MikadoStock.zip&CLID=12370&PSW=xmmlra152",
+    pricesFiles = {
+                    "76": "https://polomkam.net/office/GetFile.asp?File=MikadoStock.zip&CLID=12370&PSW=xmmlra152",
+                    "17": "https://polomkam.net/office/GetFile.asp?File=MikadoStockReg.zip&regID=182&CLID=12370&PSW=xmmlra152",
                    "180": "https://polomkam.net/office/GetFile.asp?File=MikadoStockReg.zip&regID=92&CLID=12370&PSW=xmmlra152",
                    "118": "https://polomkam.net/office/GetFile.asp?File=MikadoStockReg.zip&regID=82&CLID=12370&PSW=xmmlra152",
                    "150": "https://polomkam.net/office/GetFile.asp?File=MikadoStockReg.zip&regID=23&CLID=12370&PSW=xmmlra152",
