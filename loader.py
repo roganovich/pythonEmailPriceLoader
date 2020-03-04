@@ -119,7 +119,7 @@ class Loader:
 					 data['prfc_price_dop1'],
 					 data['prfc_price_dop2'],
 					 data['prfc_price_dop3'])
-		#log.print_r(dataClear)
+		log.print_r(dataClear)
 		self.cursor.execute(query, dataClear)
 		self.conn.commit()
 		return True
