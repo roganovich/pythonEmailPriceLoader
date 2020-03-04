@@ -116,10 +116,8 @@ with profiler.Profiler() as p:
             log.print_r('Этот прайс уже загружали сегодня')
             continue
         # скачивания файла
-        # получаем путь сохранения файла из письма
-        path = obj.getParserPath()
         # получаем файлы вложенные в письмо
-        files = mLoader.downloadAttachment(email['email_message'], path)
+        files = mLoader.downloadAttachment(email['email_message'], obj)
         # загружаем файл в базу
         obj.upload()
         # грузим только 1 письмо. т.к время соединения с базой заканчиваеться

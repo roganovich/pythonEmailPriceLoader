@@ -106,7 +106,9 @@ class MailLoader():
         return ru_text
 
     # скачивания файла
-    def downloadAttachment(self, email, path):
+    def downloadAttachment(self, email, obj):
+        # получаем путь сохранения файла из письма
+        path = obj.getParserPath()
         files = []
         # есть ли вложения в письме
         if email.is_multipart():
@@ -119,26 +121,8 @@ class MailLoader():
                 # проверяем на наличие имени у файла
                 if filename:
 
-                    longFilename = ""
-                    # разбиваем тему на абзацы
-                    longFilenameRows = filename.split('\n')
-
-                    if (len(longFilenameRows) > 1):
-                        for name in longFilenameRows:
-                            if (self.hascyrillic(name)):
-                                try:
-                                    longFilename += self.translit(name)
-                                except:
-                                    longFilename += name
-                            else:
-                                longFilename += name
-                    else:
-                        if (self.hascyrillic(filename)):
-                            longFilename = self.translit(filename)
-                        else:
-                            longFilename = filename
                     # очищаем имя файла от мусора
-                    clearName = re.sub(r'[^A-Za-zА-я0-9.\s]', '', longFilename)
+                    clearName = "price.".obj.filetype
                     # путь к сохранения файла
                     filePath = path + clearName
                     # если этот файл уже есть удалить
