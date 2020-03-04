@@ -122,10 +122,14 @@ class MailLoader():
                     longFilename = ""
                     # разбиваем тему на абзацы
                     longFilenameRows = filename.split('\n')
+
                     if (len(longFilenameRows) > 1):
                         for name in longFilenameRows:
                             if (self.hascyrillic(name)):
-                                longFilename += self.translit(name)
+                                try:
+                                    longFilename += self.translit(name)
+                                except:
+                                    longFilename += name
                             else:
                                 longFilename += name
                     else:
@@ -133,7 +137,8 @@ class MailLoader():
                             longFilename = self.translit(filename)
                         else:
                             longFilename = filename
-
+                    print(longFilename)
+                    exit()
                     # очищаем имя файла от мусора
                     clearName = re.sub(r'[^A-Za-zА-я0-9.\s]', '', longFilename)
                     # путь к сохранения файла
