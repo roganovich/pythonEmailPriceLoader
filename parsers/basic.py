@@ -297,27 +297,29 @@ class Basic:
         with open(filePath, 'r', newline='', encoding=self.fileEncoding) as file_obj:
             reader = csv.reader(file_obj, delimiter=self.delimiter)
             i = 0
-            try:
-                for row in reader:
-                    i = i + 1
-                    # пропускаем первую строку
-                    if (self.clearLine  and i <= self.clearLine):
-                        continue
-                    if(len(row) <5):
-                        continue
-                    # берем из строки только нужные столбцы
-                    colData = self.prepareColumns(row)
-                    if (len(colData) < 5):
-                        continue
-                    # проверяем данные
+            for row in reader:
+                i = i + 1
+                # пропускаем первую строку
+                if (self.clearLine  and i <= self.clearLine):
+                    continue
+                if(len(row) <5):
+                    continue
+                # берем из строки только нужные столбцы
+                colData = self.prepareColumns(row)
+                if (len(colData) < 5):
+                    continue
+                # проверяем данные
+                try:
                     clearData = loader.validate(colData)
                     if(clearData):
                         # записываем в таблицу загрузки
                         loader.writerests(clearData)
                         # записываем в файл результата
                         loader.writer.writerows([clearData.values()])
-            except:
-                log.print_r('Не смог прочитать файл')
+                except:
+                    log.print_r('Не смог прочитать файл')
+                    continue
+
             log.print_r('Обработал ' + str(i) + " строк")
             loader.resultFile.close()
             loader.closeWrite()
