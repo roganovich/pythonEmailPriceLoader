@@ -58,7 +58,7 @@ class Loader:
 		prfc_desc = str(data[4]).strip()
 
 		# подготавливаем дополнительыне поля для поставщика JTC
-		if(6 in data):
+		if(data[6]):
 			price1Claer = re.sub(r'[^0-9.]+', r'', str(data[6]).strip().replace(',', '.'))
 			if (self.is_number(price1Claer)):
 				prfc_price_dop1 = round(float(price1Claer), 2)
@@ -66,7 +66,7 @@ class Loader:
 				prfc_price_dop1 = 0
 		else:
 			prfc_price_dop1 = 0
-		if (7 in data):
+		if (data[7]):
 			price2Claer = re.sub(r'[^0-9.]+', r'', str(data[7]).strip().replace(',', '.'))
 			if (self.is_number(price2Claer)):
 				prfc_price_dop2 = round(float(price2Claer), 2)
@@ -74,7 +74,7 @@ class Loader:
 				prfc_price_dop2 = 0
 		else:
 			prfc_price_dop2 = 0
-		if (8 in data):
+		if (data[8]):
 			price3Claer = re.sub(r'[^0-9.]+', r'', str(data[8]).strip().replace(',', '.'))
 			if (self.is_number(price3Claer)):
 				prfc_price_dop3 = round(float(price3Claer), 2)
