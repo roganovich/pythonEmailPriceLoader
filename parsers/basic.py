@@ -246,7 +246,6 @@ class Basic:
 
             #проверяем данные
             clearData = loader.validate(colData)
-            print(clearData)
             if(clearData):
                 # записываем в таблицу загрузки
                 loader.writerests(clearData)
