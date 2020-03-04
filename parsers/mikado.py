@@ -111,32 +111,33 @@ class Mikado(Basic):
                     reader = csv.reader(file_obj, delimiter=self.delimiter)
                     # проверка на целостность данных
                     i = 0
-                    try:
-                        for row in reader:
-                            i = i + 1
-                            #log.print_r('Работаю со строкой ' + str(i) + ' ' + str(row))
-                            # пропускаем первую строку
-                            if (self.clearLine and i <= self.clearLine):
-                                continue
-                            if (len(row) < 5):
-                                continue
-                            # берем из строки только нужные столбцы
-                            colData = self.prepareColumns(row)
+                    for row in reader:
+                        i = i + 1
+                        #log.print_r('Работаю со строкой ' + str(i) + ' ' + str(row))
+                        # пропускаем первую строку
+                        if (self.clearLine and i <= self.clearLine):
+                            continue
+                        if (len(row) < 5):
+                            continue
+                        # берем из строки только нужные столбцы
+                        colData = self.prepareColumns(row)
 
-                            if (len(colData) < 5):
-                                continue
-                            # проверяем данные
+                        if (len(colData) < 5):
+                            continue
+                        # проверяем данные
+                        try:
+                            clearData = loader.validate(colData)
+                        except:
+                            log.print_r('Не смог прочитать строку ' + str(i))
+
+                        if (clearData):
                             try:
-                                clearData = loader.validate(colData)
-                            except:
-                                log.print_r('Ошибка строки ' + i)
-                            if (clearData):
                                 # записываем в таблицу загрузки
                                 loader.writerests(clearData)
                                 # записываем в файл результата
                                 loader.writer.writerows([clearData.values()])
-                    except:
-                        log.print_r('Не смог прочитать файл')
+                            except:
+                                log.print_r('Не смог записать строку в базу ' + str(i))
                     loader.resultFile.close()
                     loader.closeWrite()
 

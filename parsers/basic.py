@@ -188,10 +188,13 @@ class Basic:
                 # проверяем данные
                 clearData = loader.validate(colData)
                 if (clearData):
-                    # записываем в таблицу загрузки
-                    loader.writerests(clearData)
-                    # записываем в файл результата
-                    loader.writer.writerows([clearData.values()])
+                    try:
+                        # записываем в таблицу загрузки
+                        loader.writerests(clearData)
+                        # записываем в файл результата
+                        loader.writer.writerows([clearData.values()])
+                    except:
+                        log.print_r('Не смог записать строку в базу ' + str(i))
             log.print_r('Обработал ' + str(i) + " строк")
             loader.resultFile.close()
             loader.closeWrite()
@@ -247,10 +250,13 @@ class Basic:
             #проверяем данные
             clearData = loader.validate(colData)
             if(clearData):
-                # записываем в таблицу загрузки
-                loader.writerests(clearData)
-                # записываем в файл результата
-                loader.writer.writerows([clearData.values()])
+                try:
+                    # записываем в таблицу загрузки
+                    loader.writerests(clearData)
+                    # записываем в файл результата
+                    loader.writer.writerows([clearData.values()])
+                except:
+                    log.print_r('Не смог записать строку в базу ' + str(i))
 
         log.print_r('Обработал ' + str(i) + " строк")
         loader.resultFile.close()
@@ -313,10 +319,13 @@ class Basic:
                 try:
                     clearData = loader.validate(colData)
                     if(clearData):
-                        # записываем в таблицу загрузки
-                        loader.writerests(clearData)
-                        # записываем в файл результата
-                        loader.writer.writerows([clearData.values()])
+                        try:
+                            # записываем в таблицу загрузки
+                            loader.writerests(clearData)
+                            # записываем в файл результата
+                            loader.writer.writerows([clearData.values()])
+                        except:
+                            log.print_r('Не смог записать строку в базу ' + str(i))
                 except:
                     log.print_r('Не смог прочитать строку ' + str(i))
                     continue
