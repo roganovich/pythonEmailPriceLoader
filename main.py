@@ -32,6 +32,7 @@ from parsers.profitliga import PFLKrasnodar
 from parsers.profitliga import PFLRostov
 from parsers.toyotanova import Toyotanova
 from parsers.voltag import Voltag
+from parsers.jtc import Jtc
 
 
 # получаем настройки приложения
@@ -89,6 +90,8 @@ def checkParser(email):
         return PFLRostov()
     if "optprice@ats-auto.ru" in email['email_from']:
         return Toyotanova()
+    if "прайс JTC" in email['email_subject']:
+        return Jtc()
     if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow()

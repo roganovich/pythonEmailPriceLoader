@@ -57,24 +57,68 @@ class Loader:
 		prfc_brand = str(data[1]).strip()
 		prfc_desc = str(data[4]).strip()
 
+		# подготавливаем дополнительыне поля для поставщика JTC
+		if(6 in data):
+			price1Claer = re.sub(r'[^0-9.]+', r'', str(data[6]).strip().replace(',', '.'))
+			if (self.is_number(price1Claer)):
+				prfc_price_dop1 = round(float(price1Claer), 2)
+			else:
+				prfc_price_dop1 = 0
+		else:
+			prfc_price_dop1 = 0
+		if (7 in data):
+			price2Claer = re.sub(r'[^0-9.]+', r'', str(data[7]).strip().replace(',', '.'))
+			if (self.is_number(price2Claer)):
+				prfc_price_dop2 = round(float(price2Claer), 2)
+			else:
+				prfc_price_dop2 = 0
+		else:
+			prfc_price_dop2 = 0
+		if (8 in data):
+			price3Claer = re.sub(r'[^0-9.]+', r'', str(data[8]).strip().replace(',', '.'))
+			if (self.is_number(price3Claer)):
+				prfc_price_dop3 = round(float(price3Claer), 2)
+			else:
+				prfc_price_dop3 = 0
+		else:
+			prfc_price_dop3 = 0
+
+		# проверяем цену
 		priceClaer = re.sub(r'[^0-9.]+', r'', str(data[2]).strip().replace(',', '.'))
 		if (self.is_number(priceClaer)):
 			prfc_price = round(float(priceClaer), 2)
 		else:
-			return False
+			prfc_price = 0
+		# проверяем остатки
 		qualityClaer = re.sub(r'[^0-9.]+', r'', str(data[3]).strip().replace(',', '.'))
 		if (self.is_number(qualityClaer)):
 			prfc_quality = round(float(qualityClaer))
 		else:
-			return False
+			prfc_quality = 0
 
-		return {'prfc_prices_file_id':str(prfc_prices_file_id),'prfc_article':str(prfc_article),'prfc_brand':str(prfc_brand),'prfc_price':str(prfc_price),'prfc_quality':str(prfc_quality),'prfc_desc':str(prfc_desc)}
+		return {'prfc_prices_file_id':str(prfc_prices_file_id),
+				'prfc_article':str(prfc_article),
+				'prfc_brand':str(prfc_brand),
+				'prfc_price':str(prfc_price),
+				'prfc_quality':str(prfc_quality),
+				'prfc_desc':str(prfc_desc),
+				'prfc_price_dop1':str(prfc_price_dop1),
+				'prfc_price_dop2':str(prfc_price_dop2),
+				'prfc_price_dop3':str(prfc_price_dop3)}
 
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
 		#log.print_r(data)
-		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality, prfc_desc) VALUES (%s, %s, %s, %s, %s, %s)")
-		dataClear = (data['prfc_prices_file_id'], data['prfc_brand'], data['prfc_article'], data['prfc_price'], data['prfc_quality'], data['prfc_desc'])
+		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality, prfc_desc) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
+		dataClear = (data['prfc_prices_file_id'],
+					 data['prfc_brand'],
+					 data['prfc_article'],
+					 data['prfc_price'],
+					 data['prfc_quality'],
+					 data['prfc_desc'],
+					 data['prfc_price_dop1'],
+					 data['prfc_price_dop2'],
+					 data['prfc_price_dop3'])
 		#log.print_r(dataClear)
 		self.cursor.execute(query, dataClear)
 		self.conn.commit()
