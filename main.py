@@ -11,6 +11,7 @@ from parsers.autoeuro import Autoeuro
 from parsers.focusauto import Focusauto
 from parsers.shatem import Shatepodolsk
 from parsers.shatem import Shateminsk
+from parsers.shatem import Shateekat
 from parsers.autopartner import Autopartner
 from parsers.kyariz import Kyariz
 from parsers.variant import Variant
@@ -53,6 +54,8 @@ def checkParser(email):
             return Shatepodolsk()
         if "Склад Минск" in email['email_subject']:
             return Shateminsk()
+        if "Склад Екатеринбург" in email['email_subject']:
+            return Shateekat()
     if "avtopartner99@bk.ru" in email['email_from']:
         return Autopartner()
     if "Остатки Kyariz" in email['email_subject']:
