@@ -120,11 +120,33 @@ class MailLoader():
                 filename = part.get_filename()
                 # проверяем на наличие имени у файла
                 if filename:
-                    # очищаем имя файла от мусора
-                    if(obj.parsertype == 'file'):
-                        clearName = "price." + obj.filetype
+
+                    clearName = ""
+                    # разбиваем тему на абзацы
+                    filenameRows = filename.split('\n')
+                    if (len(filenameRows) > 1):
+                        for name in filenameRows:
+                            if (self.hascyrillic(name)):
+                                try:
+                                    clearName += self.translit(name)
+                                except:
+                                    clearName += name
+                            else:
+                                clearName += name
                     else:
-                        clearName = "price." + obj.parsertype
+                        if (self.hascyrillic(filenameRows)):
+                            try:
+                                clearName += self.translit(filenameRows)
+                            except:
+                                clearName = filenameRows
+                        else:
+                            clearName = filenameRows
+
+                    # очищаем имя файла от мусора
+                    #if(obj.parsertype == 'file'):
+                    #    clearName = "price." + obj.filetype
+                    #else:
+                    #    clearName = "price." + obj.parsertype
                     # путь к сохранения файла
                     filePath = path + clearName
                     # если этот файл уже есть удалить
