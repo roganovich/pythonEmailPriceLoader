@@ -130,7 +130,7 @@ class MailLoader():
                                 try:
                                     clearName += self.translit(name)
                                 except:
-                                    clearName += name
+                                    clearName = ""
                             else:
                                 clearName += name
                     else:
@@ -143,12 +143,10 @@ class MailLoader():
                             clearName = filename
 
                     # очищаем имя файла от мусора
-                    #if(obj.parsertype == 'file'):
-                    #    clearName = "price." + obj.filetype
-                    #else:
-                    #    clearName = "price." + obj.parsertype
-                    # путь к сохранения файла
                     clearName = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\/\.\-\\\s+]+', r'', clearName.strip())
+                    # если не удалось получить имя файла, то делаем его базовым
+                    if (not clearName):
+                        clearName = "price." + obj.filetype
                     filePath = path + clearName
                     # если этот файл уже есть удалить
                     if os.path.exists(filePath):
