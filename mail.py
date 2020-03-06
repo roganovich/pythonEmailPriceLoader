@@ -134,13 +134,13 @@ class MailLoader():
                             else:
                                 clearName += name
                     else:
-                        if (self.hascyrillic(filenameRows)):
+                        if (self.hascyrillic(filename)):
                             try:
-                                clearName += self.translit(filenameRows)
+                                clearName += self.translit(filename)
                             except:
-                                clearName = filenameRows
+                                clearName = filename
                         else:
-                            clearName = filenameRows
+                            clearName = filename
 
                     # очищаем имя файла от мусора
                     #if(obj.parsertype == 'file'):
