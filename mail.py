@@ -148,6 +148,7 @@ class MailLoader():
                     #else:
                     #    clearName = "price." + obj.parsertype
                     # путь к сохранения файла
+                    clearName = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\/\.\-\\\s+]+', r'', clearName.strip())
                     filePath = path + clearName
                     # если этот файл уже есть удалить
                     if os.path.exists(filePath):
