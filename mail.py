@@ -77,6 +77,11 @@ class MailLoader():
             alpha = '=?windows-1251?B?'
             char = 'windows-1251'
             type = 'base64'
+        elif "=?Windows - 1251?Q" in s:
+            alpha = '=?Windows - 1251?Q'
+            char = 'windows-1251'
+            type = 'quopri'
+            s = s.replace('_', ' ')
         elif "=?windows-1251?Q?" in s:
             alpha = '=?windows-1251?Q?'
             char = 'windows-1251'
