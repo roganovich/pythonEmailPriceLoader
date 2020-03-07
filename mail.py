@@ -143,7 +143,7 @@ class MailLoader():
                             clearName = filename
 
                     # очищаем имя файла от мусора
-                    clearName = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ.\/\-\\\s+]+', r'', clearName.strip())
+                    clearName = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\.\/\-\\\s+]+', r'', clearName.strip())
                     # если не удалось получить имя файла, то делаем его базовым
                     if (not clearName):
                         clearName = "price." + obj.filetype
