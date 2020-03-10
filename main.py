@@ -93,7 +93,7 @@ def checkParser(email):
         return PFLRostov()
     if "optprice@ats-auto.ru" in email['email_from']:
         return Toyotanova()
-    if "ml1cuser@autoopt.ru" in email['email_from']:
+    if "ML1Cuser@autoopt.ru" in email['email_from']:
         return Jtc()
     if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
