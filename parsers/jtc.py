@@ -24,7 +24,7 @@ class Jtc(Basic):
 	# price_dop1 - розница и дискот 5
 	# price_dop2 - закупочная цена
 	# price_dop3 - дисконт 1 и 3
-	colums = {"art": 3, "bra": 0, "price": 4, "quality": 2, "desc":1, "art_sup":2, "price_dop1": 4, "price_dop2": 5, "price_dop3": 6}
+	colums = {"art": 3, "bra": 0, "price": 4, "quality": 2, "desc":1, "art_sup":2, "price_dop1": 5, "price_dop2": 4, "price_dop3": 6}
 
 
 
