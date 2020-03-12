@@ -16,7 +16,7 @@ class Avtosputnik(Basic):
 	# пупустить строк в файле
 	clearLine = 1
 	# тип файла вложения
-	parsertype = "file"
+	parsertype = "zip"
 	# тип файла прайса
 	filetype = "xlsx"
 
