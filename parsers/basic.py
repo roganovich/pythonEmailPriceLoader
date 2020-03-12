@@ -220,7 +220,6 @@ class Basic:
             log.print_r('Не нашел склад для загрузки')
             return False
 
-
         # создаем класс загрузчика
         loader = Loader(self)
         # начинаем работать с xls
@@ -235,8 +234,9 @@ class Basic:
                 continue
             k = 0
             rowData = []
-            for cell in row.tolist():
-                rowData.append(cell.value)
+            columts = row.tolist()
+            for cell in columts:
+                rowData.append(columts[cell])
                 k = k + 1
 
             # берем столбцы строки
