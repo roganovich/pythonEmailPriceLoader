@@ -125,7 +125,6 @@ class MailLoader():
                 filename = part.get_filename()
                 # проверяем на наличие имени у файла
                 if filename:
-
                     clearName = ""
                     # разбиваем тему на абзацы
                     filenameRows = filename.split('\n')
@@ -152,6 +151,7 @@ class MailLoader():
                     # если не удалось получить имя файла, то делаем его базовым
                     if (not clearName):
                         clearName = "price." + obj.filetype
+                    log.print_r('Нашел файл ' + clearName)
                     filePath = path + clearName
                     # если этот файл уже есть удалить
                     if os.path.exists(filePath):
@@ -159,16 +159,16 @@ class MailLoader():
                         os.remove(filePath)
                     # открываем файл для записи
                     new_file = open(filePath, 'wb')
-                    # сохраняем файл в папку для дальнейшей загрузки
 
+                    # сохраняем файл в папку для дальнейшей загрузки
                     try:
                         os.chmod(filePath, 0o600)
                         new_file.write(part.get_payload(decode=True))
-                        log.print_r('Нашел файл '+clearName+'. Сохраняем в ' + filePath)
+                        log.print_r('Сохраняем в ' + filePath)
                         # добавляем путь к файлу в массив с данными
                         files.append(filePath)
                     except:
-                        log.print_r('Нашел файл '+clearName+'. Не смог скопировать в ' + filePath)
+                        log.print_r('Не смог скопировать в ' + filePath)
                     # закрытие файла
                     new_file.close()
 

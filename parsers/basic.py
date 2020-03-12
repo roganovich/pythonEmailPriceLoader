@@ -112,6 +112,7 @@ class Basic:
         for file in files:
             # получаем полный путь к файлу
             findFile = filePathExtract + file
+            log.print_r('Распаковываю архив RAR: ' + findFile)
             if os.path.exists(findFile):
                 # находим extension  файла
                 extension = splitext(findFile)
@@ -129,6 +130,7 @@ class Basic:
         for file in files:
             # получаем полный путь к файлу
             findFile = filePathExtract + file
+            log.print_r('Распаковываю архив ZIP: ' + findFile)
             if os.path.exists(findFile):
                 # находим extension  файла
                 extension = splitext(findFile)
@@ -136,7 +138,6 @@ class Basic:
                 if(extension[1] == ".zip"):
                     # работа с архивом
                     zip = ZipFile(findFile)
-                    log.print_r('Распаковываю архив ' + findFile)
                     zip.extractall(filePathExtract)
                     zip.close()
                     # удаляем архив после распаковки
