@@ -227,16 +227,15 @@ class Basic:
         # открываем книгу
         df = pd.read_excel(xls, sheet_name=0, skiprows=self.clearLine)
         i = 0
-        for row in df.iterrows():
+        for index, row in df.iterrows():
             i = i + 1
-            # пропускаем первую строку
-            if (self.clearLine and i <= self.clearLine):
-                continue
-            k = 0
             rowData = []
-            columts = row.tolist()
-            for cell in columts:
-                rowData.append(columts[cell])
+            # превращаем строку в массив
+            columns = row.tolist()
+            k = 0
+            # перебераем колонки
+            for cell in columns:
+                rowData.append(cell)
                 k = k + 1
 
             # берем столбцы строки
