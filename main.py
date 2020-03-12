@@ -121,7 +121,7 @@ with profiler.Profiler() as p:
         obj.email = email
         if (obj.needToLoad() == False):
             # удаляем письмо
-            mLoader.deleteEmail(email);
+            #mLoader.deleteEmail(email);
             log.print_r('Этот прайс уже загружали сегодня')
             continue
         # скачивания файла
@@ -129,6 +129,7 @@ with profiler.Profiler() as p:
         files = mLoader.downloadAttachment(email['email_message'], obj)
         # загружаем файл в базу
         obj.upload()
+        exit()
         # грузим только 1 письмо. т.к время соединения с базой заканчиваеться
         # удаляем письма помеченные флагом Deleted
         mLoader.connect.expunge()

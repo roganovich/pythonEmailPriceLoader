@@ -8,6 +8,7 @@ import config
 import datetime
 import csv
 import openpyxl
+import pandas as read_excel
 import xlrd
 from xml.dom import minidom
 
@@ -112,7 +113,6 @@ class Basic:
         for file in files:
             # получаем полный путь к файлу
             findFile = filePathExtract + file
-            log.print_r('Распаковываю архив RAR: ' + findFile)
             if os.path.exists(findFile):
                 # находим extension  файла
                 extension = splitext(findFile)
@@ -130,7 +130,6 @@ class Basic:
         for file in files:
             # получаем полный путь к файлу
             findFile = filePathExtract + file
-            log.print_r('Распаковываю архив ZIP: ' + findFile)
             if os.path.exists(findFile):
                 # находим extension  файла
                 extension = splitext(findFile)
@@ -138,6 +137,7 @@ class Basic:
                 if(extension[1] == ".zip"):
                     # работа с архивом
                     zip = ZipFile(findFile)
+                    log.print_r('Распаковываю архив ' + findFile)
                     zip.extractall(filePathExtract)
                     zip.close()
                     # удаляем архив после распаковки
@@ -162,6 +162,11 @@ class Basic:
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
         log.print_r('Работаю с файлом xls ' + filePath)
+
+        rows = read_excel(filePath, sheetname=0, index_col=0)
+        # Print the sheet names
+        print(rows)
+        exit()
 
         # создаем класс загрузчика
         loader = Loader(self)
