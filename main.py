@@ -82,7 +82,7 @@ def checkParser(email):
         return Variant()
     if "seatrade-2012@mail.ru" in email['email_from']:
         return Satrade()
-    if "Avtosputnik" in email['email_subject']:
+    if "robot@auto-sputnik.ru" in email['email_from']:
         return Avtosputnik()
     if "Прайс вольтаж" in email['email_subject']:
         return Voltag()

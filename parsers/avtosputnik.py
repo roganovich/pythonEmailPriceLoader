@@ -18,7 +18,7 @@ class Avtosputnik(Basic):
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
-	filetype = "xls"
+	filetype = "xlsx"
 
 	# сопостовляем колонки в файле с назначениями полей
 	colums = {"art": 0, "bra": 1, "price": 3, "quality": 4, "desc":2, "art_sup":0}
