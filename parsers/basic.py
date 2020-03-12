@@ -8,7 +8,7 @@ import config
 import datetime
 import csv
 import openpyxl
-import pandas as read_excel
+import pandas as pd
 import xlrd
 from xml.dom import minidom
 
@@ -163,10 +163,6 @@ class Basic:
         filePath = filePathExtract + file
         log.print_r('Работаю с файлом xls ' + filePath)
 
-        rows = read_excel(filePath, sheetname=0, index_col=0)
-        # Print the sheet names
-        print(rows)
-        exit()
 
         # создаем класс загрузчика
         loader = Loader(self)
@@ -224,23 +220,22 @@ class Basic:
             log.print_r('Не нашел склад для загрузки')
             return False
 
+
         # создаем класс загрузчика
         loader = Loader(self)
         # начинаем работать с xls
-        rb = openpyxl.load_workbook(filePath)
+        xls = pd.ExcelFile(filePath)
         # открываем книгу
-        sheet = rb.active
-        rows = sheet.rows
-
+        df = pd.read_excel(xls, sheet_name=0, skiprows=self.clearLine)
         i = 0
-        for row in rows:
+        for row in df.iterrows():
             i = i + 1
             # пропускаем первую строку
             if (self.clearLine and i <= self.clearLine):
                 continue
             k = 0
             rowData = []
-            for cell in row:
+            for cell in row.tolist():
                 rowData.append(cell.value)
                 k = k + 1
 
