@@ -14,7 +14,7 @@ class Autopartner(Basic):
 	# путь к каталогу с файлами
 	filePathExtract = "files/Autopartner/"
 	# пупустить строк в файле
-	clearLine = 10
+	clearLine = 1
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса

@@ -16,7 +16,7 @@ class Avtosputnik(Basic):
 	# путь к каталогу с файлами
 	filePathExtract = "files/Avtosputnik/"
 	# пупустить строк в файле
-	clearLine = 1
+	clearLine = 10
 	# тип файла вложения
 	parsertype = "zip"
 	# тип файла прайса
