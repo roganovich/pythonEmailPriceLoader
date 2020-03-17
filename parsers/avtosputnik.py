@@ -69,7 +69,8 @@ class Avtosputnik(Basic):
 				log.print_r('Не смог прочитать строку ' + str(i))
 				continue
 		log.print_r('Обработал ' + str(i) + " строк")
-		exit()
+		loader.resultFile.close()
+		loader.closeWrite()
 
 
 
