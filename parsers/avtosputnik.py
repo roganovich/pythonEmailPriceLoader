@@ -35,28 +35,28 @@ class Avtosputnik(Basic):
 		rowData = []
 		# перерабатываем xml в массив
 		i = 0
-		for rows in root[3][0]:
+		xmlRows = root[3][0]
+		for rows in xmlRows:
 			i = i + 1
 			if (i < self.clearLine):
 				continue
 			row = []
 			for cels in rows:
 				for cel in cels:
-					# print(str(i) + " " + str(cel.text))
 					row.append(str(cel.text))
-			if (len(row) < 5):
-				continue
 			rowData.append(row)
 		# создаем класс загрузчика
 		loader = Loader(self)
 		i = 0
-		for colData in rowData:
+		for row in rowData:
 			i = i + 1
 			# проверяем данные
-			print(colData)
+			# берем из строки только нужные столбцы
+			colData = self.prepareColumns(row)
 			try:
 				clearData = loader.validate(colData)
-				print(clearData)
+				if (len(colData) < 5):
+					continue
 				if (clearData):
 					try:
 						# записываем в таблицу загрузки
@@ -68,7 +68,6 @@ class Avtosputnik(Basic):
 			except:
 				log.print_r('Не смог прочитать строку ' + str(i))
 				continue
-			exit()
 		log.print_r('Обработал ' + str(i) + " строк")
 		exit()
 
