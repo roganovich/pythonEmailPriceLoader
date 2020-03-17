@@ -1,6 +1,4 @@
-import sys
 import profiler
-
 import config
 import log
 from mail import MailLoader

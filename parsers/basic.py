@@ -10,7 +10,7 @@ import csv
 import openpyxl
 import pandas as pd
 import xlrd
-from xml.dom import minidom
+import xml.etree.ElementTree as etree
 
 from loader import Loader
 # получаем настройки приложения
@@ -265,17 +265,42 @@ class Basic:
 
     # функция принимает путь файла, открывает его и работает
     def xmlReader(self, file):
-        exit()
-        # находим все файлы прайсов в каталоге парсера поставщика
-        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
-        filePath = filePathExtract + file
-        log.print_r('Работаю с файлом xml ' + filePath)
-        mydoc = minidom.parse(filePath)
-        rows = mydoc.getElementsByTagName('row')
+        tree = etree.parse(file)
+        root = tree.getroot()
+        rowData = []
+        # перерабатываем xml в массив
         i = 0
-        for row in rows:
+        for rows in root[3][0]:
             i = i + 1
-            print(row.attributes['name'].value)
+            if (i < 10):
+                continue
+            row = []
+            for cels in rows:
+                for cel in cels:
+                    # print(str(i) + " " + str(cel.text))
+                    row.append(str(cel.text))
+            if (len(row) < 5):
+                continue
+            rowData.append(row)
+        # создаем класс загрузчика
+        loader = Loader(self)
+        i = 0
+        for colData in rowData:
+            i = i + 1
+            # проверяем данные
+            try:
+                clearData = loader.validate(colData)
+                if (clearData):
+                    try:
+                        # записываем в таблицу загрузки
+                        loader.writerests(clearData)
+                        # записываем в файл результата
+                        loader.writer.writerows([clearData.values()])
+                    except:
+                        log.print_r('Не смог записать строку в базу ' + str(i))
+            except:
+                log.print_r('Не смог прочитать строку ' + str(i))
+                continue
         log.print_r('Обработал ' + str(i) + " строк")
         exit()
 
@@ -319,7 +344,6 @@ class Basic:
                 colData = self.prepareColumns(row)
                 if (len(colData) < 5):
                     continue
-                clearData = loader.validate(colData)
                 # проверяем данные
                 try:
                     clearData = loader.validate(colData)
