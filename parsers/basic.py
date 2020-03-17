@@ -292,8 +292,10 @@ class Basic:
         for colData in rowData:
             i = i + 1
             # проверяем данные
+            print(colData)
             try:
                 clearData = loader.validate(colData)
+                print(clearData)
                 if (clearData):
                     try:
                         # записываем в таблицу загрузки
@@ -305,6 +307,7 @@ class Basic:
             except:
                 log.print_r('Не смог прочитать строку ' + str(i))
                 continue
+            exit()
         log.print_r('Обработал ' + str(i) + " строк")
         exit()
 
