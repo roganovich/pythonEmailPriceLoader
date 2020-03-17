@@ -265,7 +265,11 @@ class Basic:
 
     # функция принимает путь файла, открывает его и работает
     def xmlReader(self, file):
-        tree = etree.parse(file)
+        filePathExtract = os.path.join(self.basePath, self.filePathExtract)
+        filePath = filePathExtract + file
+        log.print_r('Работаю с файлом xls ' + filePath)
+
+        tree = etree.parse(filePath)
         root = tree.getroot()
         rowData = []
         # перерабатываем xml в массив
