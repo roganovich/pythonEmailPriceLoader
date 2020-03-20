@@ -20,7 +20,7 @@ class Avtodel(Basic):
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
-	filetype = "xls"
+	filetype = "xlsx"
 	fileEncoding = "utf-8"
 	# пупустить строк в файле
 	clearLine = 0
