@@ -31,6 +31,7 @@ from parsers.profitliga import PFLKrasnodar
 from parsers.profitliga import PFLRostov
 from parsers.toyotanova import Toyotanova
 from parsers.voltag import Voltag
+from parsers.avtodel import Avtodel
 from parsers.jtc import Jtc
 from parsers.mosteknorot import Mosteknorot
 
@@ -83,8 +84,10 @@ def checkParser(email):
         return Satrade()
     if "robot@auto-sputnik.ru" in email['email_from']:
         return Avtosputnik()
-    if "Прайс вольтаж" in email['email_subject']:
+    if "Прайс Вольтаж" in email['email_subject']:
         return Voltag()
+    if "Прайс Автодель" in email['email_subject']:
+        return Avtodel()
     if "price91@teknorot23.ru" in email['email_from']:
         return Mosteknorot()
     #if("robot@pr-lg.ru" in email['email_from']):
