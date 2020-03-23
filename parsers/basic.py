@@ -34,13 +34,16 @@ class Basic:
             extension = splitext(filePath)
             if(extension[1] in ['.csv','.xls', '.xlsx', '.txt', '.xml']):
                 if os.path.exists(filePath):
+                    filetype = extension[1]
                     # автоматическое определение расширения файла
                     if (self.filetype == "auto"):
-                        self.filetype = extension[1]
+                        filetype = extension[1]
+                    else:
+                        filetype = self.filetype
                     # читаем построчно файл xls
-                    if(self.filetype == "xls"):
+                    if(filetype == "xls"):
                         self.xlsReader(file)
-                    if (self.filetype == "xlsx"):
+                    if (filetype == "xlsx"):
                         # меняем разрещшение файла xls на xlsx
                         if (extension[1] == ".xls"):
                             filePathOld = filePath
@@ -49,10 +52,10 @@ class Basic:
                             os.rename(filePathOld, filePath)
                         self.xlsxReader(file)
                     # читаем построчно файл csv
-                    if (self.filetype == "csv"):
+                    if (filetype == "csv"):
                         self.csvReader(file)
                     # читаем  файл xml
-                    if (self.filetype == "xml"):
+                    if (filetype == "xml"):
                         self.xmlReader(file)
                 log.print_r('Удаляю файл ' + filePath)
                 os.remove(filePath)
