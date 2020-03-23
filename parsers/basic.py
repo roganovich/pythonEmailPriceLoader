@@ -32,14 +32,14 @@ class Basic:
             # найти разрешение фапйла. что бы не грузил картинки и прочее
             # находим extension  файла
             extension = splitext(filePath)
-            if(extension[1] in ['.csv','.xls', '.xlsx', '.txt', '.xml']):
+            # автоматическое определение расширения файла
+            if (not self.filetype):
+                filetype = extension[1]
+            else:
+                filetype = self.filetype
+            log.print_r('extension = ' + filetype)
+            if(filetype in ['.csv','.xls', '.xlsx', '.txt', '.xml']):
                 if os.path.exists(filePath):
-                    filetype = extension[1]
-                    # автоматическое определение расширения файла
-                    if (self.filetype == "auto"):
-                        filetype = extension[1]
-                    else:
-                        filetype = self.filetype
                     # читаем построчно файл xls
                     if(filetype == "xls"):
                         self.xlsReader(file)
