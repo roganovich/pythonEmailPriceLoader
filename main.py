@@ -20,7 +20,8 @@ from parsers.forumauto import ForumAuto
 from parsers.paliyauto import Paliyauto
 from parsers.autolux import Autolux
 from parsers.formula82 import Formula82
-from parsers.tisrostov import Tisrostov
+from parsers.tis import Tisrostov
+from parsers.tis import Tissimpf
 from parsers.transstarter import Transstarter
 from parsers.vwsevastopol import VwSevastopol
 from parsers.vwsevastopol import VwSimferopol
@@ -73,7 +74,10 @@ def checkParser(email):
     if "shop1.formula82@yandex.ru" in email['email_from']:
         return Formula82()
     if "krym_price@mail2.tpm.ru" in email['email_from']:
-        return Tisrostov()
+        if "Симферополь" in email['email_subject']:
+            return Tissimpf()
+        if "Ростов" in email['email_subject']:
+            return Tisrostov()
     if "noreply@tstarter.ru" in email['email_from']:
         return Transstarter()
     if "script@autoopt.ru" in email['email_from']:
