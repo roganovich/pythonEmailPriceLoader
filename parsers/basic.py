@@ -37,8 +37,10 @@ class Basic:
                 filetype = extension[1]
             else:
                 filetype = self.filetype
-            log.print_r('extension = ' + filetype)
+
             if(filetype in ['.csv','.xls', '.xlsx', '.txt', '.xml']):
+                log.print_r('extension =' + filetype + " filePath="+filePath)
+                exit()
                 if os.path.exists(filePath):
                     # читаем построчно файл xls
                     if(filetype == "xls"):
