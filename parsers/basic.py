@@ -33,7 +33,7 @@ class Basic:
             # находим extension  файла
             extension = splitext(filePath)
             # автоматическое определение расширения файла
-            if (not self.filetype):
+            if (self.filetype == 'auto'):
                 filetype = extension[1]
             else:
                 filetype = self.filetype
