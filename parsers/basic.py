@@ -39,8 +39,6 @@ class Basic:
                 filetype = self.filetype
 
             if(filetype in ['.csv','.xls', '.xlsx', '.txt', '.xml']):
-                log.print_r('extension =' + filetype + " filePath="+filePath)
-                exit()
                 if os.path.exists(filePath):
                     # читаем построчно файл xls
                     if(filetype == "xls"):
@@ -59,6 +57,8 @@ class Basic:
                     # читаем  файл xml
                     if (filetype == "xml"):
                         self.xmlReader(file)
+                else:
+                    log.print_r('Не нашел файл ' + filePath)
                 log.print_r('Удаляю файл ' + filePath)
                 os.remove(filePath)
 
