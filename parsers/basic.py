@@ -31,23 +31,24 @@ class Basic:
             filePath = filePathExtract + file
             # найти разрешение фапйла. что бы не грузил картинки и прочее
             # находим extension  файла
-            extension = splitext(filePath)
+            extensionRow = splitext(filePath)
+            extension = extensionRow[1]
             # автоматическое определение расширения файла
             if (self.filetype == 'auto'):
-                filetype = extension[1]
+                filetype = extension.replace('.', '')
             else:
                 filetype = self.filetype
 
-            if(filetype in ['.csv','.xls', '.xlsx', '.txt', '.xml']):
+            if(filetype in ['csv','xls', 'xlsx', 'txt', 'xml']):
                 if os.path.exists(filePath):
                     # читаем построчно файл xls
                     if(filetype == "xls"):
                         self.xlsReader(file)
                     if (filetype == "xlsx"):
                         # меняем разрещшение файла xls на xlsx
-                        if (extension[1] == ".xls"):
+                        if (extension[1] == "xls"):
                             filePathOld = filePath
-                            file = file.replace('.xls', '.xlsx')
+                            file = file.replace('xls', 'xlsx')
                             filePath = filePathExtract + file
                             os.rename(filePathOld, filePath)
                         self.xlsxReader(file)
