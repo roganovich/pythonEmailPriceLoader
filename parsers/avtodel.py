@@ -20,11 +20,9 @@ class Avtodel(Basic):
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
-	filetype = "xlsx"
-	fileEncoding = "utf-8"
+	filetype = "auto"
 	# пупустить строк в файле
 	clearLine = 0
-
 	# сопостовляем колонки в файле с назначениями полей
 	colums ={"art": 0, "bra": 2, "price": 4, "quality": 3, "desc": 1, "art_sup":0}
 

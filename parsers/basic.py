@@ -34,6 +34,9 @@ class Basic:
             extension = splitext(filePath)
             if(extension[1] in ['.csv','.xls', '.xlsx', '.txt', '.xml']):
                 if os.path.exists(filePath):
+                    # автоматическое определение расширения файла
+                    if (self.filetype == "auto"):
+                        self.filetype = extension[1]
                     # читаем построчно файл xls
                     if(self.filetype == "xls"):
                         self.xlsReader(file)

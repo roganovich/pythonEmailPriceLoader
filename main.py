@@ -86,7 +86,7 @@ def checkParser(email):
         return Avtosputnik()
     if "Прайс Вольтаж" in email['email_subject']:
         return Voltag()
-    if "Прайс Автодель" in email['email_subject']:
+    if "z1@avtodel.com" in email['email_from']:
         return Avtodel()
     if "price91@teknorot23.ru" in email['email_from']:
         return Mosteknorot()
