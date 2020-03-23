@@ -46,9 +46,9 @@ class Basic:
                         self.xlsReader(file)
                     if (filetype == "xlsx"):
                         # меняем разрещшение файла xls на xlsx
-                        if (extension[1] == "xls"):
+                        if (extension == ".xls"):
                             filePathOld = filePath
-                            file = file.replace('xls', 'xlsx')
+                            file = file.replace('.xls', '.xlsx')
                             filePath = filePathExtract + file
                             os.rename(filePathOld, filePath)
                         self.xlsxReader(file)
