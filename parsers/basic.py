@@ -157,10 +157,14 @@ class Basic:
         for key in self.colums:
             # проверяем на наличие ключа в списке колонок строки
             try:
-                d = row[self.colums[key]]
+                d = str(row[self.colums[key]])
             except IndexError:
                 d = '-'
-            data.append(d)
+            # если тип поля xls указан как номер то excl в конец добавляе .0 - мы это очищаем
+            if (d[-2:] == '.0'):
+                data.append(d.replace('.0', ''))
+            else:
+                data.append(d)
         return data
 
     # функция принимает путь файла, открывает его и работает построчно
@@ -169,7 +173,6 @@ class Basic:
         filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         filePath = filePathExtract + file
         log.print_r('Работаю с файлом xls ' + filePath)
-
 
         # создаем класс загрузчика
         loader = Loader(self)
@@ -192,6 +195,7 @@ class Basic:
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(rowData)
+
                 if (len(colData) < 5):
                     continue
                 # проверяем данные
@@ -205,6 +209,7 @@ class Basic:
                     except:
                         log.print_r('Не смог записать строку в базу ' + str(i))
             log.print_r('Обработал ' + str(i) + " строк")
+
             loader.resultFile.close()
             loader.closeWrite()
 
