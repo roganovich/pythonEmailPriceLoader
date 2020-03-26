@@ -162,7 +162,7 @@ class Basic:
                 d = '-'
             # если тип поля xls указан как номер то excl в конец добавляе .0 - мы это очищаем
             if (d[-2:] == '.0'):
-                data.append(d.[0:-2])
+                data.append(d[0:-2])
             else:
                 data.append(d)
         return data
