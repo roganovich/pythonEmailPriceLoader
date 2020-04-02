@@ -160,9 +160,14 @@ class Basic:
                 d = str(row[self.colums[key]])
             except IndexError:
                 d = '-'
-            # если тип поля xls указан как номер то excl в конец добавляе .0 - мы это очищаем
-            if (d[-2:] == '.0'):
-                data.append(d[0:-2])
+
+            # если бошльше одной точки в строке то ничего не делаем
+            if(d.count('.')==1):
+                # если тип поля xls указан как номер то excl в конец добавляе .0 - мы это очищаем
+                if (d[-2:] == '.0'):
+                    data.append(d[0:-2])
+                else:
+                    data.append(d)
             else:
                 data.append(d)
         return data
