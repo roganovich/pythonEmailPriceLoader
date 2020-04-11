@@ -35,6 +35,7 @@ from parsers.voltag import Voltag
 from parsers.avtodel import Avtodel
 from parsers.jtc import Jtc
 from parsers.mosteknorot import Mosteknorot
+from parsers.avnomir import Avtomir
 
 
 # получаем настройки приложения
@@ -103,6 +104,8 @@ def checkParser(email):
         return Toyotanova()
     if "Прайс лист: Склад Октябрьский" in email['email_subject']:
         return Jtc()
+    if "price@part-auto.ru" in email['email_from']:
+        return Avtomir()
     if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow()
