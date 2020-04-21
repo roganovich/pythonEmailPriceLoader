@@ -37,7 +37,7 @@ from parsers.jtc import Jtc
 from parsers.mosteknorot import Mosteknorot
 from parsers.avnomir import Avtomir
 from parsers.radialplus import RadialPlus
-
+from parsers.rossko import Rossko
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -109,6 +109,8 @@ def checkParser(email):
         return Avtomir()
     if "kovpaka@radialplus.info" in email['email_from']:
         return RadialPlus()
+    if "price@rossko.ru" in email['email_from']:
+        return Rossko()
     if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow()
