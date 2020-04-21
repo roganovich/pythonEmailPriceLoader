@@ -179,6 +179,19 @@ class Basic:
         filePath = filePathExtract + file
         log.print_r('Работаю с файлом xls ' + filePath)
 
+
+        # находим все файлы прайсов в каталоге парсера поставщика
+        if(hasattr(self, 'unity')):
+            for unity in self.unity:
+                if (unity in file):
+                    self.warhouse_id = str(self.unity[unity])
+        elif(hasattr(self, 'warhouse_id')):
+            self.warhouse_id = str(self.warhouse_id)
+
+        if(self.warhouse_id == 0 or not self.warhouse_id):
+            log.print_r('Не нашел склад для загрузки')
+            return False
+
         # создаем класс загрузчика
         loader = Loader(self)
         # начинаем работать с xls
@@ -298,7 +311,7 @@ class Basic:
         elif(hasattr(self, 'warhouse_id')):
             self.warhouse_id = str(self.warhouse_id)
 
-        if(self.warhouse_id == 0):
+        if (self.warhouse_id == 0 or not self.warhouse_id):
             log.print_r('Не нашел склад для загрузки')
             return False
         # создаем класс загрузчика
