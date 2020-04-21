@@ -182,6 +182,7 @@ class Basic:
 
         # находим все файлы прайсов в каталоге парсера поставщика
         if(hasattr(self, 'unity')):
+            self.warhouse_id = 0;
             for unity in self.unity:
                 if (unity in file):
                     self.warhouse_id = str(self.unity[unity])
@@ -240,6 +241,7 @@ class Basic:
 
         # находим все файлы прайсов в каталоге парсера поставщика
         if(hasattr(self, 'unity')):
+            self.warhouse_id = 0;
             for unity in self.unity:
                 if (unity in file):
                     self.warhouse_id = str(self.unity[unity])
@@ -304,6 +306,7 @@ class Basic:
         # открываем файл результата
         # формируем имя файла результата для этого поставщика
         if(hasattr(self, 'unity')):
+            self.warhouse_id = 0;
             if(file in self.unity):
                 self.warhouse_id = str(self.unity[file])
             else:
