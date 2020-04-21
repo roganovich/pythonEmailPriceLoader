@@ -188,7 +188,7 @@ class Basic:
         elif(hasattr(self, 'warhouse_id')):
             self.warhouse_id = str(self.warhouse_id)
 
-        if(self.warhouse_id == 0 or not self.warhouse_id):
+        if(self.warhouse_id == 0):
             log.print_r('Не нашел склад для загрузки')
             return False
 
@@ -246,7 +246,7 @@ class Basic:
         elif(hasattr(self, 'warhouse_id')):
             self.warhouse_id = str(self.warhouse_id)
 
-        if(self.warhouse_id == 0 or not self.warhouse_id):
+        if(self.warhouse_id == 0):
             log.print_r('Не нашел склад для загрузки')
             return False
 
@@ -311,7 +311,7 @@ class Basic:
         elif(hasattr(self, 'warhouse_id')):
             self.warhouse_id = str(self.warhouse_id)
 
-        if (self.warhouse_id == 0 or not self.warhouse_id):
+        if (self.warhouse_id == 0):
             log.print_r('Не нашел склад для загрузки')
             return False
         # создаем класс загрузчика
