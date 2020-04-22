@@ -23,7 +23,7 @@ class RadialPlus(Basic):
 	# пупустить строк в файле
 	clearLine = 6
 	# сопостовляем колонки в файле с назначениями полей
-	colums ={"art": 1, "bra": 2, "price": 5, "quality": 6, "desc": 3, "art_sup":1}
+	colums ={"art": 1, "bra": 2, "price": 5, "quality": 7, "desc": 3, "art_sup":1}
 
 	# сопоставляем файлы и склады в базе
 	unity = {
