@@ -36,6 +36,4 @@ class Kulisa(Basic):
 		filePath = path + 'price.csv'
 		myfile = requests.get(url)
 		open(filePath, 'wb').write(myfile.content)
-		exit()
-
 
