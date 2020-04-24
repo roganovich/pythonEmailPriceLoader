@@ -4,7 +4,7 @@ from parsers.basic import Basic
 import config
 import shutil
 import os
-import urllib
+import urllib3
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -41,7 +41,8 @@ class Kulisa(Basic):
 
 
 	def file_get_contents(self, url):
-		f = urllib.urlopen(url)
-		return f.read()
+		http = urllib3.PoolManager()
+		r = http.request('GET', 'http://httpbin.org/robots.txt')
+		return r.data
 
 
