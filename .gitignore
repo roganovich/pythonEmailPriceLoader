@@ -2,6 +2,7 @@
 /.git
 /files/*
 /results/*
+/venv
 *__pycache__*
 *.pyc
 settings.ini
