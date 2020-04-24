@@ -32,6 +32,7 @@ class Kulisa(Basic):
 
 
 	def downloadFiles(self):
+		self.email['email_from'] = "bahchisaray.myserv.top"
 		url = 'http://bahchisaray.myserv.top:44000/kulisa_ostatki.txt';
 		path = self.getParserPath()
 		filePath = path + 'price.csv'
