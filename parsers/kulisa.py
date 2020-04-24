@@ -19,6 +19,7 @@ class Kulisa(Basic):
 	filePathExtract = "files/Kulisa/"
 	# пупустить строк в файле
 	clearLine = 0
+	delimiter = "\t"
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
