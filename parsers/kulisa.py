@@ -9,20 +9,23 @@ import requests
 # получаем настройки приложения
 config = config.getConfig()
 class Kulisa(Basic):
+    name = "Kulisa"
+    suppliers_id = 105
+    warhouse_id = 162
     data = []
-    email = {}
+    # путь к каталогу с файлами
+    filePathExtract = "files/Kulisa/"
+    data = []
     # делитель CSV
     delimiter = "\t"
     # пупустить строк в файле
-    clearLine = 1
+    clearLine = 0
     # тип файла вложения
     parsertype = "file"
     # тип файла прайса
     filetype = "csv"
-
-
     # сопостовляем колонки в файле с назначениями полей
-    colums = {"art": 1, "bra": 0, "price": 3, "quality": 4, "desc": 2, "art_sup": 1}
+    colums = {"art": 0, "bra": 2, "price": 4, "quality": 1, "desc": 3, "art_sup": 10
 
     def downloadFiles(self):
         link = "http://bahchisaray.myserv.top:44000/kulisa_ostatki.txt"
