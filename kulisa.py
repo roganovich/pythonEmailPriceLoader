@@ -1,7 +1,6 @@
 import profiler
 import config
 import log
-
 from parsers.kulisa import Kulisa
 # получаем настройки приложения
 config = config.getConfig()
