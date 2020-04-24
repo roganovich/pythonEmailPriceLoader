@@ -20,6 +20,7 @@ class Kulisa(Basic):
 	# пупустить строк в файле
 	clearLine = 0
 	delimiter = "\t"
+	fileEncoding = "utf-8"
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
