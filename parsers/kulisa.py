@@ -42,7 +42,7 @@ class Kulisa(Basic):
 
 	def file_get_contents(self, url):
 		http = urllib3.PoolManager()
-		r = http.request('GET', 'http://httpbin.org/robots.txt')
+		r = http.request('GET', url)
 		return r.data
 
 
