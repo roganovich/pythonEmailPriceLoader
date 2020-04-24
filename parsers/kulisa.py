@@ -14,6 +14,7 @@ class Kulisa(Basic):
 	suppliers_id = 105
 	warhouse_id = 162
 	data = []
+	email = {}
 	# путь к каталогу с файлами
 	filePathExtract = "files/Kulisa/"
 	# пупустить строк в файле
