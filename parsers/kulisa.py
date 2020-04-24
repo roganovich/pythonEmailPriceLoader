@@ -4,7 +4,7 @@ from parsers.basic import Basic
 import config
 import shutil
 import os
-import urllib3
+import requests
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -34,15 +34,8 @@ class Kulisa(Basic):
 		url = 'http://bahchisaray.myserv.top:44000/kulisa_ostatki.txt';
 		path = self.getParserPath()
 		filePath = path + 'price.csv'
-		with open(filePath, 'w', encoding='utf-8') as f_out:
-			f_out.write(self.file_get_contents(url))
+		myfile = requests.get(url)
+		open(filePath, 'wb').write(myfile.content)
 		exit()
-
-
-
-	def file_get_contents(self, url):
-		http = urllib3.PoolManager()
-		r = http.request('GET', url)
-		return r.data
 
 
