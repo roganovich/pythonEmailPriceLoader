@@ -38,7 +38,7 @@ from parsers.mosteknorot import Mosteknorot
 from parsers.avnomir import Avtomir
 from parsers.radialplus import RadialPlus
 from parsers.rossko import Rossko
-
+from parsers.favoritoe import Favoritoe
 # получаем настройки приложения
 config = config.getConfig()
 
@@ -92,6 +92,8 @@ def checkParser(email):
         return Avtosputnik()
     if "Прайс Вольтаж" in email['email_subject']:
         return Voltag()
+    if "Favoritoe" in email['email_subject']:
+        return Favoritoe()
     if "Z1@avtodel.com" in email['email_from']:
         return Avtodel()
     if "price91@teknorot23.ru" in email['email_from']:
