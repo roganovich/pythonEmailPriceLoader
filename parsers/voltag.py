@@ -23,7 +23,7 @@ class Voltag(Basic):
 	fileEncoding = "utf-8"
 
 	# сопостовляем колонки в файле с назначениями полей
-	colums = {"art": 1, "bra": 3, "price": 6, "quality": 5, "desc":4, "art_sup":1}
+	colums = {"art": 2, "bra": 3, "price": 6, "quality": 5, "desc":4, "art_sup":1}
 
 
 
