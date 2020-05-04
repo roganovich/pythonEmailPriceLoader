@@ -19,7 +19,7 @@ class Voltag(Basic):
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
-	filetype = "xls"
+	filetype = "xlsx"
 	fileEncoding = "utf-8"
 
 	# сопостовляем колонки в файле с назначениями полей
