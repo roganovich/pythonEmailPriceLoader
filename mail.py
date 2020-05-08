@@ -61,6 +61,10 @@ class MailLoader():
 
     # функция декодирует base64 в кирилицу
     def translit(self, s):
+        if "=?koi8-r?B?" in s:
+            alpha = '=?koi8-r?B?'
+            char = 'koi8-r'
+            type = 'base64'
         if "=?utf-8?B?" in s:
             alpha = '=?utf-8?B?'
             char = 'utf-8'
