@@ -55,7 +55,7 @@ class Loader:
 		prfc_article = str(data[0]).strip()
 		#prfc_brand = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\/\.\-\\\s+]+', r'', str(data[1]).strip())
 
-		if(self.obj.bra_id):
+		if(self.obj.bra_id >0 ):
 			prfc_brand = self.obj.bra_name
 		else:
 			prfc_brand = str(data[1]).strip()
