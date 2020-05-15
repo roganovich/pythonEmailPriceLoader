@@ -19,11 +19,13 @@ class Tavriyaauto(Basic):
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
-	filetype = "xls"
+	filetype = "xlsx"
 	fileEncoding = "utf-8"
+	bra_name = 'MERCEDES-BENZ'
+	bra_id = 553
 
 	# сопостовляем колонки в файле с назначениями полей
-	colums = {"art": 2, "bra": 4, "price": 6, "quality": 5, "desc":1, "art_sup":1}
+	colums = {"art": 0, "bra": 0, "price": 3, "quality": 2, "desc":1, "art_sup":0}
 
 
 
