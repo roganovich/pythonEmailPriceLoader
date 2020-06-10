@@ -224,7 +224,7 @@ class Basic:
                         # записываем в таблицу загрузки
                         loader.writerests(clearData)
                         # записываем в файл результата
-                        loader.writer.writerows([clearData.values()])
+                        #loader.writer.writerows([clearData.values()])
                     except:
                         log.print_r('Не смог записать строку в базу ' + str(i))
             log.print_r('Обработал ' + str(i) + " строк")
@@ -286,7 +286,7 @@ class Basic:
                     # записываем в таблицу загрузки
                     loader.writerests(clearData)
                     # записываем в файл результата
-                    loader.writer.writerows([clearData.values()])
+                    #loader.writer.writerows([clearData.values()])
                 except:
                     log.print_r('Не смог записать строку в базу ' + str(i))
 
@@ -346,7 +346,7 @@ class Basic:
                             # записываем в таблицу загрузки
                             loader.writerests(clearData)
                             # записываем в файл результата
-                            loader.writer.writerows([clearData.values()])
+                            #loader.writer.writerows([clearData.values()])
                         except:
                             log.print_r('Не смог записать строку в базу ' + str(i))
                 except:

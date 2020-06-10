@@ -48,7 +48,7 @@ class Loader:
 		self.conn.commit()
 
 	def validate(self, data):
-		#log.print_r(data)
+		#print(data)
 		# подготавливаем поля для записи
 		prfc_prices_file_id = self.prf_id
 		#prfc_article = re.sub(r'[^0-9A-Za-z\/.\-\\\s+]+', r'', str(data[0]).strip())
@@ -120,6 +120,7 @@ class Loader:
 	# функция ищет бренд, артикул, очищает остатки, цены и записывает новые
 	def writerests(self, data):
 		#log.print_r(data)
+		#print(data)
 		query = ("INSERT INTO public.prices_file_col(prfc_prices_file_id, prfc_brand,  prfc_article, prfc_price, prfc_quality, prfc_desc, prfc_price_dop1,prfc_price_dop2,prfc_price_dop3) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
 		dataClear = (data['prfc_prices_file_id'],
 					 data['prfc_brand'],
