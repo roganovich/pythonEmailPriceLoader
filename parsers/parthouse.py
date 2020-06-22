@@ -23,7 +23,7 @@ class PartHouse(Basic):
 	filetype = "csv"
 	# делитель CSV
 	delimiter = ";"
-	fileEncoding = "utf-8"
+	fileEncoding = "windows-1251"
 	# сопостовляем колонки в файле с назначениями полей
 	colums = {"art": 0, "bra": 1, "price": 4, "quality": 3, "desc":2, "art_sup":0}
 

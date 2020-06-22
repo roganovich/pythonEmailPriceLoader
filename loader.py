@@ -101,6 +101,9 @@ class Loader:
 		else:
 			prfc_price = 0
 		# проверяем остатки
+		#если вместо остатков +
+		if(data[3].strip() == "+"):
+			data[3] = 1
 		qualityClaer = re.sub(r'[^0-9.]+', r'', str(data[3]).strip().replace(',', '.'))
 		if (self.is_number(qualityClaer)):
 			prfc_quality = round(float(qualityClaer))
