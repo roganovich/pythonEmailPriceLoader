@@ -40,6 +40,7 @@ from parsers.radialplus import RadialPlus
 from parsers.rossko import Rossko
 from parsers.favoritoe import Favoritoe
 from parsers.tavriyaauto import Tavriyaauto
+from parsers.parthouse import PartHouse
 # получаем настройки приложения
 config = config.getConfig()
 
@@ -116,6 +117,8 @@ def checkParser(email):
         return Rossko()
     if "s.bykov@mb-crimea.ru" in email['email_from']:
         return Tavriyaauto()
+    if "part-house.ru" in email['email_subject']:
+        return PartHouse()
     if("price@armtek.ru" in email['email_from']):
         if "Moscow" in email['email_subject']:
             return ArmtekMoscow()
