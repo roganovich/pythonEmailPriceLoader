@@ -21,6 +21,8 @@ class PartHouse(Basic):
 	parsertype = "zip"
 	# тип файла прайса
 	filetype = "csv"
+	# делитель CSV
+	delimiter = ";"
 	fileEncoding = "utf-8"
 	# сопостовляем колонки в файле с назначениями полей
 	colums = {"art": 0, "bra": 1, "price": 4, "quality": 3, "desc":2, "art_sup":0}
