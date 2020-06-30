@@ -58,7 +58,7 @@ class Loader:
 		#if(self.obj.bra_id >0 ):
 		#	prfc_brand = self.obj.bra_name
 		#else:
-		if(self.obj.bra_name is not None):
+		if(hasattr(self.obj, 'bra_name')):
 			prfc_brand = self.obj.bra_name
 		else:
 			prfc_brand = str(data[1]).strip()
