@@ -58,7 +58,10 @@ class Loader:
 		#if(self.obj.bra_id >0 ):
 		#	prfc_brand = self.obj.bra_name
 		#else:
-		prfc_brand = str(data[1]).strip()
+		if(self.obj.bra_name is not None):
+			prfc_brand = self.obj.bra_name
+		else:
+			prfc_brand = str(data[1]).strip()
 
 		prfc_desc = str(data[4]).strip()
 
