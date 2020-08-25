@@ -69,9 +69,9 @@ def checkParser(email):
     if "Прайс-лист ВАРИАНТ" in email['email_subject']:
         return Variant()
     if "post@mx.forum-auto.ru" in email['email_from']:
-        if "FORUM-AUTO_PRICE" in email['attachment']:
+        if "FORUM-AUTOPRICE.zip" in email['attachment']:
             return ForumAutoMoscow()
-        if "FORUM-AUTO_RST" in email['attachment']:
+        if "FORUM-AUTORST.zip" in email['attachment']:
             return ForumAutoRostov()
     if "vivatavtos@mail.ru" in email['email_from']:
         return Vivat()
@@ -149,9 +149,6 @@ with profiler.Profiler() as p:
         attachmentName = mLoader.getAttachementList(email['email_message'])
         if(attachmentName):
             email['attachment'] = attachmentName;
-        print(email)
-        exit()
-
         obj = checkParser(email)
         obj.email = email
         if (obj.needToLoad() == False):
