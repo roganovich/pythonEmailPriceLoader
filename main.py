@@ -146,11 +146,10 @@ with profiler.Profiler() as p:
     for email in emails:
 
         #log.print_r('Нашел письмо "' + email['email_subject'] + '" ' + '"' + email['email_from'] + '"')
-
-
-        files = mLoader.getAttachementList(email['email_message'])
+        attachmentName = mLoader.getAttachementList(email['email_message'])
+        if(attachmentName):
+            email['attachment'] = attachmentName;
         print(email)
-        print(files)
         exit()
 
         obj = checkParser(email)
