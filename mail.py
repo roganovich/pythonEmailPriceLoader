@@ -114,6 +114,44 @@ class MailLoader():
 
         return ru_text
 
+
+    def getAttachementList(self, email):
+        clearName = "";
+        # есть ли вложения в письме
+        if email.is_multipart():
+            for part in email.walk():
+                if part.get_content_maintype() == 'multipart':
+                    continue
+                if part.get('Content-Disposition') is None:
+                    continue
+                filename = part.get_filename()
+                # проверяем на наличие имени у файла
+                if filename:
+                    clearName = ""
+                    # разбиваем тему на абзацы
+                    filenameRows = filename.split('\n')
+                    if (len(filenameRows) > 1):
+                        for name in filenameRows:
+                            if (self.hascyrillic(name)):
+                                try:
+                                    clearName += self.translit(name)
+                                except:
+                                    clearName = ""
+                            else:
+                                clearName += name
+                    else:
+                        if (self.hascyrillic(filename)):
+                            try:
+                                clearName += self.translit(filename)
+                            except:
+                                clearName = filename
+                        else:
+                            clearName = filename
+
+                    # очищаем имя файла от мусора
+                    clearName = re.sub(r'[^0-9A-Za-zа-яА-ЯёЁ\s+\/\.\-\\]+', r'', clearName.strip())
+        return clearName;
+
     # скачивания файла
     def downloadAttachment(self, email, obj):
         # получаем путь сохранения файла из письма
