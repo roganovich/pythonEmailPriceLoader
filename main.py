@@ -146,15 +146,15 @@ with profiler.Profiler() as p:
     for email in emails:
 
         log.print_r('Нашел письмо "' + email['email_subject'] + '" ' + '"' + email['email_from'] + '"')
-        obj = checkParser(email)
-        obj.email = email
+
 
         files = mLoader.downloadAttachment(email['email_message'], obj)
         print(email)
-        print(obj)
         print(files)
         exit()
 
+        obj = checkParser(email)
+        obj.email = email
         if (obj.needToLoad() == False):
             # удаляем письмо
             mLoader.deleteEmail(email);
