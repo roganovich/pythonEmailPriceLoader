@@ -16,7 +16,8 @@ from parsers.variant import Variant
 from parsers.armtek import ArmtekMoscow
 from parsers.armtek import ArmtekKrasnodar
 from parsers.vivat import Vivat
-from parsers.forumauto import ForumAuto
+from parsers.forumauto import ForumAutoMoscow
+from parsers.forumauto import ForumAutoRostov
 from parsers.paliyauto import Paliyauto
 from parsers.autolux import Autolux
 from parsers.formula82 import Formula82
@@ -68,7 +69,10 @@ def checkParser(email):
     if "Прайс-лист ВАРИАНТ" in email['email_subject']:
         return Variant()
     if "post@mx.forum-auto.ru" in email['email_from']:
-        return ForumAuto()
+        if "FORUM-AUTO_PRICE" in email['attachment']:
+            return ForumAutoMoscow()
+        if "FORUM-AUTO_RST" in email['attachment']:
+            return ForumAutoRostov()
     if "vivatavtos@mail.ru" in email['email_from']:
         return Vivat()
     if "paliyauto@mail.ru" in email['email_from']:
@@ -140,6 +144,8 @@ with profiler.Profiler() as p:
         log.print_r('Нет новыйх писем')
         exit()
     for email in emails:
+        print(email)
+        exit()
         log.print_r('Нашел письмо "' + email['email_subject'] + '" ' + '"' + email['email_from'] + '"')
         obj = checkParser(email)
         obj.email = email
