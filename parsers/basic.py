@@ -340,6 +340,7 @@ class Basic:
                     continue
                 # проверяем данные
                 try:
+                    log.print_r(colData)
                     clearData = loader.validate(colData)
                     if(clearData):
                         try:
