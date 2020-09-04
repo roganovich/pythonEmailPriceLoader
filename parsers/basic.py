@@ -339,10 +339,9 @@ class Basic:
 
                 if (len(colData) < 5):
                     continue
-                # проверяем данные
-                clearData = loader.validate(colData)
-                print(clearData)
                 try:
+                    # проверяем данные
+                    clearData = loader.validate(colData)
                     if(clearData):
                         try:
                             # записываем в таблицу загрузки
