@@ -336,12 +336,13 @@ class Basic:
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(row)
-                print(colData)
+
                 if (len(colData) < 5):
                     continue
                 # проверяем данные
+                clearData = loader.validate(colData)
+                print(clearData)
                 try:
-                    clearData = loader.validate(colData)
                     if(clearData):
                         try:
                             # записываем в таблицу загрузки
