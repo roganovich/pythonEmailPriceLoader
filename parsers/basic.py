@@ -336,11 +336,11 @@ class Basic:
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(row)
+                log.print_r(colData)
                 if (len(colData) < 5):
                     continue
                 # проверяем данные
                 try:
-                    log.print_r(colData)
                     clearData = loader.validate(colData)
                     if(clearData):
                         try:
