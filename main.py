@@ -9,6 +9,7 @@ from parsers.autoeuro import Autoeuro
 from parsers.focusauto import Focusauto
 from parsers.shatem import Shatepodolsk
 from parsers.shatem import Shateminsk
+from parsers.shatem import ShateminskTest
 from parsers.shatem import Shateekat
 from parsers.autopartner import Autopartner
 from parsers.kyariz import Kyariz
@@ -41,8 +42,12 @@ from parsers.radialplus import RadialPlus
 from parsers.rossko import Rossko
 from parsers.favoritoe import Favoritoe
 from parsers.tavriyaauto import Tavriyaauto
+from parsers.tavriyaauto import TavriyaautoMoscow
 from parsers.parthouse import PartHouse
 from parsers.dubai import Dubai
+from parsers.victrans import VictransEkat
+from parsers.victrans import VictransPod
+
 # получаем настройки приложения
 config = config.getConfig()
 
@@ -121,7 +126,10 @@ def checkParser(email):
     if "price@rossko.ru" in email['email_from']:
         return Rossko()
     if "s.bykov@mb-crimea.ru" in email['email_from']:
-        return Tavriyaauto()
+        if "Симферополь" in email['email_subject']:
+            return Tavriyaauto()
+        if "Москва" in email['email_subject']:
+            return TavriyaautoMoscow()
     if "part-house.ru" in email['email_subject']:
         return PartHouse()
     if("price@armtek.ru" in email['email_from']):
@@ -137,7 +145,12 @@ def checkParser(email):
             return VwSimferopol()
     if "Dubai" in email['email_subject']:
         return Dubai()
-
+    if "ShateminskTest" in email['email_subject']:
+        return ShateminskTest()
+    if "VictransPod" in email['email_subject']:
+        return VictransPod()
+    if "VictransEkat" in email['email_subject']:
+        return VictransEkat()
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:
     # получаем все письма и данные в виде списка
