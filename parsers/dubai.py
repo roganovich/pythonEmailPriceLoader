@@ -30,7 +30,7 @@ class Dubai(Basic):
 	min_quality = 10
 
 	# сопостовляем колонки в файле с назначениями полей
-	colums ={"art": 0, "bra": 1, "price": 4, "quality": 4, "desc": 2, "art_sup":0}
+	colums ={"art": 0, "bra": 1, "price": 4, "quality": 2, "desc": 2, "art_sup":0}
 
 
 
