@@ -336,7 +336,7 @@ class Basic:
                     continue
                 # берем из строки только нужные столбцы
                 colData = self.prepareColumns(row)
-                log.print_r(colData)
+                print(colData)
                 if (len(colData) < 5):
                     continue
                 # проверяем данные
