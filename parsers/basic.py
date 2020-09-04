@@ -327,7 +327,7 @@ class Basic:
                 try:
                     row
                 except:
-                    log.print_r('Не смог прочитать строку ' + str(i))
+                    log.print_r('Не смог прочитать строку в ROW ' + str(i))
                     continue
                 # пропускаем первую строку
                 if (self.clearLine  and i <= self.clearLine):
@@ -350,7 +350,7 @@ class Basic:
                         except:
                             log.print_r('Не смог записать строку в базу ' + str(i))
                 except:
-                    log.print_r('Не смог прочитать строку ' + str(i))
+                    log.print_r('Не смог прочитать строку в clearData ' + str(i))
                     continue
 
             log.print_r('Обработал ' + str(i) + " строк")
