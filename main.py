@@ -162,8 +162,6 @@ with profiler.Profiler() as p:
         # скачивания файла
         # получаем файлы вложенные в письмо
         files = mLoader.downloadAttachment(email['email_message'], obj)
-        # загружаем файл в базу
-        obj.upload()
         # грузим только 1 письмо. т.к время соединения с базой заканчиваеться
         # удаляем письма помеченные флагом Deleted
         mLoader.connect.expunge()
@@ -171,6 +169,8 @@ with profiler.Profiler() as p:
         mLoader.connect.close()
         mLoader.connect.logout()
         # возвращаем массив данных
+        # загружаем файл в базу
+        obj.upload()
         exit()
 
 
