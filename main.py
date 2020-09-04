@@ -145,12 +145,13 @@ def checkParser(email):
             return VwSimferopol()
     if "Dubai" in email['email_subject']:
         return Dubai()
-    if "ShateminskTest" in email['email_subject']:
-        return ShateminskTest()
-    if "VictransPod" in email['email_subject']:
-        return VictransPod()
-    if "VictransEkat" in email['email_subject']:
-        return VictransEkat()
+    if " andrey.pavlenko1975@yandex.ru" in email['email_from']:
+        if "Тест Шате Минск Склад Минск" in email['email_subject']:
+            return ShateminskTest()
+        if "Тест Виктранс склад Подольск" in email['email_subject']:
+            return VictransPod()
+        if "Тест Виктранс склад Екат" in email['email_subject']:
+            return VictransEkat()
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:
     # получаем все письма и данные в виде списка
