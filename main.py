@@ -42,6 +42,7 @@ from parsers.rossko import Rossko
 from parsers.favoritoe import Favoritoe
 from parsers.tavriyaauto import Tavriyaauto
 from parsers.parthouse import PartHouse
+from parsers.dubai import Dubai
 # получаем настройки приложения
 config = config.getConfig()
 
@@ -134,6 +135,8 @@ def checkParser(email):
     if "vwparts@vw-avtoholding.ru" in email['email_from']:
         if "Симферополь" in email['email_subject']:
             return VwSimferopol()
+    if "Dubai" in email['email_subject']:
+        return Dubai()
 
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:

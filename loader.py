@@ -58,6 +58,10 @@ class Loader:
 		#if(self.obj.bra_id >0 ):
 		#	prfc_brand = self.obj.bra_name
 		#else:
+		#если в прайсе нет остатков, то исспользуем свойство min_quality
+		if(hasattr(self.obj, 'min_quality')):
+			data[3] = self.obj.min_quality
+
 		if(hasattr(self.obj, 'bra_name')):
 			prfc_brand = self.obj.bra_name
 		else:
