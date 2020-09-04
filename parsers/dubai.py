@@ -13,7 +13,7 @@ config = config.getConfig()
 class Dubai(Basic):
 	name = "Dubai"
 	suppliers_id = 98
-	warhouse_id = 115
+	warhouse_id = 151
 
 	data = []
 	# путь к каталогу с файлами
