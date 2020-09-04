@@ -62,6 +62,11 @@ class Loader:
 		if(hasattr(self.obj, 'min_quality')):
 			data[3] = self.obj.min_quality
 
+		# проверяем остатки
+		#если вместо остатков +
+		if(str(data[3]).strip() == "+"):
+			data[3] = 1
+
 		if(hasattr(self.obj, 'bra_name')):
 			prfc_brand = self.obj.bra_name
 		else:
@@ -107,10 +112,7 @@ class Loader:
 			prfc_price = round(float(priceClaer), 2)
 		else:
 			prfc_price = 0
-		# проверяем остатки
-		#если вместо остатков +
-		if(data[3].strip() == "+"):
-			data[3] = 1
+
 		qualityClaer = re.sub(r'[^0-9.]+', r'', str(data[3]).strip().replace(',', '.'))
 		if (self.is_number(qualityClaer)):
 			prfc_quality = round(float(qualityClaer))
