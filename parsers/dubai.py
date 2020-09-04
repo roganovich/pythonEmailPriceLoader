@@ -20,7 +20,7 @@ class Dubai(Basic):
 	filePathExtract = "files/Dubai/"
 	# тип файла прайса
 	filetype = "csv"
-	parsertype = "file"
+	parsertype = "zip"
 	fileEncoding = "utf-8"
 	# делитель CSV
 	delimiter = "\t"
