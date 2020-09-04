@@ -145,7 +145,7 @@ def checkParser(email):
             return VwSimferopol()
     if "Dubai" in email['email_subject']:
         return Dubai()
-    if " andrey.pavlenko1975@yandex.ru" in email['email_from']:
+    if "andrey.pavlenko1975@yandex.ru" in email['email_from']:
         if "Тест Шате Минск Склад Минск" in email['email_subject']:
             return ShateminskTest()
         if "Тест Виктранс склад Подольск" in email['email_subject']:
