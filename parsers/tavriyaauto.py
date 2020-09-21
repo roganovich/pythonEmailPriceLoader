@@ -19,7 +19,7 @@ class Tavriyaauto(Basic):
 	# тип файла вложения
 	parsertype = "file"
 	# тип файла прайса
-	filetype = "xlsx"
+	filetype = "xls"
 	fileEncoding = "utf-8"
 	bra_name = 'MERCEDES-BENZ'
 	bra_id = 553
