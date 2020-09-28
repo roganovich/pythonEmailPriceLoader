@@ -29,11 +29,11 @@ class FavoritBasic(Basic):
     colums = {"art": 1, "bra": 0, "price": 3, "quality": 4, "desc": 2, "art_sup": 1}
 
     def __init__(self):
+        self.email['email_from'] = "ftp.favorit-parts.ru"
         self.prepareDir()
 
     def prepareDir(self):
         self.basePath = config.get("path", "_DIR_")
-        self.email['email_from'] = "ftp.favorit-parts.ru"
         self.filePathExtract = os.path.join(self.basePath, self.filePathExtract)
         if (not os.path.exists(self.filePathExtract)):
             os.mkdir(self.filePathExtract)
