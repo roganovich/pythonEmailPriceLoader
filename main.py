@@ -169,7 +169,7 @@ with profiler.Profiler() as p:
         exit()
     for email in emails:
 
-        log.print_r('Нашел письмо "' + email['email_subject'] + '" ' + '"' + email['email_from'] + '"' + email['attachment'] + '"')
+        log.print_r('Нашел письмо "' + email['email_subject'] + '" ' + '"' + email['email_from'] + '" ' + '"' + email['attachment'] + '"')
         attachmentName = mLoader.getAttachementList(email['email_message'])
         if(attachmentName):
             email['attachment'] = attachmentName;
