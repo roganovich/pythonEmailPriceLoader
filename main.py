@@ -3,6 +3,7 @@ import config
 import log
 from mail import MailLoader
 
+from parsers.apex import Apex
 from parsers.abs import Absparser
 from parsers.autoray import Autorayparser
 from parsers.autoeuro import Autoeuro
@@ -145,6 +146,8 @@ def checkParser(email):
             return VwSimferopol()
     if "Dubai" in email['email_subject']:
         return Dubai()
+    if "noreply@rnsprice.ru" in email['email_from']:
+        return Apex()
     if "andrey.pavlenko1975@yandex.ru" in email['email_from']:
         if "Тест Шате Минск" in email['email_subject']:
             return ShateminskTest()
