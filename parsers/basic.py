@@ -185,8 +185,8 @@ class Basic:
             self.warhouse_id = 0;
             for unity in self.unity:
                 log.print_r(unity + " in " + file)
-                if (unity in file):
-                    self.warhouse_id = str(self.unity[unity])
+                if (unity.lower() in file.lower()):
+                    self.warhouse_id = str(self.unity[unity.lower()])
         elif(hasattr(self, 'warhouse_id')):
             self.warhouse_id = str(self.warhouse_id)
 
