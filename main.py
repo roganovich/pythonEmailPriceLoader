@@ -173,6 +173,10 @@ with profiler.Profiler() as p:
         if(attachmentName):
             email['attachment'] = attachmentName;
             log.print_r('Нашел вложение"' + email['attachment'] + '"')
+        else:
+            # удаляем письмо
+            #mLoader.deleteEmail(email);
+            log.print_r('Нет вложения!')
 
         obj = checkParser(email)
         obj.email = email
