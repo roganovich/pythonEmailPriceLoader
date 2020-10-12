@@ -49,6 +49,8 @@ from parsers.parthouse import PartHouse
 from parsers.dubai import Dubai
 from parsers.victrans import VictransEkat
 from parsers.victrans import VictransPod
+from parsers.autodakar import AutoDakar
+
 
 # получаем настройки приложения
 config = config.getConfig()
@@ -147,6 +149,8 @@ def checkParser(email):
             return VwSimferopol()
     if "Dubai" in email['email_subject']:
         return Dubai()
+    if "AutoDakkar" in email['email_subject']:
+        return AutoDakar()
     if "noreply@rnsprice.ru" in email['email_from']:
         if "Севастополь" in email['attachment']:
             return ApexSevastopol()
@@ -159,6 +163,8 @@ def checkParser(email):
             return VictransPod()
         if "Тест Виктранс склад Екат" in email['email_subject']:
             return VictransEkat()
+
+
 # profiler позволяет посчитать время выполнения процедуры внутри него
 with profiler.Profiler() as p:
     # получаем все письма и данные в виде списка
