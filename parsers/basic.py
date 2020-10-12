@@ -16,6 +16,7 @@ config = config.getConfig()
 # устанавливаем максимальную длину строки csv
 csv.field_size_limit(sys.maxsize)
 class Basic:
+    email = ""
 
     def __init__(self):
         self.prepareDir()
